@@ -12,3 +12,8 @@ target/
 *.iws
 *.iml
 *.ipr
+/.idea/encodings.xml
+/.idea/runConfigurations/faerite.xml
+src/main/resources/
+/.idea/misc.xml
+/.idea/vcs.xml
