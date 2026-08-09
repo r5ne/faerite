@@ -22,9 +22,6 @@ public class MapViewModel {
         regions.add(britishIsles);
     }
 
-    public final ObjectProperty<Color> getOceanColor() {return oceanColor;}
-    public final DoubleProperty getScaleX() {return scaleX;}
-    public final DoubleProperty getScaleY() {return scaleY;}
-    public final IntegerProperty getMapWidth() {return mapWidth;}
-    public final IntegerProperty getMapHeight() {return mapHeight;}
+    public final ObjectProperty<Color> getOceanColorProperty() {return oceanColor;}
+    public final ObjectProperty<Rectangle2D> getCurrentMapBoundsProperty() {return currentMapBounds;}
 }

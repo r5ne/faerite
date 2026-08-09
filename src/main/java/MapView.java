@@ -12,10 +12,14 @@ public class MapView extends Pane {
     private final Group mapTiles;
     private final Scale mapScale = new Scale();
 
-    public MapView() {
-        backgroundProperty().bind(Bindings.createObjectBinding(() ->
-            new Background(new BackgroundFill(viewModel.getOceanColor().get(), CornerRadii.EMPTY, Insets.EMPTY)),
-                viewModel.getOceanColor()
+    public MapView(MapViewModel viewModel) {
+        this.viewModel = viewModel;
+
+        backgroundProperty().bind(Bindings.createObjectBinding(() -> {
+                    return new Background(new BackgroundFill(viewModel.getOceanColorProperty().get(), CornerRadii.EMPTY,
+                            Insets.EMPTY));
+                },
+                viewModel.getOceanColorProperty()
         ));
 
         mapTiles = assembleTiles("tile", 6, 4096);
