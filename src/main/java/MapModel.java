@@ -1,7 +1,7 @@
 import java.util.Collections;
 import java.util.Set;
 
-public record MapModel(String tileNames, int width, int height, int tileSize, Set<Region> regions) {
+public record MapModel(String tileNames, int width, int height, int tileSize, Set<RegionModel> regions) {
     public MapModel {
         if (regions == null) {
             regions = Collections.emptySet();
