@@ -7,7 +7,9 @@ import java.util.HashSet;
 public class MapViewModel {
     private ObjectProperty<RegionModel> hoveredRegion;
 
-    public final String mapTileNames;
+    public final String mapTileName;
+    public final String borderTileName;
+    public final String hitboxTileName;
     public final int mapWidth;
     public final int mapHeight;
     public final int tileSize;

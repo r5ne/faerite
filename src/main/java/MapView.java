@@ -15,6 +15,7 @@ public class MapView extends Pane {
 
     private final Group mapTiles;
     private final Map<String, ImageView> mapTileIndex = new HashMap<>();
+    private final Map<String, Image> hitboxTileIndex;
     private final Scale mapScale = new Scale();
 
     public MapView(MapViewModel viewModel) {
@@ -27,7 +28,8 @@ public class MapView extends Pane {
                 viewModel.getOceanColorProperty()
         ));
 
-        mapTiles = assembleTiles();
+        hitboxTileIndex = assembleHitboxTiles();
+        mapTiles = assembleMapTiles();
         mapTiles.getTransforms().add(mapScale);
         getChildren().add(mapTiles);
 
@@ -65,7 +67,7 @@ public class MapView extends Pane {
 
                 if (tileBounds.intersects(bounds)) {
                     if (currentTile.getImage() == null) {
-                        String path = String.format("/%s_%d_%d.png", viewModel.mapTileNames, x, y);
+                        String path = String.format("/%s_%d_%d.png", viewModel.mapTileName, x, y);
                         currentTile.setImage(new Image(path));
                     }
                 }
@@ -76,11 +78,11 @@ public class MapView extends Pane {
         }
     }
 
-    private Group assembleTiles() {
+    private Group assembleMapTiles() {
         Group tileGroup = new Group();
         for (int x = 0; x < viewModel.tileNumWidth; x++) {
             for (int y = 0; y < viewModel.tileNumHeight; y++) {
-                String path = String.format("/%s_%d_%d.png", viewModel.mapTileNames, x, y);
+                String path = String.format("/%s_%d_%d.png", viewModel.mapTileName, x, y);
                 Image image = new Image(getClass().getResourceAsStream(path));
                 ImageView tile = new ImageView(image);
 
@@ -93,5 +95,22 @@ public class MapView extends Pane {
             }
         }
         return tileGroup;
+    }
+
+    private HashMap<String, Image> assembleHitboxTiles() {
+        HashMap<String, Image> tileIndex = new HashMap<>();
+        for (int x = 0; x < viewModel.tileNumWidth; x++) {
+            for (int y = 0; y < viewModel.tileNumHeight; y++) {
+                String path = String.format("/%s_%d_%d.png", viewModel.hitboxTileName, x, y);
+                Image image = new Image(getClass().getResourceAsStream(path));
+                tileIndex.put(x + "_" + y, image);
+            }
+        }
+        return tileIndex;
+    }
+
+    private Color getHitboxColorAt(int tileNumWidth, int tileNumHeight, int x, int y) {
+        Image image = hitboxTileIndex.get(tileNumWidth + "_" + tileNumHeight);
+        return image.getPixelReader().getColor(x, y);
     }
 }
