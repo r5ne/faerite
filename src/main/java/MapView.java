@@ -10,13 +10,14 @@ import javafx.scene.transform.Scale;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class MapView extends Pane {
     private final MapViewModel viewModel;
 
     private final Group mapTiles;
-    private final Map<String, ImageView> mapTileIndex = new HashMap<>();
-    private final Map<String, Image> hitboxTileIndex;
+    private final Map<TileCoordinate, ImageView> mapTileIndex = new HashMap<>();
+    private final Map<TileCoordinate, Image> hitboxTileIndex;
     private final Scale mapScale = new Scale();
 
     public MapView(MapViewModel viewModel) {
@@ -82,7 +83,7 @@ public class MapView extends Pane {
         for (int x = 0; x < viewModel.tileNumWidth; x++) {
             for (int y = 0; y < viewModel.tileNumHeight; y++) {
                 Rectangle2D tileBounds = new Rectangle2D(x * viewModel.tileSize, y * viewModel.tileSize, viewModel.tileSize, viewModel.tileSize);
-                ImageView currentTile = mapTileIndex.get(x + "_" + y);
+                ImageView currentTile = mapTileIndex.get(new TileCoordinate(x, y));
 
                 if (tileBounds.intersects(bounds)) {
                     if (currentTile.getImage() == null) {
@@ -97,39 +98,44 @@ public class MapView extends Pane {
         }
     }
 
-    private Group assembleMapTiles() {
-        Group tileGroup = new Group();
+    private void forEachTile(String tileName, BiConsumer<TileCoordinate, Image> tileProcessor) {
         for (int x = 0; x < viewModel.tileNumWidth; x++) {
             for (int y = 0; y < viewModel.tileNumHeight; y++) {
-                String path = String.format("/%s_%d_%d.png", viewModel.mapTileName, x, y);
-                Image image = new Image(getClass().getResourceAsStream(path));
-                ImageView tile = new ImageView(image);
+                String path = String.format("/%s_%d_%d.png", tileName, x, y);
+                Image tile = new Image(getClass().getResourceAsStream(path), 0, 0, false, false, true);
+                TileCoordinate key = new TileCoordinate(x, y);
 
-                tile.setX(x * viewModel.tileSize);
-                tile.setY(y * viewModel.tileSize);
-                tile.setSmooth(false);
-
-                tileGroup.getChildren().add(tile);
-                mapTileIndex.put(x + "_" + y, tile);
+                tileProcessor.accept(key, tile);
             }
         }
+    }
+
+    private Group assembleMapTiles() {
+        Group tileGroup = new Group();
+
+        forEachTile(viewModel.mapTileName, (key, tile) -> {
+            ImageView tileView = new ImageView(tile);
+            tileView.setX(key.x() * viewModel.tileSize);
+            tileView.setY(key.y() * viewModel.tileSize);
+            tileView.setSmooth(false);
+
+            tileGroup.getChildren().add(tileView);
+            mapTileIndex.put(key, tileView);
+        });
+
         return tileGroup;
     }
 
-    private HashMap<String, Image> assembleHitboxTiles() {
-        HashMap<String, Image> tileIndex = new HashMap<>();
-        for (int x = 0; x < viewModel.tileNumWidth; x++) {
-            for (int y = 0; y < viewModel.tileNumHeight; y++) {
-                String path = String.format("/%s_%d_%d.png", viewModel.hitboxTileName, x, y);
-                Image image = new Image(getClass().getResourceAsStream(path));
-                tileIndex.put(x + "_" + y, image);
-            }
-        }
+    private Map<TileCoordinate, Image> assembleHitboxTiles() {
+        Map<TileCoordinate, Image> tileIndex = new HashMap<>();
+
+        forEachTile(viewModel.hitboxTileName, tileIndex::put);
+
         return tileIndex;
     }
 
     private Color getHitboxColorAt(int tileNumWidth, int tileNumHeight, int x, int y) {
-        Image image = hitboxTileIndex.get(tileNumWidth + "_" + tileNumHeight);
+        Image image = hitboxTileIndex.get(new TileCoordinate(tileNumWidth, tileNumHeight));
         return image.getPixelReader().getColor(x, y);
     }
 }
