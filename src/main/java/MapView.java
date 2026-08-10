@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
 import java.util.HashMap;
@@ -35,6 +36,24 @@ public class MapView extends Pane {
 
         updateVisibleMap(viewModel.getCurrentMapBoundsProperty().get());
         viewModel.getCurrentMapBoundsProperty().addListener((_, _, newBounds) -> {updateVisibleMap(newBounds);});
+
+        this.setOnMouseMoved(event -> {
+            double screenX = event.getX();
+            double screenY = event.getY();
+
+            double mapX = (screenX - mapTiles.getTranslateX()) / mapScale.getX();
+            double mapY = (screenY - mapTiles.getTranslateY()) / mapScale.getY();
+
+            int tileNumWidth = (int) (mapX / viewModel.tileSize);
+            int tileNumHeight = (int) (mapY / viewModel.tileSize);
+
+            int tileX = (int) (mapX % viewModel.tileSize);
+            int tileY = (int) (mapY % viewModel.tileSize);
+
+            Color hitboxColor = getHitboxColorAt(tileNumWidth, tileNumHeight, tileX, tileY);
+
+            viewModel.updateHoveredColor(hitboxColor);
+        });
     }
 
     @Override
