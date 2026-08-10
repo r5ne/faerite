@@ -1,30 +1,43 @@
 import javafx.beans.property.*;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 
 import java.util.HashSet;
 
 public class MapViewModel {
-    private final HashSet<Region> regions = new HashSet<>();
-    private ObjectProperty<Region> hoveredRegion;
+    private ObjectProperty<RegionModel> hoveredRegion;
 
-    private final IntegerProperty mapWidth = new SimpleIntegerProperty();
-    private final IntegerProperty mapHeight = new SimpleIntegerProperty();
-    private final DoubleProperty scaleX = new SimpleDoubleProperty(1);
-    private final DoubleProperty scaleY = new SimpleDoubleProperty(1);
-
+    public final String mapTileNames;
+    public final int mapWidth;
+    public final int mapHeight;
+    public final int tileSize;
+    public final int tileNumWidth;
+    public final int tileNumHeight;
+    private ObjectProperty<Rectangle2D> currentMapBounds = new SimpleObjectProperty<>();
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
 
     public MapViewModel() {
-        int[] britishIslesPos = {9716, 5954};
-        int[] britishIslesSize = {1254, 941};
-        Region britishIsles = new Region("British Isles", "archipelago", "000000",
-                null, null, britishIslesPos, britishIslesSize);
+
+        RegionBounds britishIslesBounds = new RegionBounds(9716, 5954, 941, 1254);
+        RegionModel britishIsles = new RegionModel("British Isles", "archipelago", "000000",
+                null, null, britishIslesBounds);
+        HashSet<RegionModel> regions = new HashSet<>();
         regions.add(britishIsles);
+        MapModel currentMap = new MapModel("tile", 20966, 20966, 4096, regions);
+        mapTileNames = currentMap.tileNames();
+        mapWidth = currentMap.width();
+        mapHeight = currentMap.height();
+        tileSize = currentMap.tileSize();
+        tileNumWidth = currentMap.tileNumWidth();
+        tileNumHeight = currentMap.tileNumHeight();
+        focusOnRegion(britishIsles);
     }
 
-    public final ObjectProperty<Color> getOceanColor() {return oceanColor;}
-    public final DoubleProperty getScaleX() {return scaleX;}
-    public final DoubleProperty getScaleY() {return scaleY;}
-    public final IntegerProperty getMapWidth() {return mapWidth;}
-    public final IntegerProperty getMapHeight() {return mapHeight;}
+    public void focusOnRegion(RegionModel regionModel) {
+        RegionBounds bounds = regionModel.bounds();
+        currentMapBounds.set(new Rectangle2D(bounds.x(), bounds.y(), bounds.width(), bounds.height()));
+    }
+
+    public final ObjectProperty<Color> getOceanColorProperty() {return oceanColor;}
+    public final ObjectProperty<Rectangle2D> getCurrentMapBoundsProperty() {return currentMapBounds;}
 }
