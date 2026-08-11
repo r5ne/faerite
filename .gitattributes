@@ -1,3 +1,1 @@
-src/main/resources/british-isles.png filter=lfs diff=lfs merge=lfs -text
-src/main/resources/british-isles-bordermask.png filter=lfs diff=lfs merge=lfs -text
-src/main/resources/british-isles-hitboxmask.png filter=lfs diff=lfs merge=lfs -text
+src/main/resources/**/*.png filter=lfs diff=lfs merge=lfs -text
