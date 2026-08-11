@@ -1,26 +1,13 @@
 import javafx.beans.property.*;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class MapViewModel {
-    private final Map<String, RegionModel> colorRegionMap = new HashMap<>();
-    private final ObjectProperty<RegionModel> hoveredRegion = new SimpleObjectProperty<>();
+    private Map<Integer, RegionModel> regionMaskMap = new HashMap<>();
 
-    public final String mapTileName;
-    public final String borderTileName;
-    public final String hitboxTileName;
-    public final int mapWidth;
-    public final int mapHeight;
-    public final int tileSize;
-    public final int tileNumWidth;
-    public final int tileNumHeight;
-
-    private final MapModel currentMap;
-    private ObjectProperty<Rectangle2D> currentMapBounds = new SimpleObjectProperty<>();
+    private final ReadOnlyObjectWrapper<MapModel> currentMap = new ReadOnlyObjectWrapper<>();
+    private final ReadOnlyObjectWrapper<RegionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
 
     public MapViewModel() {
@@ -70,4 +57,13 @@ public class MapViewModel {
         String in = Integer.toHexString((int) Math.round(val * 255));
         return in.length() == 1 ? "0" + in : in;
     }
+
+    public ReadOnlyObjectProperty<MapModel> getCurrentMapProperty() { return currentMap.getReadOnlyProperty(); }
+    public MapModel getCurrentMap() { return currentMap.get(); }
+
+    public ReadOnlyObjectProperty<RegionModel> getHoveredRegionProperty() { return hoveredRegion.getReadOnlyProperty(); }
+    public RegionModel getHoveredRegion() { return hoveredRegion.get(); }
+
+    public ObjectProperty<Color> getOceanColorProperty() { return oceanColor; }
+    public Color getOceanColor() { return oceanColor.get(); }
 }
