@@ -99,6 +99,6 @@ public class MapView extends Pane {
         if (stream == null) {
             throw new IllegalArgumentException("No file exists at: " + path);
         }
-        return new Image(stream, 0, 0, false, false, true);
+        return new Image(stream);
     }
 }
