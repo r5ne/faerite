@@ -1,18 +1,18 @@
 import java.util.Collections;
 import java.util.Set;
 
-public record MapModel(String tileName, String bordersTileName, String hitboxTileName, int width, int height, int tileSize, Set<RegionModel> regions) {
+public record MapModel(String fileName, String name, int width, int height, RegionType type, Set<RegionModel> regions) {
     public MapModel {
         if (regions == null) {
             regions = Collections.emptySet();
         }
     }
 
-    public int tileNumWidth() {
-        return Math.floorDiv(width, tileSize) + 1;
+    public String borderMaskFileName() {
+        return fileName + "-bordermask";
     }
 
-    public int tileNumHeight() {
-        return Math.floorDiv(height, tileSize) + 1;
+    public String hitboxMaskFileName() {
+        return fileName + "-hitboxmask";
     }
 }
