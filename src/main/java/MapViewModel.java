@@ -9,13 +9,15 @@ public class MapViewModel {
     private final ReadOnlyObjectWrapper<MapModel> currentMap = new ReadOnlyObjectWrapper<>();
     private final ReadOnlyObjectWrapper<RegionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
+    private final ObjectProperty<Color> borderColor = new SimpleObjectProperty<>(Color.web("#ff3d3d"));
 
     public MapViewModel() {
         currentMap.addListener((_, _, newMap) -> updateRegionMaskMap(newMap));
 
         MapModel britishIsles = new MapModel("british-isles", "British Isles", 941, 1254, RegionType.ARCHIPELAGO, new HashSet<>());
         RegionModel greatBritain = new RegionModel("Great Britain", RegionType.ISLAND, 0xFF000000, new HashSet<>());
-        britishIsles.regions().add(greatBritain);
+        RegionModel ireland = new RegionModel("Ireland", RegionType.ISLAND, 0xFFFFFFFF, new HashSet<>());
+        britishIsles.regions().addAll(Set.of(greatBritain, ireland));
 
         currentMap.set(britishIsles);
     }
@@ -34,7 +36,7 @@ public class MapViewModel {
         if (map == null) return;
 
         for (RegionModel region : map.regions()) {
-            regionMaskMap.put(region.maskARGBColor(), region);
+            regionMaskMap.put(region.maskColor(), region);
         }
     }
 
@@ -46,4 +48,9 @@ public class MapViewModel {
 
     public ObjectProperty<Color> getOceanColorProperty() { return oceanColor; }
     public Color getOceanColor() { return oceanColor.get(); }
+
+    public ObjectProperty<Color> getBorderColorProperty() { return borderColor; }
+    public Color getBorderColor() { return borderColor.get(); }
+
+    public Map<Integer, RegionModel> getRegionMaskMap() { return regionMaskMap; }
 }
