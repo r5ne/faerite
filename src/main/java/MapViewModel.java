@@ -11,51 +11,31 @@ public class MapViewModel {
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
 
     public MapViewModel() {
-        RegionBounds britishIslesBounds = new RegionBounds(9716, 5954, 941, 1254);
-        RegionModel britishIsles = new RegionModel("British Isles", "archipelago", "000000FF",
-                null, null, britishIslesBounds);
-        colorRegionMap.put("00000000", null);
-        colorRegionMap.put(britishIsles.maskColor(), britishIsles);
-        HashSet<RegionModel> regions = new HashSet<>();
-        regions.add(britishIsles);
+        currentMap.addListener((_, _, newMap) -> updateRegionMaskMap(newMap));
 
-        currentMap = new MapModel("map", "borders_map_0", "hitbox_map_0", 20966, 20966, 4096, regions);
-        mapTileName = currentMap.tileName();
-        borderTileName = currentMap.bordersTileName();
-        hitboxTileName = currentMap.hitboxTileName();
-        mapWidth = currentMap.width();
-        mapHeight = currentMap.height();
-        tileSize = currentMap.tileSize();
-        tileNumWidth = currentMap.tileNumWidth();
-        tileNumHeight = currentMap.tileNumHeight();
+        MapModel britishIsles = new MapModel("british-isles", "British Isles", 941, 1254, RegionType.ARCHIPELAGO, new HashSet<>());
+        RegionModel greatBritain = new RegionModel("Great Britain", RegionType.ISLAND, 0xFF000000, new HashSet<>());
+        britishIsles.regions().add(greatBritain);
 
-        setViewedMapRegion(britishIsles);
+        currentMap.set(britishIsles);
     }
 
-    public void setViewedMapRegion(RegionModel regionModel) {
-        RegionBounds bounds = regionModel.bounds();
-        currentMapBounds.set(new Rectangle2D(bounds.x(), bounds.y(), bounds.width(), bounds.height()));
-    }
+    public void updateHoveredColor(int argb) {
+        RegionModel region = regionMaskMap.get(argb);
 
-    public void updateHoveredColor(Color color) {
-        String hexCode = (format(color.getRed()) + format(color.getGreen()) +
-                format(color.getBlue()) + format(color.getOpacity())).toUpperCase();
-
-        RegionModel region = colorRegionMap.get(hexCode);
-
-        if (hoveredRegion != null && hoveredRegion.get() != region) {
+        if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);
-            System.out.println(hexCode);
+            System.out.println(argb);
         }
     }
 
-    public final ObjectProperty<Color> getOceanColorProperty() {return oceanColor;}
-    public final ObjectProperty<Rectangle2D> getCurrentMapBoundsProperty() {return currentMapBounds;}
+    private void updateRegionMaskMap(MapModel map) {
+        regionMaskMap.clear();
+        if (map == null) return;
 
-
-    private static String format(double val) {
-        String in = Integer.toHexString((int) Math.round(val * 255));
-        return in.length() == 1 ? "0" + in : in;
+        for (RegionModel region : map.regions()) {
+            regionMaskMap.put(region.maskARGBColor(), region);
+        }
     }
 
     public ReadOnlyObjectProperty<MapModel> getCurrentMapProperty() { return currentMap.getReadOnlyProperty(); }
