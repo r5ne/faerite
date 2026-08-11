@@ -1,3 +1,5 @@
+package faerite;
+
 import java.util.Collections;
 import java.util.Set;
 

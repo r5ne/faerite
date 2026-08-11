@@ -1,3 +1,5 @@
+package faerite;
+
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
