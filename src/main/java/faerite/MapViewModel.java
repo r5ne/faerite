@@ -29,7 +29,6 @@ public class MapViewModel {
 
         if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);
-            System.out.println(argb);
         }
     }
 
