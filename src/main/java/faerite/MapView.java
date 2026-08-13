@@ -40,6 +40,10 @@ public class MapView extends Pane {
         mapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
         getChildren().add(mapBorderCanvas);
 
+        createBindings();
+        createListeners();
+        createEvents();
+
         updateMapData(viewModel.getCurrentMap());
         borderCache = cacheBorders(borderMaskImage, 2);
 
@@ -74,6 +78,50 @@ public class MapView extends Pane {
             if (pixelX >= 0 && pixelX < hitboxMaskImage.getWidth() && pixelY >= 0 && pixelY < hitboxMaskImage.getHeight()) {
                 int argb = hitboxMaskImage.getPixelReader().getArgb(pixelX, pixelY);
                 viewModel.updateHoveredColor(argb);
+            } else {
+                viewModel.updateHoveredColor(0);
+            }
+        });
+    }
+
+    private void createBindings() {
+        // Keep the background synced with the oceanColor.
+        backgroundProperty().bind(Bindings.createObjectBinding(() ->
+                        new Background(new BackgroundFill(
+                                viewModel.getOceanColorProperty().get(),
+                                CornerRadii.EMPTY,
+                                Insets.EMPTY
+                        )),
+                viewModel.getOceanColorProperty()
+        ));
+    }
+
+    private void createListeners() {
+        // Update the map, border and hitbox masks when the currentMap changes.
+        viewModel.getCurrentMapProperty().addListener((_, _, newMap) -> {
+            if (newMap != null) {
+                updateMapData(newMap);
+            }
+        });
+
+        viewModel.getHoveredRegionProperty().addListener((_, _, newRegion) -> {
+            updateMapBorder(newRegion);
+        });
+    }
+
+    private void createEvents() {
+        setOnMouseMoved(event -> {
+            if (hitboxMaskImage == null) return;
+
+            // Gets absolute position regardless of Scale & Transform objects applied.
+            Point2D point = mapImageView.sceneToLocal(event.getSceneX(), event.getSceneY());
+            int pixelX = (int) Math.floor(point.getX());
+            int pixelY = (int) Math.floor(point.getY());
+
+            // Out of bounds check.
+            if (pixelX >= 0 && pixelX < hitboxMaskImage.getWidth() && pixelY >= 0 && pixelY < hitboxMaskImage.getHeight()) {
+                int color = hitboxMaskImage.getPixelReader().getArgb(pixelX, pixelY);
+                viewModel.updateHoveredColor(color);
             } else {
                 viewModel.updateHoveredColor(0);
             }
