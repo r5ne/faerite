@@ -16,7 +16,7 @@ public class MapViewModel {
     public MapViewModel() {
         currentMap.addListener((_, _, newMap) -> updateRegionMaskMap(newMap));
 
-        MapModel britishIsles = new MapModel("british-isles", "British Isles", 941, 1254, RegionType.ARCHIPELAGO, new HashSet<>());
+        MapModel britishIsles = new MapModel("british-isles", "British Isles", 724, 1204, RegionType.ARCHIPELAGO, new HashSet<>());
         RegionModel greatBritain = new RegionModel("Great Britain", RegionType.ISLAND, 0xFF000000, new HashSet<>());
         RegionModel ireland = new RegionModel("Ireland", RegionType.ISLAND, 0xFFFFFFFF, new HashSet<>());
         britishIsles.regions().addAll(Set.of(greatBritain, ireland));
