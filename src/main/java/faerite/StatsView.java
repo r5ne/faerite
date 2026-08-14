@@ -6,22 +6,25 @@ import javafx.scene.layout.VBox;
 public class StatsView extends VBox {
     private final MapViewModel viewModel;
 
+    private final Label titleLabel = new Label();
+    private final Label typeLabel = new Label();
+
     public StatsView(MapViewModel viewModel) {
         this.viewModel = viewModel;
 
-        Label titleLabel = new Label();
         titleLabel.getStyleClass().add("h1");
-
-        Label typeLabel = new Label();
         typeLabel.getStyleClass().add("body-text");
 
-        viewModel.getCurrentRegionDataProperty().addListener((_, _, newData) -> {
-            if (newData != null) {
-                titleLabel.setText(newData.name());
-                typeLabel.setText(String.format("Type: %s", newData.type()));
-            }
-        });
+        viewModel.getCurrentRegionDataProperty().addListener((_, _, newData) -> updateLabels(newData));
+        updateLabels(viewModel.getCurrentMap().mapRegionData());
 
         getChildren().addAll(titleLabel, typeLabel);
+    }
+
+    private void updateLabels(RegionData data) {
+        if (data != null) {
+            titleLabel.setText(data.name());
+            typeLabel.setText(String.format("Type: %s", data.type()));
+        }
     }
 }
