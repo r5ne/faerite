@@ -7,7 +7,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
@@ -20,7 +22,8 @@ public class MapView extends Pane {
 
     private final MapViewModel viewModel;
     private final ImageView mapImageView = new ImageView();
-    private final Canvas mapBorderCanvas;
+    private final Canvas hoveredMapBorderCanvas;
+    private final Canvas selectedMapBorderCanvas;
 
     private final Scale mapScale = new Scale();
     private final Translate mapTranslate = new Translate();
@@ -40,12 +43,19 @@ public class MapView extends Pane {
         // ensure canvas size accounts for borders being added to the map
         double canvasWidth = viewModel.getCurrentMap().width() + (BORDER_SIZE * 2);
         double canvasHeight = viewModel.getCurrentMap().height() + (BORDER_SIZE * 2);
-        mapBorderCanvas = new Canvas(canvasWidth, canvasHeight);
+        hoveredMapBorderCanvas = new Canvas(canvasWidth, canvasHeight);
         // re-align canvas with map image
-        mapBorderCanvas.setLayoutX(-BORDER_SIZE);
-        mapBorderCanvas.setLayoutY(-BORDER_SIZE);
-        mapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
-        getChildren().add(mapBorderCanvas);
+        hoveredMapBorderCanvas.setLayoutX(-BORDER_SIZE);
+        hoveredMapBorderCanvas.setLayoutY(-BORDER_SIZE);
+        hoveredMapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
+
+        selectedMapBorderCanvas = new Canvas(canvasWidth, canvasHeight);
+        // re-align canvas with map image
+        selectedMapBorderCanvas.setLayoutX(-BORDER_SIZE);
+        selectedMapBorderCanvas.setLayoutY(-BORDER_SIZE);
+        selectedMapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
+
+        getChildren().addAll(hoveredMapBorderCanvas, selectedMapBorderCanvas);
 
         createBindings();
         createListeners();
@@ -75,7 +85,11 @@ public class MapView extends Pane {
         });
 
         viewModel.getHoveredRegionProperty().addListener((_, _, newRegion) ->
-            updateMapBorder(newRegion)
+                updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor())
+        );
+
+        viewModel.getSelectedRegionProperty().addListener((_, _, newRegion) ->
+                updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor())
         );
     }
 
@@ -94,6 +108,12 @@ public class MapView extends Pane {
                 viewModel.updateHoveredRegion(color);
             } else {
                 viewModel.updateHoveredRegion(0);
+            }
+        });
+
+        setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                viewModel.updateSelectedRegion();
             }
         });
     }
@@ -128,14 +148,15 @@ public class MapView extends Pane {
         borderCache = MaskUtils.createBorderMasks(borderMaskImage, viewModel.getRegionMaskMap().keySet(), 2);
     }
 
-    private void updateMapBorder(RegionModel region) {
-        mapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, mapBorderCanvas.getWidth(), mapBorderCanvas.getHeight());
+    private void updateMapBorder(RegionModel region, Canvas canvas, Color borderColor) {
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
         if (region == null || borderCache == null) return;
 
         boolean[] borderMask = borderCache.get(region.maskColor());
         if (borderMask == null) return;
 
-        PixelWriter writer = mapBorderCanvas.getGraphicsContext2D().getPixelWriter();
+        PixelWriter writer = canvas.getGraphicsContext2D().getPixelWriter();
 
         int paddedWidth = (int) borderMaskImage.getWidth() + (BORDER_SIZE * 2);
         int paddedHeight = (int) borderMaskImage.getHeight() + (BORDER_SIZE * 2);
@@ -143,7 +164,7 @@ public class MapView extends Pane {
         for (int y = 0; y < paddedHeight; y++) {
             for (int x = 0; x < paddedWidth; x++) {
                 if (borderMask[y * paddedWidth + x]) {
-                    writer.setColor(x, y, viewModel.getBorderColor());
+                    writer.setColor(x, y, borderColor);
                 }
             }
         }

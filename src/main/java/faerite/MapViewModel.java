@@ -10,12 +10,16 @@ public class MapViewModel {
 
     private final ReadOnlyObjectWrapper<MapModel> currentMap = new ReadOnlyObjectWrapper<>();
     private final ReadOnlyObjectWrapper<RegionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
+    private final ReadOnlyObjectWrapper<RegionModel> selectedRegion = new ReadOnlyObjectWrapper<>();
     private final ObjectProperty<RegionData> currentRegionData = new SimpleObjectProperty<>();
 
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
-    private final ObjectProperty<Color> borderColor = new SimpleObjectProperty<>(Color.web("#ff3d3d"));
+    private final ObjectProperty<Color> hoveredBorderColor = new SimpleObjectProperty<>();
+    private final ObjectProperty<Color> selectedBorderColor = new SimpleObjectProperty<>(Color.web("#ff3d3d"));
 
     public MapViewModel() {
+        hoveredBorderColor.set(oceanColor.get().deriveColor(1, 0.7, 3, 1));
+
         currentMap.addListener((_, _, newMap) -> updateRegionMaskMap(newMap));
 
         RegionData britishIslesData = new RegionData("British Isles", RegionType.ARCHIPELAGO);
@@ -37,8 +41,17 @@ public class MapViewModel {
 
         if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);
-            if (color != 0) {
-                currentRegionData.set(region.regionData());
+        }
+    }
+
+    public void updateSelectedRegion() {
+        RegionModel currentHover = hoveredRegion.get();
+
+        if (!Objects.equals(selectedRegion.get(), currentHover)) {
+            selectedRegion.set(currentHover);
+
+            if (currentHover != null) {
+                currentRegionData.set(currentHover.regionData());
             } else {
                 currentRegionData.set(currentMap.get().mapRegionData());
             }
@@ -60,11 +73,18 @@ public class MapViewModel {
     public ReadOnlyObjectProperty<RegionModel> getHoveredRegionProperty() { return hoveredRegion.getReadOnlyProperty(); }
     public RegionModel getHoveredRegion() { return hoveredRegion.get(); }
 
+
+    public ReadOnlyObjectProperty<RegionModel> getSelectedRegionProperty() { return selectedRegion.getReadOnlyProperty(); }
+    public RegionModel getSelectedRegion() { return selectedRegion.get(); }
+
     public ObjectProperty<Color> getOceanColorProperty() { return oceanColor; }
     public Color getOceanColor() { return oceanColor.get(); }
 
-    public ObjectProperty<Color> getBorderColorProperty() { return borderColor; }
-    public Color getBorderColor() { return borderColor.get(); }
+    public ObjectProperty<Color> getHoveredBorderColorProperty() { return hoveredBorderColor; }
+    public Color getHoveredBorderColor() { return hoveredBorderColor.get(); }
+
+    public ObjectProperty<Color> getSelectedBorderColorProperty() { return selectedBorderColor; }
+    public Color getSelectedBorderColor() { return selectedBorderColor.get(); }
 
     public ObjectProperty<RegionData> getCurrentRegionDataProperty() { return currentRegionData; }
     public RegionData getCurrentRegionData() { return currentRegionData.get(); }

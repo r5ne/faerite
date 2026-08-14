@@ -1,3 +1,9 @@
+/* Strip backgrounds and borders from ScrollPane and its internal viewport */
+.scroll-pane, .scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
 .info-card {
     -fx-background-color: #1e1e1e;
     -fx-background-radius: 12px;
@@ -5,13 +11,13 @@
 }
 
 .h1 {
-    -fx-font-size: 24px;
+    -fx-font-size: 54px;
     -fx-font-weight: bold;
-    fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .body-text {
-    fx-font-size: 14px;
+    -fx-font-size: 24px;
     -fx-text-fill: #cccccc;
     -fx-line-spacing: 4px;
 }
