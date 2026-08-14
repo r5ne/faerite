@@ -30,8 +30,8 @@ public class MapViewModel {
         currentMap.set(britishIsles);
     }
 
-    public void updateHoveredColor(int argb) {
-        RegionModel region = regionMaskMap.get(argb);
+    public void updateHoveredRegion(int color) {
+        RegionModel region = regionMaskMap.get(color);
 
         if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);

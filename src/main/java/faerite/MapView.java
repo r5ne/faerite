@@ -91,9 +91,9 @@ public class MapView extends Pane {
             // Out of bounds check.
             if (pixelX >= 0 && pixelX < hitboxMaskImage.getWidth() && pixelY >= 0 && pixelY < hitboxMaskImage.getHeight()) {
                 int color = hitboxMaskImage.getPixelReader().getArgb(pixelX, pixelY);
-                viewModel.updateHoveredColor(color);
+                viewModel.updateHoveredRegion(color);
             } else {
-                viewModel.updateHoveredColor(0);
+                viewModel.updateHoveredRegion(0);
             }
         });
     }
