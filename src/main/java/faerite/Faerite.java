@@ -18,7 +18,7 @@ public class Faerite extends Application {
         // On strict compositors ensures the window gets treated as non-maximised, and is forced to the screen size.
         Scene scene = new Scene(root, screenRect.getWidth()/2, screenRect.getHeight()/2);
         stage.setScene(scene);
-        stage.setTitle("faerite.Faerite");
+        stage.setTitle("Faerite");
         // Ignored on strict compositors (e.g. tiled, scrolling)
         stage.setMaximized(true);
         stage.show();
