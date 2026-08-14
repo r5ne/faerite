@@ -6,10 +6,12 @@ import javafx.scene.paint.Color;
 import java.util.*;
 
 public class MapViewModel {
-    private Map<Integer, RegionModel> regionMaskMap = new HashMap<>();
+    private final Map<Integer, RegionModel> regionMaskMap = new HashMap<>();
 
     private final ReadOnlyObjectWrapper<MapModel> currentMap = new ReadOnlyObjectWrapper<>();
     private final ReadOnlyObjectWrapper<RegionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
+    private final ObjectProperty<RegionData> currentRegionData = new SimpleObjectProperty<>();
+
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
     private final ObjectProperty<Color> borderColor = new SimpleObjectProperty<>(Color.web("#ff3d3d"));
 
@@ -35,6 +37,11 @@ public class MapViewModel {
 
         if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);
+            if (color != 0) {
+                currentRegionData.set(region.regionData());
+            } else {
+                currentRegionData.set(currentMap.get().mapRegionData());
+            }
         }
     }
 
@@ -58,6 +65,9 @@ public class MapViewModel {
 
     public ObjectProperty<Color> getBorderColorProperty() { return borderColor; }
     public Color getBorderColor() { return borderColor.get(); }
+
+    public ObjectProperty<RegionData> getCurrentRegionDataProperty() { return currentRegionData; }
+    public RegionData getCurrentRegionData() { return currentRegionData.get(); }
 
     public Map<Integer, RegionModel> getRegionMaskMap() { return regionMaskMap; }
 }
