@@ -3,7 +3,7 @@ package faerite;
 import java.util.Collections;
 import java.util.Set;
 
-public record MapModel(String fileName, String name, int width, int height, RegionType type, Set<RegionModel> regions) {
+public record MapModel(String fileName, int width, int height, RegionData mapRegionData, Set<RegionModel> regions) {
     public MapModel {
         if (regions == null) {
             regions = Collections.emptySet();

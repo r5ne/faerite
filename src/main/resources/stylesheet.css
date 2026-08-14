@@ -1,0 +1,17 @@
+.info-card {
+    -fx-background-color: #1e1e1e;
+    -fx-background-radius: 12px;
+    -fx-padding: 20px;
+}
+
+.h1 {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    fx-text-fill: white;
+}
+
+.body-text {
+    fx-font-size: 14px;
+    -fx-text-fill: #cccccc;
+    -fx-line-spacing: 4px;
+}

@@ -6,29 +6,42 @@ import javafx.scene.paint.Color;
 import java.util.*;
 
 public class MapViewModel {
-    private Map<Integer, RegionModel> regionMaskMap = new HashMap<>();
+    private final Map<Integer, RegionModel> regionMaskMap = new HashMap<>();
 
     private final ReadOnlyObjectWrapper<MapModel> currentMap = new ReadOnlyObjectWrapper<>();
     private final ReadOnlyObjectWrapper<RegionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
+    private final ObjectProperty<RegionData> currentRegionData = new SimpleObjectProperty<>();
+
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
     private final ObjectProperty<Color> borderColor = new SimpleObjectProperty<>(Color.web("#ff3d3d"));
 
     public MapViewModel() {
         currentMap.addListener((_, _, newMap) -> updateRegionMaskMap(newMap));
 
-        MapModel britishIsles = new MapModel("british-isles", "British Isles", 724, 1204, RegionType.ARCHIPELAGO, new HashSet<>());
-        RegionModel greatBritain = new RegionModel("Great Britain", RegionType.ISLAND, 0xFF000000, new HashSet<>());
-        RegionModel ireland = new RegionModel("Ireland", RegionType.ISLAND, 0xFFFFFFFF, new HashSet<>());
+        RegionData britishIslesData = new RegionData("British Isles", RegionType.ARCHIPELAGO);
+        MapModel britishIsles = new MapModel("british-isles", 724, 1204, britishIslesData, new HashSet<>());
+
+        RegionData greatBritainData = new RegionData("Great Britain", RegionType.ISLAND);
+        RegionModel greatBritain = new RegionModel(greatBritainData, 0xFF000000, new HashSet<>());
+
+        RegionData irelandData = new RegionData("Ireland", RegionType.ISLAND);
+        RegionModel ireland = new RegionModel(irelandData, 0xFFFFFFFF, new HashSet<>());
+
         britishIsles.regions().addAll(Set.of(greatBritain, ireland));
 
         currentMap.set(britishIsles);
     }
 
-    public void updateHoveredColor(int argb) {
-        RegionModel region = regionMaskMap.get(argb);
+    public void updateHoveredRegion(int color) {
+        RegionModel region = regionMaskMap.get(color);
 
         if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);
+            if (color != 0) {
+                currentRegionData.set(region.regionData());
+            } else {
+                currentRegionData.set(currentMap.get().mapRegionData());
+            }
         }
     }
 
@@ -52,6 +65,9 @@ public class MapViewModel {
 
     public ObjectProperty<Color> getBorderColorProperty() { return borderColor; }
     public Color getBorderColor() { return borderColor.get(); }
+
+    public ObjectProperty<RegionData> getCurrentRegionDataProperty() { return currentRegionData; }
+    public RegionData getCurrentRegionData() { return currentRegionData.get(); }
 
     public Map<Integer, RegionModel> getRegionMaskMap() { return regionMaskMap; }
 }
