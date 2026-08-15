@@ -90,13 +90,11 @@ jobs:
       - name: Extract release message
         id: tag_data
         run: |
-          # 1. Extract subject cleanly (stripping surrounding whitespace)
-          TITLE_TEXT=$(git show -s --format='%s' ${{ github.ref_name }} | xargs)
+          TITLE_TEXT=$(git tag -l --format='%_contents:subject' ${{ github.ref_name }})
           echo "TITLE=$TITLE_TEXT" >> $GITHUB_ENV
           
-          # 2. Extract body cleanly using a unique delimiter
           echo "BODY<<EOF" >> $GITHUB_ENV
-          git show -s --format='%b' ${{ github.ref_name }} >> $GITHUB_ENV
+          git tag -l --format='%_contents:body' ${{ github.ref_name }} >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Create GitHub Release
@@ -106,6 +104,7 @@ jobs:
           body: ${{ env.BODY }}
           generate_release_notes: true
           files: artifacts/*.zip
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
