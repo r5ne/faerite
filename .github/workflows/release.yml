@@ -79,7 +79,7 @@ jobs:
           lfs: true
 
       - name: Fetch Tags
-        run: git fetch --tags
+        run: git fetch --tags --force
 
       - name: Download Artifacts
         uses: actions/download-artifact@v4
