@@ -5,22 +5,17 @@ on:
     tags:
       - 'v*.*.*'
 
-permissions:
-  contents: write
-  pull-requests: write
-  repository-projects: write
-
 jobs:
   build:
     strategy:
       matrix:
         include:
           - os: windows-latest
-            artifact_name: faerite-${{ github.ref_name }}-windows.zip
+            platform: windows
           - os: macos-latest
-            artifact_name: faerite-${{ github.ref_name }}-mac.zip
+            platform: mac
           - os: ubuntu-latest
-            artifact_name: faerite-${{ github.ref_name }}-linux.zip
+            platform: linux
 
     runs-on: ${{ matrix.os }}
 
@@ -29,6 +24,15 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+
+      - name: Calculate Artifact Name
+        run: |
+          VERSION="${{ github.ref_name }}"
+          CLEAN_VERSION="${VERSION#v}"
+          
+          ZIP_NAME="faerite-${CLEAN_VERSION}-${{ matrix.platform }}.zip"
+          
+          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
       - name: Set up JDK
         uses: actions/setup-java@v5
@@ -49,29 +53,31 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out
-          cd out && zip -r ../${{ matrix.artifact_name }} Faerite
+          cd out && zip -r ../${{ env.ZIP_NAME }} Faerite
 
       - name: Package Windows
         if: matrix.os == 'windows-latest'
         run: |
           jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out
-          Compress-Archive -Path out/Faerite/* -DestinationPath ${{ matrix.artifact_name }}
+          Compress-Archive -Path out/Faerite -DestinationPath ${{ env.ZIP_NAME }}
 
       - name: Package Mac
         if: matrix.os == 'macos-latest'
         run: |
           jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out
-          cd out && zip -r ../${{ matrix.artifact_name }} Faerite.app
+          cd out && zip -r ../${{ env.ZIP_NAME }} Faerite.app
 
       - name: Upload builds
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
-          path: ${{ matrix.artifact_name }}
+          name: build-${{ matrix.platform }}
+          path: ${{ env.ZIP_NAME }}
 
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
