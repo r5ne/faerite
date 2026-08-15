@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+    branches:
+      - master
 
 jobs:
   build:
@@ -45,7 +47,7 @@ jobs:
         run: |
           jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out
           cd out && zip -r ../${{ matrix.artifact_name }} Faerite
-Builds
+
       - name: Package Windows
         if: matrix.os == 'windows-latest'
         run: |
@@ -68,7 +70,7 @@ Builds
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
