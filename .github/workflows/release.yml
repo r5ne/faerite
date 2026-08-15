@@ -89,12 +89,14 @@ jobs:
 
       - name: Extract release message
         id: tag_data
+        env:
+          REF_NAME: ${{ github.ref_name }}
         run: |
-          TITLE_TEXT=$(git tag -l --format='%_contents:subject' ${{ github.ref_name }})
-          echo "TITLE=$TITLE_TEXT" >> $GITHUB_ENV
+          TITLE=$(git tag -l --format='%(contents:subject)' $REF_NAME)
+          echo "TITLE=$TITLE" >> $GITHUB_ENV
           
           echo "BODY<<EOF" >> $GITHUB_ENV
-          git tag -l --format='%_contents:body' ${{ github.ref_name }} >> $GITHUB_ENV
+          git tag -l --format='%(contents:body)' $REF_NAME >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Create GitHub Release
