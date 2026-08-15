@@ -26,6 +26,7 @@ jobs:
           lfs: true
 
       - name: Calculate Artifact Name
+        shell: bash
         run: |
           VERSION="${{ github.ref_name }}"
           CLEAN_VERSION="${VERSION#v}"
