@@ -1,6 +1,6 @@
 # Faerite
 <p>
-  <a href="https://github.comhttps://github.com/r5ne/faerite/actions">
+  <a href="https://github.com/r5ne/faerite/actions">
     <img src="https://img.shields.io/github/actions/workflow/status/starship/starship/workflow.yml?branch=main&label=workflow&style=flat-square"
       alt="GitHub Actions workflow status"/></a>
 </p>
