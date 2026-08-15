@@ -31,7 +31,7 @@ jobs:
           lfs: true
 
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '25'
           distribution: 'temurin'
@@ -78,6 +78,9 @@ jobs:
           fetch-depth: 0
           lfs: true
 
+      - name: Fetch Tags
+        run: git fetch --tags
+
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -87,13 +90,13 @@ jobs:
       - name: Extract release message
         id: tag_data
         run: |
-          git for-each-ref --format='%(*subject)' refs/tags/${{ github.ref_name }} > title.txt
-          git for-each-ref --format='%(*body)' refs/tags/${{ github.ref_name }} > body.txt
+          # 1. Extract subject cleanly (stripping surrounding whitespace)
+          TITLE_TEXT=$(git show -s --format='%s' ${{ github.ref_name }} | xargs)
+          echo "TITLE=$TITLE_TEXT" >> $GITHUB_ENV
           
-          echo "TITLE=$(cat title.txt)" >> $GITHUB_ENV
-          
+          # 2. Extract body cleanly using a unique delimiter
           echo "BODY<<EOF" >> $GITHUB_ENV
-          cat body.txt >> $GITHUB_ENV
+          git show -s --format='%b' ${{ github.ref_name }} >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Create GitHub Release
