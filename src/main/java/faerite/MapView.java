@@ -84,8 +84,11 @@ public class MapView extends Pane {
             }
         });
 
-        viewModel.getHoveredRegionProperty().addListener((_, _, newRegion) ->
-                updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor())
+        viewModel.getHoveredRegionProperty().addListener((_, _, newRegion) -> {
+            if (viewModel.getHoveredRegion() != viewModel.getSelectedRegion()) {
+                updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor());
+            }
+        }
         );
 
         viewModel.getSelectedRegionProperty().addListener((_, _, newRegion) ->
