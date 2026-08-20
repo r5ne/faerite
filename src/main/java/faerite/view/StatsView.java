@@ -1,5 +1,7 @@
-package faerite;
+package faerite.view;
 
+import faerite.MapViewModel;
+import faerite.model.RegionData;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 

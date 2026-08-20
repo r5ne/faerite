@@ -1,5 +1,8 @@
-package faerite;
+package faerite.view;
 
+import faerite.MapViewModel;
+import faerite.model.MapModel;
+import faerite.model.RegionModel;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -174,7 +177,7 @@ public class MapView extends Pane {
     }
 
     private static Image loadImage(String fileName) {
-        String path = String.format("/%s.png", fileName);
+        String path = String.format("/mapdata/%s.png", fileName);
         InputStream stream = MapView.class.getResourceAsStream(path);
         if (stream == null) {
             throw new IllegalArgumentException("No file exists at: " + path);

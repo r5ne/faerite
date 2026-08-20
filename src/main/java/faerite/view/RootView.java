@@ -1,5 +1,6 @@
-package faerite;
+package faerite.view;
 
+import faerite.MapViewModel;
 import javafx.scene.layout.StackPane;
 
 public class RootView extends StackPane {

@@ -1,5 +1,6 @@
 package faerite;
 
+import faerite.model.*;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 

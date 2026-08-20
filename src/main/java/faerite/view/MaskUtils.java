@@ -1,4 +1,4 @@
-package faerite;
+package faerite.view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
