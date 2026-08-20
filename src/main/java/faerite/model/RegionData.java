@@ -1,6 +1,3 @@
 package faerite.model;
 
-public record RegionData(
-        String name,
-        RegionType type
-        ) {}
+public record RegionData(String name, RegionType type) {}

@@ -1,17 +1,25 @@
 package faerite;
 
-import faerite.model.*;
-import javafx.beans.property.*;
+import faerite.model.MapDataLoader;
+import faerite.model.MapModel;
+import faerite.model.RegionData;
+import faerite.model.RegionSelectionModel;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 
-import java.util.*;
-
 public class MapViewModel {
-    private final Map<Integer, RegionModel> regionMaskMap = new HashMap<>();
+
+    private final Map<Integer, RegionSelectionModel> regionMaskMap = new HashMap<>();
 
     private final ReadOnlyObjectWrapper<MapModel> currentMap = new ReadOnlyObjectWrapper<>();
-    private final ReadOnlyObjectWrapper<RegionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
-    private final ReadOnlyObjectWrapper<RegionModel> selectedRegion = new ReadOnlyObjectWrapper<>();
+    private final ReadOnlyObjectWrapper<RegionSelectionModel> hoveredRegion = new ReadOnlyObjectWrapper<>();
+    private final ReadOnlyObjectWrapper<RegionSelectionModel> selectedRegion = new ReadOnlyObjectWrapper<>();
     private final ObjectProperty<RegionData> currentRegionData = new SimpleObjectProperty<>();
 
     private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
@@ -29,7 +37,7 @@ public class MapViewModel {
     }
 
     public void updateHoveredRegion(int color) {
-        RegionModel region = regionMaskMap.get(color);
+        RegionSelectionModel region = regionMaskMap.get(color);
 
         if (!Objects.equals(hoveredRegion.get(), region)) {
             hoveredRegion.set(region);
@@ -37,7 +45,7 @@ public class MapViewModel {
     }
 
     public void updateSelectedRegion() {
-        RegionModel currentHover = hoveredRegion.get();
+        RegionSelectionModel currentHover = hoveredRegion.get();
 
         if (!Objects.equals(selectedRegion.get(), currentHover)) {
             selectedRegion.set(currentHover);
@@ -45,7 +53,7 @@ public class MapViewModel {
             if (currentHover != null) {
                 currentRegionData.set(currentHover.regionData());
             } else {
-                currentRegionData.set(currentMap.get().mapRegionData());
+                currentRegionData.set(currentMap.get().regionData());
             }
         }
     }
@@ -54,32 +62,68 @@ public class MapViewModel {
         regionMaskMap.clear();
         if (map == null) return;
 
-        for (RegionModel region : map.regions()) {
+        for (RegionSelectionModel region : map.regions()) {
             regionMaskMap.put(region.maskColor(), region);
         }
     }
 
-    public ReadOnlyObjectProperty<MapModel> getCurrentMapProperty() { return currentMap.getReadOnlyProperty(); }
-    public MapModel getCurrentMap() { return currentMap.get(); }
+    public ReadOnlyObjectProperty<MapModel> getCurrentMapProperty() {
+        return currentMap.getReadOnlyProperty();
+    }
 
-    public ReadOnlyObjectProperty<RegionModel> getHoveredRegionProperty() { return hoveredRegion.getReadOnlyProperty(); }
-    public RegionModel getHoveredRegion() { return hoveredRegion.get(); }
+    public MapModel getCurrentMap() {
+        return currentMap.get();
+    }
 
+    public ReadOnlyObjectProperty<RegionSelectionModel> getHoveredRegionProperty() {
+        return hoveredRegion.getReadOnlyProperty();
+    }
 
-    public ReadOnlyObjectProperty<RegionModel> getSelectedRegionProperty() { return selectedRegion.getReadOnlyProperty(); }
-    public RegionModel getSelectedRegion() { return selectedRegion.get(); }
+    public RegionSelectionModel getHoveredRegion() {
+        return hoveredRegion.get();
+    }
 
-    public ObjectProperty<Color> getOceanColorProperty() { return oceanColor; }
-    public Color getOceanColor() { return oceanColor.get(); }
+    public ReadOnlyObjectProperty<RegionSelectionModel> getSelectedRegionProperty() {
+        return selectedRegion.getReadOnlyProperty();
+    }
 
-    public ObjectProperty<Color> getHoveredBorderColorProperty() { return hoveredBorderColor; }
-    public Color getHoveredBorderColor() { return hoveredBorderColor.get(); }
+    public RegionSelectionModel getSelectedRegion() {
+        return selectedRegion.get();
+    }
 
-    public ObjectProperty<Color> getSelectedBorderColorProperty() { return selectedBorderColor; }
-    public Color getSelectedBorderColor() { return selectedBorderColor.get(); }
+    public ObjectProperty<Color> getOceanColorProperty() {
+        return oceanColor;
+    }
 
-    public ObjectProperty<RegionData> getCurrentRegionDataProperty() { return currentRegionData; }
-    public RegionData getCurrentRegionData() { return currentRegionData.get(); }
+    public Color getOceanColor() {
+        return oceanColor.get();
+    }
 
-    public Map<Integer, RegionModel> getRegionMaskMap() { return regionMaskMap; }
+    public ObjectProperty<Color> getHoveredBorderColorProperty() {
+        return hoveredBorderColor;
+    }
+
+    public Color getHoveredBorderColor() {
+        return hoveredBorderColor.get();
+    }
+
+    public ObjectProperty<Color> getSelectedBorderColorProperty() {
+        return selectedBorderColor;
+    }
+
+    public Color getSelectedBorderColor() {
+        return selectedBorderColor.get();
+    }
+
+    public ObjectProperty<RegionData> getCurrentRegionDataProperty() {
+        return currentRegionData;
+    }
+
+    public RegionData getCurrentRegionData() {
+        return currentRegionData.get();
+    }
+
+    public Map<Integer, RegionSelectionModel> getRegionMaskMap() {
+        return regionMaskMap;
+    }
 }

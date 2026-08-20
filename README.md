@@ -11,10 +11,13 @@ An interactive, hand-drawn pixel art atlas.
 
 ## Installation
 #### v0.0.5+
-Faerite can be downloaded and ran straight from the releases tab. Simply extract the downloaded zip for the corresponding operating system.
+Faerite can be downloaded straight from the releases tab. Simply extract the downloaded zip for the corresponding operating system.
+You will find the executable inside (or in the /bin folder on linux).
 
-Faerite can also be installed via the terminal which some may find more convenient:  
-Replace the LATEST variable used in all of the commands with the latest version number e.g. 0.0.5.
+Faerite can also be downloaded and ran directly from the terminal which some may find more convenient.
+> [!IMPORTANT]
+> Replace the LATEST `x.x.x` variable used in all of the commands with the latest version number e.g. `0.0.5`.
+
 
 ##### On Linux
 ```bash
@@ -29,8 +32,10 @@ $LATEST="x.x.x"; Invoke-WebRequest -Uri "https://github.com/r5ne/faerite/release
 Using Command Prompt:
 
 
+> [!NOTE]
+> Since variables cannot be set and used in the same line you must first set the LATEST variable in a separate line.
+
 ```cmd
-:: Since variables cannot be set and used in the same line you must first set the LATEST variable in a separate line.
 set LATEST=x.x.x
 curl -LO "https://github.com/r5ne/faerite/releases/download/v%LATEST%/faerite-%LATEST%-windows.zip" && tar -xf "faerite-%LATEST%-windows.zip" && .\Faerite\Faerite.exe
 ```
@@ -38,7 +43,7 @@ curl -LO "https://github.com/r5ne/faerite/releases/download/v%LATEST%/faerite-%L
 #### v0.0.1 - v0.0.4:  
 ```bash
 # Using Java 25+.
-# Note that v0.0.1 - v0.0.3 are only compiled for Linux.
+# Note that v0.0.1 - v0.0.3 are only compiled for Linux as indicated by the filename.
 java -jar faerite-[version number].jar
 ```
   
@@ -49,29 +54,30 @@ Requirements:
 - Apache Maven 3.9.16+
 - Git v1.8.2+
 - Git LFS v3.7.1+
+
+Faerite can be downloaded, compiled and ran all from the terminal using the following commands.  
+
+> [!IMPORTANT]
+> Replace the LATEST `x.x.x` variable used in all of the commands with the latest version number e.g. `0.0.5`.
+
+##### On Linux
 ```bash
-# From the project root:
-mvn clean compile javafx:jlink
-# The out/Faerite directory will contain the compiled binaries.
-jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out
+VERSION="x.x.x" && git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite && cd faerite && mvn clean compile javafx:jlink && jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out && out/Faerite/bin/Faerite
 ```
 
-#### CLI one-liners
-Replace the LATEST variable used in all of the commands with the latest version number e.g. 0.0.5.
 ##### On Windows
 Using Powershell:
 ```powershell
 $LATEST="x.x.x"; git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite; cd faerite; mvn clean compile javafx:jlink; jpackage --type app-image --runtime-image target\image --name Faerite --module faerite\faerite.Main --dest out; .\Faerite\Faerite.exe
 ```
 Using Command Prompt:
+> [!NOTE]
+> Since variables cannot be set and used in the same line you must first set the LATEST variable in a separate line.
 ```cmd
-:: Since variables cannot be set and used in the same line you must first set the LATEST variable in a separate line.
 set LATEST=x.x.x
-git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite && cd faerite && mvn clean compile javafx:jlink && jpackage --type app-image --runtime-image target\image --name Faerite --module faerite\faerite.Main --dest out && out\Faerite\Faerite.exe
 ```
-##### On Linux
-```bash
-VERSION="x.x.x" && git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite && cd faerite && mvn clean compile javafx:jlink && jpackage --type app-image --runtime-image target/image --name Faerite --module faerite/faerite.Main --dest out && out/Faerite/bin/Faerite
+```cmd
+git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite && cd faerite && mvn clean compile javafx:jlink && jpackage --type app-image --runtime-image target\image --name Faerite --module faerite\faerite.Main --dest out && out\Faerite\Faerite.exe
 ```
 ## Licence
 Faerite is licenced under the [MIT Licence](https://github.com/r5ne/faerite/blob/master/LICENCE).

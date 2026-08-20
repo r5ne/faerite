@@ -1,0 +1,10 @@
+{
+  "fileName" : "isle-of-man",
+  "width" : 500,
+  "height" : 500,
+  "regionData" : {
+    "name" : "Isle of Man",
+    "type" : "ISLAND"
+  },
+  "regions" : [ ]
+}

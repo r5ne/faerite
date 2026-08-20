@@ -2,7 +2,9 @@ package faerite.view;
 
 import faerite.MapViewModel;
 import faerite.model.MapModel;
-import faerite.model.RegionModel;
+import faerite.model.RegionSelectionModel;
+import java.io.InputStream;
+import java.util.Map;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -16,10 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
-import java.io.InputStream;
-import java.util.Map;
-
 public class MapView extends Pane {
+
     private static final int PADDING = 40;
     private static final int BORDER_SIZE = 2;
 
@@ -44,8 +44,8 @@ public class MapView extends Pane {
         getChildren().add(mapImageView);
 
         // ensure canvas size accounts for borders being added to the map
-        double canvasWidth = viewModel.getCurrentMap().width() + (BORDER_SIZE * 2);
-        double canvasHeight = viewModel.getCurrentMap().height() + (BORDER_SIZE * 2);
+        double canvasWidth = viewModel.getCurrentMap().width() + BORDER_SIZE * 2;
+        double canvasHeight = viewModel.getCurrentMap().height() + BORDER_SIZE * 2;
         hoveredMapBorderCanvas = new Canvas(canvasWidth, canvasHeight);
         // re-align canvas with map image
         hoveredMapBorderCanvas.setLayoutX(-BORDER_SIZE);
@@ -69,14 +69,13 @@ public class MapView extends Pane {
 
     private void createBindings() {
         // Keep the background synced with the oceanColor.
-        backgroundProperty().bind(Bindings.createObjectBinding(() ->
-                        new Background(new BackgroundFill(
-                                viewModel.getOceanColorProperty().get(),
-                                CornerRadii.EMPTY,
-                                Insets.EMPTY
-                        )),
-                viewModel.getOceanColorProperty()
-        ));
+        backgroundProperty().bind(
+            Bindings.createObjectBinding(() -> {
+                Color oceanColor = viewModel.getOceanColorProperty().get();
+                BackgroundFill bgFill = new BackgroundFill(oceanColor, CornerRadii.EMPTY, Insets.EMPTY);
+                return new Background(bgFill);
+            }, viewModel.getOceanColorProperty())
+        );
     }
 
     private void createListeners() {
@@ -88,15 +87,16 @@ public class MapView extends Pane {
         });
 
         viewModel.getHoveredRegionProperty().addListener((_, _, newRegion) -> {
-            if (viewModel.getHoveredRegion() != viewModel.getSelectedRegion()) {
+            if (viewModel.getHoveredRegion() != viewModel.getSelectedRegion() || viewModel.getHoveredRegion() == null) {
                 updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor());
             }
-        }
-        );
+        });
 
-        viewModel.getSelectedRegionProperty().addListener((_, _, newRegion) ->
+        viewModel
+            .getSelectedRegionProperty()
+            .addListener((_, _, newRegion) ->
                 updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor())
-        );
+            );
     }
 
     private void createEvents() {
@@ -109,7 +109,12 @@ public class MapView extends Pane {
             int pixelY = (int) Math.floor(point.getY());
 
             // Out of bounds check.
-            if (pixelX >= 0 && pixelX < hitboxMaskImage.getWidth() && pixelY >= 0 && pixelY < hitboxMaskImage.getHeight()) {
+            if (
+                pixelX >= 0 &&
+                pixelX < hitboxMaskImage.getWidth() &&
+                pixelY >= 0 &&
+                pixelY < hitboxMaskImage.getHeight()
+            ) {
                 int color = hitboxMaskImage.getPixelReader().getArgb(pixelX, pixelY);
                 viewModel.updateHoveredRegion(color);
             } else {
@@ -154,7 +159,7 @@ public class MapView extends Pane {
         borderCache = MaskUtils.createBorderMasks(borderMaskImage, viewModel.getRegionMaskMap().keySet(), 2);
     }
 
-    private void updateMapBorder(RegionModel region, Canvas canvas, Color borderColor) {
+    private void updateMapBorder(RegionSelectionModel region, Canvas canvas, Color borderColor) {
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         if (region == null || borderCache == null) return;
@@ -164,8 +169,8 @@ public class MapView extends Pane {
 
         PixelWriter writer = canvas.getGraphicsContext2D().getPixelWriter();
 
-        int paddedWidth = (int) borderMaskImage.getWidth() + (BORDER_SIZE * 2);
-        int paddedHeight = (int) borderMaskImage.getHeight() + (BORDER_SIZE * 2);
+        int paddedWidth = (int) borderMaskImage.getWidth() + BORDER_SIZE * 2;
+        int paddedHeight = (int) borderMaskImage.getHeight() + BORDER_SIZE * 2;
 
         for (int y = 0; y < paddedHeight; y++) {
             for (int x = 0; x < paddedWidth; x++) {
