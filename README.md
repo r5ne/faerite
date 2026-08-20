@@ -75,6 +75,8 @@ Using Command Prompt:
 > Since variables cannot be set and used in the same line you must first set the LATEST variable in a separate line.
 ```cmd
 set LATEST=x.x.x
+```
+```cmd
 git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite && cd faerite && mvn clean compile javafx:jlink && jpackage --type app-image --runtime-image target\image --name Faerite --module faerite\faerite.Main --dest out && out\Faerite\Faerite.exe
 ```
 ## Licence
