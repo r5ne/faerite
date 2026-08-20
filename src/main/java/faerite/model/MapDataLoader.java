@@ -13,15 +13,6 @@ public final class MapDataLoader {
 
     private MapDataLoader() {}
 
-    public static void writeMapModel(MapModel mapModel) {
-        Path filePath = Path.of("src/main/resources/mapdata/" + MAP_MODEL_FILE_NAME);
-        try (var writer = Files.newBufferedWriter(filePath)) {
-            objectMapper.writeValue(filePath.toFile(), mapModel);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static MapModel loadMapModel() {
         Path filePath = Path.of("src/main/resources/mapdata/" + MAP_MODEL_FILE_NAME);
         try (var reader = Files.newBufferedReader(filePath)) {
