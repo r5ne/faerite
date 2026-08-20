@@ -1,5 +1,8 @@
 # Faerite
 <p>
+  <a href="https://github.com/r5ne/faerite/releases/latest">
+  <img src="https://img.shields.io/github/v/release/r5ne/faerite?style=flat-square"
+    alt="GitHub Actions workflow status"/></a>
   <a href="https://github.com/r5ne/faerite/actions">
     <img src="https://img.shields.io/github/actions/workflow/status/r5ne/faerite/release.yml?event=push&label=workflow&style=flat-square"
       alt="GitHub Actions workflow status"/></a>
