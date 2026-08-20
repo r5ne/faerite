@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class StatsView extends VBox {
+
     private final MapViewModel viewModel;
 
     private final Label titleLabel = new Label();
@@ -18,7 +19,7 @@ public class StatsView extends VBox {
         typeLabel.getStyleClass().add("body-text");
 
         viewModel.getCurrentRegionDataProperty().addListener((_, _, newData) -> updateLabels(newData));
-        updateLabels(viewModel.getCurrentMap().mapRegionData());
+        updateLabels(viewModel.getCurrentMap().regionData());
 
         getChildren().addAll(titleLabel, typeLabel);
     }

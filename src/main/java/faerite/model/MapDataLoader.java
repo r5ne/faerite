@@ -1,12 +1,13 @@
 package faerite.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public final class MapDataLoader {
+
     private static final String MAP_MODEL_FILE_NAME = "british-isles.json";
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

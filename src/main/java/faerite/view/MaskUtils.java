@@ -1,13 +1,13 @@
 package faerite.view;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 
 public final class MaskUtils {
+
     private MaskUtils() {}
 
     public static Map<Integer, boolean[]> createBorderMasks(Image maskImage, Set<Integer> maskColors, int borderSize) {
@@ -33,7 +33,7 @@ public final class MaskUtils {
         for (int y = 0; y < maskHeight; y++) {
             for (int x = 0; x < maskWidth; x++) {
                 int pixelColor = reader.getArgb(x, y);
-                mask[y * maskWidth + x] = (pixelColor == color);
+                mask[y * maskWidth + x] = pixelColor == color;
             }
         }
         return mask;
@@ -41,8 +41,8 @@ public final class MaskUtils {
 
     private static boolean[] generateBorderMask(boolean[] mask, int maskWidth, int maskHeight, int borderSize) {
         // Make the generated border mask larger to allow borders to spill out of the original mask.
-        int paddedWidth = maskWidth + (borderSize * 2);
-        int paddedHeight = maskHeight + (borderSize * 2);
+        int paddedWidth = maskWidth + borderSize * 2;
+        int paddedHeight = maskHeight + borderSize * 2;
         boolean[] borderMask = new boolean[paddedWidth * paddedHeight];
 
         for (int y = 0; y < maskHeight; y++) {
@@ -56,8 +56,11 @@ public final class MaskUtils {
                             int originalMaskX = x + dx;
                             int originalMaskY = y + dy;
 
-                            boolean isOutOfBounds = originalMaskX < 0 || originalMaskX >= maskWidth
-                                    || originalMaskY < 0 || originalMaskY >= maskHeight;
+                            boolean isOutOfBounds =
+                                originalMaskX < 0 ||
+                                originalMaskX >= maskWidth ||
+                                originalMaskY < 0 ||
+                                originalMaskY >= maskHeight;
 
                             if (isOutOfBounds || !mask[originalMaskY * maskWidth + originalMaskX]) {
                                 borderMask[(paddedY + dy) * paddedWidth + paddedX + dx] = true;

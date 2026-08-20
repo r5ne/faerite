@@ -8,6 +8,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Faerite extends Application {
+
     @Override
     public void start(Stage stage) {
         MapViewModel viewModel = new MapViewModel();
@@ -17,7 +18,7 @@ public class Faerite extends Application {
 
         // Ignored on non-strict compositors where the setMaximised call ensures the window is as big as the monitor.
         // On strict compositors ensures the window gets treated as non-maximised, and is forced to the screen size.
-        Scene scene = new Scene(root, screenRect.getWidth()/2, screenRect.getHeight()/2);
+        Scene scene = new Scene(root, screenRect.getWidth() / 2, screenRect.getHeight() / 2);
         String cssPath = getClass().getResource("/stylesheet.css").toExternalForm();
         scene.getStylesheets().add(cssPath);
         stage.setScene(scene);

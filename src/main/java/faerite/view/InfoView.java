@@ -7,6 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class InfoView extends AnchorPane {
+
     private static final double PADDING = 40.0;
     private static final int INFO_CARD_MIN_WIDTH = 300;
     private static final int INFO_CARD_MAX_WIDTH = 1000;

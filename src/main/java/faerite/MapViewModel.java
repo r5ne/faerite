@@ -13,8 +13,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 
-import java.util.*;
-
 public class MapViewModel {
 
     private final Map<Integer, RegionSelectionModel> regionMaskMap = new HashMap<>();
@@ -93,21 +91,29 @@ public class MapViewModel {
         return selectedRegion.get();
     }
 
+    public ObjectProperty<Color> getOceanColorProperty() {
+        return oceanColor;
+    }
 
-    public ReadOnlyObjectProperty<RegionModel> getSelectedRegionProperty() { return selectedRegion.getReadOnlyProperty(); }
-    public RegionModel getSelectedRegion() { return selectedRegion.get(); }
+    public Color getOceanColor() {
+        return oceanColor.get();
+    }
 
-    public ObjectProperty<Color> getOceanColorProperty() { return oceanColor; }
-    public Color getOceanColor() { return oceanColor.get(); }
+    public ObjectProperty<Color> getHoveredBorderColorProperty() {
+        return hoveredBorderColor;
+    }
 
-    public ObjectProperty<Color> getHoveredBorderColorProperty() { return hoveredBorderColor; }
-    public Color getHoveredBorderColor() { return hoveredBorderColor.get(); }
+    public Color getHoveredBorderColor() {
+        return hoveredBorderColor.get();
+    }
 
-    public ObjectProperty<Color> getSelectedBorderColorProperty() { return selectedBorderColor; }
-    public Color getSelectedBorderColor() { return selectedBorderColor.get(); }
+    public ObjectProperty<Color> getSelectedBorderColorProperty() {
+        return selectedBorderColor;
+    }
 
-    public ObjectProperty<RegionData> getCurrentRegionDataProperty() { return currentRegionData; }
-    public RegionData getCurrentRegionData() { return currentRegionData.get(); }
+    public Color getSelectedBorderColor() {
+        return selectedBorderColor.get();
+    }
 
     public ObjectProperty<RegionData> getCurrentRegionDataProperty() {
         return currentRegionData;

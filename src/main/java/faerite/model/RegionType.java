@@ -1,7 +1,8 @@
 package faerite.model;
 
 public enum RegionType {
-    ARCHIPELAGO("Archipelago"), ISLAND("Island");
+    ARCHIPELAGO("Archipelago"),
+    ISLAND("Island");
 
     private final String displayName;
 
