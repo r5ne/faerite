@@ -1,5 +1,6 @@
-package faerite;
+package faerite.view;
 
+import faerite.MapViewModel;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;

@@ -1,4 +1,4 @@
-package faerite;
+package faerite.model;
 
 public enum RegionType {
     ARCHIPELAGO,

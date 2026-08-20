@@ -1,5 +1,6 @@
 package faerite;
 
+import faerite.model.*;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 
@@ -22,16 +23,7 @@ public class MapViewModel {
 
         currentMap.addListener((_, _, newMap) -> updateRegionMaskMap(newMap));
 
-        RegionData britishIslesData = new RegionData("British Isles", RegionType.ARCHIPELAGO);
-        MapModel britishIsles = new MapModel("british-isles", 724, 1204, britishIslesData, new HashSet<>());
-
-        RegionData greatBritainData = new RegionData("Great Britain", RegionType.ISLAND);
-        RegionModel greatBritain = new RegionModel(greatBritainData, 0xFF000000, new HashSet<>());
-
-        RegionData irelandData = new RegionData("Ireland", RegionType.ISLAND);
-        RegionModel ireland = new RegionModel(irelandData, 0xFFFFFFFF, new HashSet<>());
-
-        britishIsles.regions().addAll(Set.of(greatBritain, ireland));
+        MapModel britishIsles = MapDataLoader.loadMapModel();
 
         currentMap.set(britishIsles);
     }
