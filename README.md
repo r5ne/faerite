@@ -13,7 +13,7 @@ An interactive, hand-drawn pixel art atlas.
 #### v0.0.5+
 Faerite can be downloaded and ran straight from the releases tab. Simply extract the downloaded zip for the corresponding operating system.
 
-Faerite can also be installed via the terminal which some may find more convenient:  
+Faerite can also be installed and ran via the terminal which some may find more convenient:  
 Replace the LATEST variable used in all of the commands with the latest version number e.g. 0.0.5.
 
 ##### On Linux
