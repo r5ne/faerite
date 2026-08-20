@@ -2,7 +2,9 @@ package faerite.view;
 
 import faerite.MapViewModel;
 import faerite.model.MapModel;
-import faerite.model.RegionModel;
+import faerite.model.RegionSelectionModel;
+import java.io.InputStream;
+import java.util.Map;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -154,7 +156,7 @@ public class MapView extends Pane {
         borderCache = MaskUtils.createBorderMasks(borderMaskImage, viewModel.getRegionMaskMap().keySet(), 2);
     }
 
-    private void updateMapBorder(RegionModel region, Canvas canvas, Color borderColor) {
+    private void updateMapBorder(RegionSelectionModel region, Canvas canvas, Color borderColor) {
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         if (region == null || borderCache == null) return;
