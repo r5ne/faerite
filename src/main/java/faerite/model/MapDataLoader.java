@@ -25,6 +25,8 @@ public final class MapDataLoader {
         Path filePath = Path.of("src/main/resources/mapdata/" + MAP_MODEL_FILE_NAME);
         try (var reader = Files.newBufferedReader(filePath)) {
             return objectMapper.readValue(reader, MapModel.class);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Config file not found at:" + filePath.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
