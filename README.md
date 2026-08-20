@@ -13,15 +13,30 @@ An interactive, hand-drawn pixel art atlas.
 #### v0.0.5+
 Faerite can be downloaded and ran straight from the releases tab. Simply extract the downloaded zip for the corresponding operating system.
 
-Quick install on linux:
+Faerite can also be installed via the terminal which some may find more convenient:
+
+##### Linux
+Replace the LATEST variable with the latest version number e.g. 0.0.5.
 ```bash
-# Replace with latest version number e.g. 0.0.5.
-LATEST=x.x.x
+LATEST="x.x.x" && wget -N "https://github.com/r5ne/faerite/releases/download/v$LATEST/faerite-$LATEST-linux.zip" && unzip -o "faerite-$LATEST-linux.zip" && ./Faerite/bin/Faerite
 ```
-```bash
-wget -N "https://github.com/r5ne/faerite/releases/download/v$LATEST/faerite-$LATEST-linux.zip"
-unzip "faerite-$LATEST-linux.zip"
-./Faerite/bin/Faerite
+##### Windows
+Using Powershell:
+
+Replace the LATEST variable with the latest version number e.g. 0.0.5.
+```powershell
+$LATEST="x.x.x"; Invoke-WebRequest -Uri "https://github.com/r5ne/faerite/releases/download/v$LATEST/faerite-$LATEST-windows.zip" -OutFile "faerite-$LATEST-windows.zip"; Expand-Archive -Path "faerite-$LATEST-windows.zip" -DestinationPath "." -Force; .\Faerite\Faerite.exe
+```
+Using Command Prompt:
+
+Since variables cannot be set and used in the same line you must first set the LATEST variable in a separate line.  
+Replace the LATEST variable with the latest version number e.g. 0.0.5.
+
+```
+set LATEST=x.x.x
+```
+```
+curl -LO "https://github.com/r5ne/faerite/releases/download/v%LATEST%/faerite-%LATEST%-windows.zip" && tar -xf "faerite-%LATEST%-windows.zip" && .\Faerite\Faerite.exe
 ```
 
 #### v0.0.1 - v0.0.4:  
