@@ -33,9 +33,9 @@ java -jar faerite-[version number].jar
   
 ## Compiling from source
 Requirements:
+- Faerite v0.0.5+
 - openjdk 25.0.4+
 - Apache Maven 3.9.16+
-- Faerite v0.0.5+
 - Git v1.8.2+
 - Git LFS v3.7.1+
 ```bash
@@ -46,7 +46,6 @@ jpackage --type app-image --runtime-image target/image --name Faerite --module f
 
 Quick compile on linux:
 ```
-```bash
 # Replace with latest version number e.g. 0.0.5.
 VERSION=x.x.x
 ```
