@@ -26,7 +26,7 @@ public class StatsView extends VBox {
     private void updateLabels(RegionData data) {
         if (data != null) {
             titleLabel.setText(data.name());
-            typeLabel.setText(String.format("Type: %s", data.type()));
+            typeLabel.setText(String.format("Type: %s", data.type().getDisplayName()));
         }
     }
 }
