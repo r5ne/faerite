@@ -1,8 +1,14 @@
+.kotlin
+*.iws
+*.iml
+*.ipr
+
+### Maven ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.kotlin
+src/main/resources/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -10,12 +16,13 @@ target/
 .idea/jsonCatalog.xml
 .idea/compiler.xml
 .idea/libraries/
-*.iws
-*.iml
-*.ipr
 /.idea/encodings.xml
 /.idea/runConfigurations/faerite.xml
 .idea/codeStyles/*
-src/main/resources/
 /.idea/misc.xml
 /.idea/vcs.xml
+
+### Node ###
+/node_modules/
+/package.json
+/package-lock.json
