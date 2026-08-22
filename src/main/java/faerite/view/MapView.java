@@ -1,5 +1,6 @@
 package faerite.view;
 
+import faerite.model.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
 import faerite.viewmodel.AtlasViewModel;
@@ -65,6 +66,7 @@ public class MapView extends Pane {
 
         updateActiveMap(null, viewModel.getActiveLayer());
 
+        getChildren().addAll(hoveredMapBorderCanvas, selectedMapBorderCanvas);
         createEvents();
     }
 
@@ -112,11 +114,15 @@ public class MapView extends Pane {
                 return;
             }
 
+            MapViewModel currentLayer = viewModel.getActiveLayer();
+
             if (event.getClickCount() == 1) {
-                viewModel.getActiveLayer().updateSelectedRegion();
+                currentLayer.updateSelectedRegion();
             } else if (event.getClickCount() > 1) {
-                if (viewModel.getActiveLayer().getHoveredRegion().subMapFileName() != null) {
-                    System.out.println("submap switch");
+                RegionSelectionModel currentHoveredRegion = currentLayer.getHoveredRegion();
+                if (currentHoveredRegion != null && currentHoveredRegion.subMapFileName() != null) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                    viewModel.zoomIn(newMap);
                 }
             }
         });
@@ -160,8 +166,6 @@ public class MapView extends Pane {
 
         newLayer.getHoveredRegionProperty().addListener(hoveredRegionListener);
         newLayer.getSelectedRegionProperty().addListener(selectedRegionListener);
-
-        getChildren().addAll(hoveredMapBorderCanvas, selectedMapBorderCanvas);
 
         requestLayout();
     }
