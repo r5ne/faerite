@@ -1,14 +1,16 @@
 package faerite.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collections;
 import java.util.Set;
 
 public record MapModel(
-    String fileName,
+    String name,
     int width,
     int height,
     RegionData regionData,
-    Set<RegionSelectionModel> regions
+    @Nullable Set<RegionSelectionModel> regions
 ) implements RegionModel {
     public MapModel {
         if (regions == null) {
@@ -16,11 +18,15 @@ public record MapModel(
         }
     }
 
+    public String imageFileName() {
+        return name + ".png";
+    }
+
     public String borderMaskFileName() {
-        return fileName + "-bordermask";
+        return name + "-bordermask.png";
     }
 
     public String hitboxMaskFileName() {
-        return fileName + "-hitboxmask";
+        return name + "-hitboxmask.png";
     }
 }
