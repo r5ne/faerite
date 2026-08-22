@@ -50,7 +50,7 @@ public class AtlasViewModel {
 
             RegionSelectionModel oldSelectedRegion = oldMap.getSelectedRegion();
             if (oldSelectedRegion != null && oldSelectedRegion.parentMapMaskColor() != null) {
-                newMap.updateSelectedRegion();
+                newMap.setSelectedRegionByColor(oldSelectedRegion.parentMapMaskColor());
             }
         }
     }
