@@ -1,25 +1,26 @@
 package faerite.view;
 
-import faerite.MapViewModel;
+import faerite.viewmodel.AtlasViewModel;
 import faerite.model.RegionData;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class StatsView extends VBox {
 
-    private final MapViewModel viewModel;
+    private final AtlasViewModel viewModel;
 
     private final Label titleLabel = new Label();
     private final Label typeLabel = new Label();
 
-    public StatsView(MapViewModel viewModel) {
+    public StatsView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
         titleLabel.getStyleClass().add("h1");
         typeLabel.getStyleClass().add("body-text");
 
-        viewModel.getCurrentRegionDataProperty().addListener((_, _, newData) -> updateLabels(newData));
-        updateLabels(viewModel.getCurrentMap().regionData());
+        // temporary
+        // viewModel.getCurrentRegionDataProperty().addListener((_, _, newData) -> updateLabels(newData));
+        // updateLabels(viewModel.getCurrentMap().regionData());
 
         getChildren().addAll(titleLabel, typeLabel);
     }

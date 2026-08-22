@@ -1,6 +1,6 @@
 package faerite.view;
 
-import faerite.MapViewModel;
+import faerite.viewmodel.AtlasViewModel;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
@@ -12,9 +12,9 @@ public class InfoView extends AnchorPane {
     private static final int INFO_CARD_MIN_WIDTH = 300;
     private static final int INFO_CARD_MAX_WIDTH = 1000;
 
-    MapViewModel viewModel;
+    AtlasViewModel viewModel;
 
-    public InfoView(MapViewModel viewModel) {
+    public InfoView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
         // pass events to the pane behind if not directly over this pane's components

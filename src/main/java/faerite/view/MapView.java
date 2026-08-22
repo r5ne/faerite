@@ -1,11 +1,12 @@
 package faerite.view;
 
-import faerite.MapViewModel;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
-import java.io.InputStream;
+import faerite.viewmodel.AtlasViewModel;
+import faerite.viewmodel.MapViewModel;
 import java.util.Map;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -23,10 +24,10 @@ public class MapView extends Pane {
     private static final int PADDING = 40;
     private static final int BORDER_SIZE = 2;
 
-    private final MapViewModel viewModel;
+    private final AtlasViewModel viewModel;
     private final ImageView mapImageView = new ImageView();
-    private final Canvas hoveredMapBorderCanvas;
-    private final Canvas selectedMapBorderCanvas;
+    private final Canvas hoveredMapBorderCanvas = new Canvas();
+    private final Canvas selectedMapBorderCanvas = new Canvas();
 
     private final Scale mapScale = new Scale();
     private final Translate mapTranslate = new Translate();
@@ -35,7 +36,10 @@ public class MapView extends Pane {
     private Image borderMaskImage;
     private Map<Integer, boolean[]> borderCache;
 
-    public MapView(MapViewModel viewModel) {
+    private ChangeListener<RegionSelectionModel> hoveredRegionListener;
+    private ChangeListener<RegionSelectionModel> selectedRegionListener;
+
+    public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
         // nearest-neighbour interp for pixel art
@@ -43,60 +47,36 @@ public class MapView extends Pane {
         mapImageView.getTransforms().addAll(mapScale, mapTranslate);
         getChildren().add(mapImageView);
 
-        // ensure canvas size accounts for borders being added to the map
-        double canvasWidth = viewModel.getCurrentMap().width() + BORDER_SIZE * 2;
-        double canvasHeight = viewModel.getCurrentMap().height() + BORDER_SIZE * 2;
-        hoveredMapBorderCanvas = new Canvas(canvasWidth, canvasHeight);
         // re-align canvas with map image
         hoveredMapBorderCanvas.setLayoutX(-BORDER_SIZE);
         hoveredMapBorderCanvas.setLayoutY(-BORDER_SIZE);
         hoveredMapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
 
-        selectedMapBorderCanvas = new Canvas(canvasWidth, canvasHeight);
         // re-align canvas with map image
         selectedMapBorderCanvas.setLayoutX(-BORDER_SIZE);
         selectedMapBorderCanvas.setLayoutY(-BORDER_SIZE);
         selectedMapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
 
-        getChildren().addAll(hoveredMapBorderCanvas, selectedMapBorderCanvas);
-
         createBindings();
-        createListeners();
-        createEvents();
 
-        updateMapData(viewModel.getCurrentMap());
+        viewModel.activeLayerProperty().addListener((_, oldLayer, newLayer) -> {
+            updateActiveMap(oldLayer, newLayer);
+        });
+
+        updateActiveMap(null, viewModel.getActiveLayer());
+
+        createEvents();
     }
 
     private void createBindings() {
         // Keep the background synced with the oceanColor.
         backgroundProperty().bind(
             Bindings.createObjectBinding(() -> {
-                Color oceanColor = viewModel.getOceanColorProperty().get();
+                Color oceanColor = viewModel.getOceanColor();
                 BackgroundFill bgFill = new BackgroundFill(oceanColor, CornerRadii.EMPTY, Insets.EMPTY);
                 return new Background(bgFill);
-            }, viewModel.getOceanColorProperty())
+            }, viewModel.oceanColorProperty())
         );
-    }
-
-    private void createListeners() {
-        // Update the map, border and hitbox masks when the currentMap changes.
-        viewModel.getCurrentMapProperty().addListener((_, _, newMap) -> {
-            if (newMap != null) {
-                updateMapData(newMap);
-            }
-        });
-
-        viewModel.getHoveredRegionProperty().addListener((_, _, newRegion) -> {
-            if (viewModel.getHoveredRegion() != viewModel.getSelectedRegion() || viewModel.getHoveredRegion() == null) {
-                updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor());
-            }
-        });
-
-        viewModel
-            .getSelectedRegionProperty()
-            .addListener((_, _, newRegion) ->
-                updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor())
-            );
     }
 
     private void createEvents() {
@@ -116,27 +96,86 @@ public class MapView extends Pane {
                 pixelY < hitboxMaskImage.getHeight()
             ) {
                 int color = hitboxMaskImage.getPixelReader().getArgb(pixelX, pixelY);
-                viewModel.updateHoveredRegion(color);
+                viewModel.getActiveLayer().updateHoveredRegion(color);
             } else {
-                viewModel.updateHoveredRegion(0);
+                viewModel.getActiveLayer().updateHoveredRegion(0);
             }
         });
 
         setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                viewModel.updateSelectedRegion();
+                viewModel.getActiveLayer().updateSelectedRegion();
             }
         });
+        setOnMouseClicked(event -> {
+            if (event.getButton() != MouseButton.PRIMARY) {
+                return;
+            }
+
+            if (event.getClickCount() == 1) {
+                viewModel.getActiveLayer().updateSelectedRegion();
+            } else if (event.getClickCount() > 1) {
+                if (viewModel.getActiveLayer().getHoveredRegion().subMapFileName() != null) {
+                    System.out.println("submap switch");
+                }
+            }
+        });
+    }
+
+    private void updateActiveMap(MapViewModel oldLayer, MapViewModel newLayer) {
+        if (newLayer == null) return;
+
+        if (oldLayer != null) {
+            oldLayer.getHoveredRegionProperty().removeListener(hoveredRegionListener);
+            oldLayer.getSelectedRegionProperty().removeListener(selectedRegionListener);
+        }
+
+        MapModel mapModel = newLayer.mapModel;
+        Image mapImage = MapAssetCache.getImage(mapModel.imageFileName());
+        borderMaskImage = MapAssetCache.getImage(mapModel.borderMaskFileName());
+        hitboxMaskImage = MapAssetCache.getImage(mapModel.hitboxMaskFileName());
+
+        borderCache = MapAssetCache.getMapBorders(mapModel, borderMaskImage);
+        mapImageView.setImage(mapImage);
+
+        // ensure canvas size accounts for borders being added to the map
+        double canvasWidth = mapModel.width() + BORDER_SIZE * 2;
+        double canvasHeight = mapModel.height() + BORDER_SIZE * 2;
+        hoveredMapBorderCanvas.setWidth(canvasWidth);
+        hoveredMapBorderCanvas.setHeight(canvasHeight);
+        selectedMapBorderCanvas.setWidth(canvasWidth);
+        selectedMapBorderCanvas.setHeight(canvasHeight);
+
+        hoveredMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, canvasWidth, canvasHeight);
+        selectedMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, canvasWidth, canvasHeight);
+
+        hoveredRegionListener = (_, _, newRegion) -> {
+            if (newLayer.getHoveredRegion() != newLayer.getSelectedRegion() || newLayer.getHoveredRegion() == null) {
+                updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor());
+            }
+        };
+        selectedRegionListener = (_, _, newRegion) -> {
+            updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor());
+        };
+
+        newLayer.getHoveredRegionProperty().addListener(hoveredRegionListener);
+        newLayer.getSelectedRegionProperty().addListener(selectedRegionListener);
+
+        getChildren().addAll(hoveredMapBorderCanvas, selectedMapBorderCanvas);
+
+        requestLayout();
     }
 
     @Override
     protected void layoutChildren() {
         super.layoutChildren();
 
-        if (viewModel.getCurrentMap() == null || getWidth() <= 0 || getHeight() <= 0) return;
+        MapModel currentMapModel = viewModel.getActiveLayer().mapModel;
 
-        int mapWidth = viewModel.getCurrentMap().width();
-        int mapHeight = viewModel.getCurrentMap().height();
+        if (currentMapModel == null || getWidth() <= 0 || getHeight() <= 0) return;
+
+        int mapWidth = currentMapModel.width();
+        int mapHeight = currentMapModel.height();
 
         double paddedPaneWidth = getWidth() - PADDING;
         double paddedPaneHeight = getHeight() - PADDING;
@@ -149,14 +188,6 @@ public class MapView extends Pane {
         double scaledHeight = mapHeight * newScale;
         mapTranslate.setX((getWidth() - scaledWidth) / 2);
         mapTranslate.setY((getHeight() - scaledHeight) / 2);
-    }
-
-    private void updateMapData(MapModel map) {
-        mapImageView.setImage(loadImage(map.fileName()));
-        borderMaskImage = loadImage(map.borderMaskFileName());
-        hitboxMaskImage = loadImage(map.hitboxMaskFileName());
-
-        borderCache = MaskUtils.createBorderMasks(borderMaskImage, viewModel.getRegionMaskMap().keySet(), 2);
     }
 
     private void updateMapBorder(RegionSelectionModel region, Canvas canvas, Color borderColor) {
@@ -179,15 +210,5 @@ public class MapView extends Pane {
                 }
             }
         }
-    }
-
-    private static Image loadImage(String fileName) {
-        String path = String.format("/mapdata/%s.png", fileName);
-        InputStream stream = MapView.class.getResourceAsStream(path);
-        if (stream == null) {
-            throw new IllegalArgumentException("No file exists at: " + path);
-        }
-
-        return new Image(stream);
     }
 }
