@@ -37,38 +37,38 @@ public class MapDataGenerator {
     private static void createMapModels() {
         var ireland = regionSelectionModelFactory("Ireland", RegionType.ISLAND, 0xffffffff, false, null, null);
         var greatBritain = regionSelectionModelFactory(
-                "Great Britain",
-                RegionType.ISLAND,
-                0xff000000,
-                false,
-                null,
-                null
+            "Great Britain",
+            RegionType.ISLAND,
+            0xff000000,
+            false,
+            null,
+            null
         );
         var isleOfManGroup = regionSelectionModelFactory(
-                "Isle of Man",
-                RegionType.ISLAND_GROUP,
-                0xffff0000,
-                true,
-                null,
-                null
+            "Isle of Man",
+            RegionType.ISLAND_GROUP,
+            0xffff0000,
+            true,
+            null,
+            null
         );
         mapModelFactory("British Isles", RegionType.ARCHIPELAGO, Set.of(greatBritain, ireland, isleOfManGroup));
 
         var isleOfMan = regionSelectionModelFactory(
-                "Isle of Man",
-                RegionType.ISLAND,
-                0xff000000,
-                false,
-                null,
-                0xffff0000
+            "Isle of Man",
+            RegionType.ISLAND,
+            0xff000000,
+            false,
+            null,
+            0xffff0000
         );
         var calfOfMan = regionSelectionModelFactory(
-                "Calf of Man",
-                RegionType.ISLAND,
-                0xffffffff,
-                false,
-                new Point(488, 771),
-                null
+            "Calf of Man",
+            RegionType.ISLAND,
+            0xffffffff,
+            false,
+            new Point(488, 771),
+            null
         );
         subMapModelFromRegion(isleOfManGroup, Set.of(isleOfMan, calfOfMan));
     }
@@ -95,7 +95,7 @@ public class MapDataGenerator {
         return new RegionSelectionModel(
             regionData,
             maskColor,
-            hasSubMap ? name.replace(" ", "-").toLowerCase() : null,
+            hasSubMap ? name.replace(" ", "-").toLowerCase() + ".json" : null,
             parentMapCoordinates,
             parentMapMaskColor
         );
@@ -115,7 +115,10 @@ public class MapDataGenerator {
         return mapModel;
     }
 
-    private static void subMapModelFromRegion(RegionSelectionModel regionSelectionModel, Set<RegionSelectionModel> regions) {
+    private static void subMapModelFromRegion(
+        RegionSelectionModel regionSelectionModel,
+        Set<RegionSelectionModel> regions
+    ) {
         mapModelFactory(regionSelectionModel.regionData().name(), regionSelectionModel.regionData().type(), regions);
     }
 
