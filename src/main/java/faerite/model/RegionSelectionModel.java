@@ -1,3 +1,12 @@
 package faerite.model;
 
-public record RegionSelectionModel(RegionData regionData, int maskColor, String subMapFileName) implements RegionModel {}
+import faerite.Point;
+import org.jetbrains.annotations.Nullable;
+
+public record RegionSelectionModel(
+    RegionData regionData,
+    int maskColor,
+    @Nullable String subMapFileName,
+    @Nullable Point parentMapPointCoordinates,
+    @Nullable Integer parentMapMaskColor
+) implements RegionModel {}
