@@ -1,11 +1,12 @@
 package faerite.view;
 
 import javafx.embed.swing.SwingNode;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class MapRendererView extends Pane {
+public class MapRendererView extends StackPane {
 
     private final SwingNode swingNode = new SwingNode();
 

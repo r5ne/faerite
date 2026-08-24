@@ -205,6 +205,8 @@ public class MapView extends Pane {
     protected void layoutChildren() {
         super.layoutChildren();
 
+        rendererView.resizeRelocate(0, 0, getWidth(), getHeight());
+
         MapModel currentMapModel = viewModel.getActiveLayer().mapModel;
 
         if (currentMapModel == null || getWidth() <= 0 || getHeight() <= 0) return;
