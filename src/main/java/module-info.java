@@ -4,6 +4,7 @@ module faerite {
     requires javafx.graphics;
     requires com.fasterxml.jackson.databind;
     requires org.jetbrains.annotations;
+    requires java.desktop;
 
     exports faerite;
     exports faerite.model;
