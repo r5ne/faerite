@@ -1,7 +1,7 @@
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import faerite.Point;
 import faerite.model.MapModel;
 import faerite.model.RegionData;
 import faerite.model.RegionSelectionModel;
@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import org.jetbrains.annotations.Nullable;
 
 public class MapDataGenerator {
 
@@ -24,9 +25,7 @@ public class MapDataGenerator {
     static void main() throws IOException {
         Files.createDirectories(Path.of(OUTPUT_PATH));
 
-        ObjectMapper objectMapper = JsonMapper.builder()
-            .enable(SerializationFeature.INDENT_OUTPUT)
-            .build();
+        ObjectMapper objectMapper = JsonMapper.builder().enable(SerializationFeature.INDENT_OUTPUT).build();
 
         createMapModels();
 
@@ -35,8 +34,47 @@ public class MapDataGenerator {
         }
     }
 
+    private static void createMapModels() {
+        var ireland = regionSelectionModelFactory("Ireland", RegionType.ISLAND, 0xffffffff, false, null, null);
+        var greatBritain = regionSelectionModelFactory(
+            "Great Britain",
+            RegionType.ISLAND,
+            0xff000000,
+            false,
+            null,
+            null
+        );
+        var isleOfManGroup = regionSelectionModelFactory(
+            "Isle of Man",
+            RegionType.ISLAND_GROUP,
+            0xffff0000,
+            true,
+            null,
+            null
+        );
+        mapModelFactory("British Isles", RegionType.ARCHIPELAGO, Set.of(greatBritain, ireland, isleOfManGroup));
+
+        var isleOfMan = regionSelectionModelFactory(
+            "Isle of Man",
+            RegionType.ISLAND,
+            0xff000000,
+            false,
+            null,
+            0xffff0000
+        );
+        var calfOfMan = regionSelectionModelFactory(
+            "Calf of Man",
+            RegionType.ISLAND,
+            0xffffffff,
+            false,
+            new Point(488, 771),
+            null
+        );
+        subMapModelFromRegion(isleOfManGroup, Set.of(isleOfMan, calfOfMan));
+    }
+
     public static void writeMapModel(ObjectMapper objectMapper, MapModel mapModel) {
-        Path filePath = Path.of(MapDataGenerator.OUTPUT_PATH + mapModel.fileName() + ".json");
+        Path filePath = Path.of(MapDataGenerator.OUTPUT_PATH + mapModel.name() + ".json");
         try {
             objectMapper.writeValue(filePath.toFile(), mapModel);
         } catch (IOException e) {
@@ -44,24 +82,23 @@ public class MapDataGenerator {
         }
     }
 
-    private static void createMapModels() {
-        var ireland = regionSelectionModelFactory("Ireland", RegionType.ISLAND, 0xffffffff, false, null);
-        var greatBritain = regionSelectionModelFactory("Great Britain", RegionType.ISLAND, 0xff000000, false, null);
-        var isleOfMan = regionSelectionModelFactory("Isle of Man", RegionType.ISLAND, 0xffff0000, true, null);
-
-        mapModelFactory("British Isles", RegionType.ARCHIPELAGO, Set.of(greatBritain, ireland, isleOfMan));
-    }
-
     private static RegionSelectionModel regionSelectionModelFactory(
         String name,
         RegionType regionType,
         int maskColor,
         boolean hasSubMap,
-        Set<RegionSelectionModel> regions
+        @Nullable Point parentMapCoordinates,
+        @Nullable Integer parentMapMaskColor
     ) {
         var regionData = new RegionData(name, regionType);
-        MapModel mapModel = hasSubMap ? mapModelFactory(name, regionType, regions) : null;
-        return new RegionSelectionModel(regionData, maskColor, hasSubMap ? mapModel.fileName() : null);
+
+        return new RegionSelectionModel(
+            regionData,
+            maskColor,
+            hasSubMap ? name.replace(" ", "-").toLowerCase() + ".json" : null,
+            parentMapCoordinates,
+            parentMapMaskColor
+        );
     }
 
     private static MapModel mapModelFactory(String name, RegionType regionType, Set<RegionSelectionModel> regions) {
@@ -76,6 +113,13 @@ public class MapDataGenerator {
         mapModels.add(mapModel);
 
         return mapModel;
+    }
+
+    private static void subMapModelFromRegion(
+        RegionSelectionModel regionSelectionModel,
+        Set<RegionSelectionModel> regions
+    ) {
+        mapModelFactory(regionSelectionModel.regionData().name(), regionSelectionModel.regionData().type(), regions);
     }
 
     private static int[] getImageDimensions(String imageFilePath) {

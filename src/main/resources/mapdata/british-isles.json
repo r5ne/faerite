@@ -1,5 +1,5 @@
 {
-  "fileName" : "british-isles",
+  "name" : "british-isles",
   "width" : 724,
   "height" : 1205,
   "regionData" : {
@@ -12,20 +12,26 @@
       "type" : "ISLAND"
     },
     "maskColor" : -16777216,
-    "subMapFileName" : null
+    "subMapFileName" : null,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
   }, {
     "regionData" : {
       "name" : "Isle of Man",
-      "type" : "ISLAND"
+      "type" : "ISLAND_GROUP"
     },
     "maskColor" : -65536,
-    "subMapFileName" : "isle-of-man"
+    "subMapFileName" : "isle-of-man.json",
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
   }, {
     "regionData" : {
       "name" : "Ireland",
       "type" : "ISLAND"
     },
     "maskColor" : -1,
-    "subMapFileName" : null
+    "subMapFileName" : null,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
   } ]
 }
