@@ -19,7 +19,7 @@ public final class MapAssetCache {
 
     private static final Map<String, Image> imageCache = new HashMap<>();
     private static final Map<String, BufferedImage> bufferedImageCache = new HashMap<>();
-    private static final Map<String, Map<Integer, boolean[]>> mapBordersCache = new HashMap<>();
+    private static final Map<String, Map<Integer, int[]>> mapBordersCache = new HashMap<>();
 
     private MapAssetCache() {}
 
@@ -31,7 +31,7 @@ public final class MapAssetCache {
         return bufferedImageCache.computeIfAbsent(fileName, MapAssetCache::loadBufferedImage);
     }
 
-    public static Map<Integer, boolean[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
+    public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
         return mapBordersCache.computeIfAbsent(mapModel.name(), k ->
             MaskUtils.createBorderMasks(
                 borderMaskImage,

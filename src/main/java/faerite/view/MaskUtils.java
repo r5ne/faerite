@@ -10,21 +10,38 @@ public final class MaskUtils {
 
     private MaskUtils() {}
 
-    public static Map<Integer, boolean[]> createBorderMasks(Image maskImage, Set<Integer> maskColors, int borderSize) {
+    public static Map<Integer, int[]> createBorderMasks(Image maskImage, Set<Integer> maskColors, int borderSize) {
         int width = (int) maskImage.getWidth();
         int height = (int) maskImage.getHeight();
 
         PixelReader reader = maskImage.getPixelReader();
 
-        Map<Integer, boolean[]> maskBorderMap = new HashMap<>();
+        Map<Integer, int[]> maskBorderMap = new HashMap<>();
 
         for (int maskColor : maskColors) {
             boolean[] colorMask = extractColorMask(reader, maskColor, width, height);
             boolean[] borderMask = generateBorderMask(colorMask, width, height, borderSize);
 
-            maskBorderMap.put(maskColor, borderMask);
+            int[] borderMaskSparseIndices = maskToSparseIndices(borderMask);
+            maskBorderMap.put(maskColor, borderMaskSparseIndices);
         }
         return maskBorderMap;
+    }
+
+    private static int[] maskToSparseIndices(boolean[] mask) {
+        int totalSetPixels = 0;
+        for (boolean isPixelSet : mask) {
+            if (isPixelSet) totalSetPixels++;
+        }
+
+        int[] indices = new int[totalSetPixels];
+        int currentIndex = 0;
+        for (int i = 0; i < mask.length; i++) {
+            if (mask[i]) {
+                indices[currentIndex++] = i;
+            }
+        }
+        return indices;
     }
 
     private static boolean[] extractColorMask(PixelReader reader, int color, int maskWidth, int maskHeight) {
