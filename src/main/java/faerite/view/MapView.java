@@ -73,13 +73,13 @@ public class MapView extends Pane {
 
     private void createBindings() {
         // Keep the background synced with the oceanColor.
-        backgroundProperty().bind(
-            Bindings.createObjectBinding(() -> {
-                Color oceanColor = viewModel.getOceanColor();
-                BackgroundFill bgFill = new BackgroundFill(oceanColor, CornerRadii.EMPTY, Insets.EMPTY);
-                return new Background(bgFill);
-            }, viewModel.oceanColorProperty())
-        );
+        //backgroundProperty().bind(
+        //    Bindings.createObjectBinding(() -> {
+        //        Color oceanColor = viewModel.getOceanColor();
+        //        BackgroundFill bgFill = new BackgroundFill(oceanColor, CornerRadii.EMPTY, Insets.EMPTY);
+        //        return new Background(bgFill);
+        //    }, viewModel.oceanColorProperty())
+        //);
     }
 
     private void createEvents() {
@@ -187,11 +187,11 @@ public class MapView extends Pane {
 
         hoveredRegionListener = (_, _, newRegion) -> {
             if (newLayer.getHoveredRegion() != newLayer.getSelectedRegion() || newLayer.getHoveredRegion() == null) {
-                updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor());
+                //updateMapBorder(newRegion, hoveredMapBorderCanvas, viewModel.getHoveredBorderColor());
             }
         };
         selectedRegionListener = (_, _, newRegion) -> {
-            updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor());
+            //updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor());
             hoveredMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, hoveredMapBorderCanvas.getWidth(), hoveredMapBorderCanvas.getHeight());
         };
 

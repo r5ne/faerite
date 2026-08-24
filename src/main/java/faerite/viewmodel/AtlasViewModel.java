@@ -12,11 +12,13 @@ public class AtlasViewModel {
     private final IntegerProperty currentLayerIndex = new SimpleIntegerProperty(-1);
     private final ObjectProperty<MapViewModel> activeLayer = new SimpleObjectProperty<>();
 
-    private final ObjectProperty<Color> oceanColor = new SimpleObjectProperty<>(Color.web("#213840"));
-    private final ObjectProperty<Color> hoveredBorderColor = new SimpleObjectProperty<>(oceanColor.get().deriveColor(1, 0.7, 3, 1));
-    private final ObjectProperty<Color> selectedBorderColor = new SimpleObjectProperty<>(Color.web("#ff3d3d"));
+    private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840);
+    private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty();
+    private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xff3d3d);
 
     public AtlasViewModel(MapModel rootMapModel) {
+        hoveredBorderColor.set(deriveColorRGB(oceanColor.get(), 0.7, 3));
+
         currentLayerIndex.addListener((_, _, newIndex) -> {
             if (newIndex.intValue() >= 0 && newIndex.intValue() < layerHistory.size()) {
                 activeLayer.set(layerHistory.get(newIndex.intValue()));
@@ -63,27 +65,39 @@ public class AtlasViewModel {
         return activeLayer;
     }
 
-    public Color getOceanColor() {
+    public int getOceanColor() {
         return oceanColor.get();
     }
 
-    public ObjectProperty<Color> oceanColorProperty() {
+    public IntegerProperty oceanColorProperty() {
         return oceanColor;
     }
 
-    public Color getHoveredBorderColor() {
+    public int getHoveredBorderColor() {
         return hoveredBorderColor.get();
     }
 
-    public ObjectProperty<Color> hoveredBorderColorProperty() {
+    public IntegerProperty hoveredBorderColorProperty() {
         return hoveredBorderColor;
     }
 
-    public Color getSelectedBorderColor() {
+    public int getSelectedBorderColor() {
         return selectedBorderColor.get();
     }
 
-    public ObjectProperty<Color> selectedBorderColorProperty() {
+    public IntegerProperty selectedBorderColorProperty() {
         return selectedBorderColor;
+    }
+
+    private int deriveColorRGB(int rgb, double satFactor, double brightFactor) {
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+
+        float[] hsb = java.awt.Color.RGBtoHSB(r, g, b, null);
+        hsb[1] = (float) Math.clamp(hsb[1] * satFactor, 0.0, 1.0);
+        hsb[2] = (float) Math.clamp(hsb[2] * brightFactor, 0.0, 1.0);
+
+        return java.awt.Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
     }
 }
