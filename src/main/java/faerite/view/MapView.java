@@ -28,6 +28,7 @@ public class MapView extends Pane {
     private static final int BORDER_SIZE = 2;
 
     private final AtlasViewModel viewModel;
+    private final MapRendererView rendererView = new MapRendererView();
 
     private final Group mapCanvasGroup = new Group();
 
@@ -53,9 +54,12 @@ public class MapView extends Pane {
         selectedMapBorderCanvas.setLayoutX(-BORDER_SIZE);
         selectedMapBorderCanvas.setLayoutY(-BORDER_SIZE);
 
+        rendererView.setMapImage(MapAssetCache.getBufferedImage("british-isles.png"));
+        rendererView.setZoomFactor(1);
+        getChildren().add(rendererView);
+
         mapCanvasGroup.getChildren().addAll(mapImageCanvas, hoveredMapBorderCanvas, selectedMapBorderCanvas);
         mapCanvasGroup.getTransforms().addAll(mapScale, mapTranslate);
-        getChildren().add(mapCanvasGroup);
 
         createBindings();
 
