@@ -10,9 +10,10 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -20,13 +21,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
+
 public class MapView extends Pane {
 
     private static final int PADDING = 40;
     private static final int BORDER_SIZE = 2;
 
     private final AtlasViewModel viewModel;
-    private final ImageView mapImageView = new ImageView();
+
+    private final Group mapCanvasGroup = new Group();
+
+    private final Canvas mapImageCanvas = new Canvas();
     private final Canvas hoveredMapBorderCanvas = new Canvas();
     private final Canvas selectedMapBorderCanvas = new Canvas();
 
@@ -43,20 +48,14 @@ public class MapView extends Pane {
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
-        // nearest-neighbour interp for pixel art
-        mapImageView.setSmooth(false);
-        mapImageView.getTransforms().addAll(mapScale, mapTranslate);
-        getChildren().add(mapImageView);
-
-        // re-align canvas with map image
         hoveredMapBorderCanvas.setLayoutX(-BORDER_SIZE);
         hoveredMapBorderCanvas.setLayoutY(-BORDER_SIZE);
-        hoveredMapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
-
-        // re-align canvas with map image
         selectedMapBorderCanvas.setLayoutX(-BORDER_SIZE);
         selectedMapBorderCanvas.setLayoutY(-BORDER_SIZE);
-        selectedMapBorderCanvas.getTransforms().addAll(mapScale, mapTranslate);
+
+        mapCanvasGroup.getChildren().addAll(mapImageCanvas, hoveredMapBorderCanvas, selectedMapBorderCanvas);
+        mapCanvasGroup.getTransforms().addAll(mapScale, mapTranslate);
+        getChildren().add(mapCanvasGroup);
 
         createBindings();
 
@@ -65,8 +64,6 @@ public class MapView extends Pane {
         });
 
         updateActiveMap(null, viewModel.getActiveLayer());
-
-        getChildren().addAll(hoveredMapBorderCanvas, selectedMapBorderCanvas);
         createEvents();
     }
 
@@ -86,7 +83,7 @@ public class MapView extends Pane {
             if (hitboxMaskImage == null) return;
 
             // Gets absolute position regardless of Scale & Transform objects applied.
-            Point2D point = mapImageView.sceneToLocal(event.getSceneX(), event.getSceneY());
+            Point2D point = mapCanvasGroup.sceneToLocal(event.getSceneX(), event.getSceneY());
             int pixelX = (int) Math.floor(point.getX());
             int pixelY = (int) Math.floor(point.getY());
 
@@ -120,6 +117,7 @@ public class MapView extends Pane {
                 currentLayer.updateSelectedRegion();
             } else if (event.getClickCount() > 1) {
                 RegionSelectionModel currentHoveredRegion = currentLayer.getHoveredRegion();
+
                 if (currentHoveredRegion != null && currentHoveredRegion.subMapFileName() != null) {
                     MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
                     viewModel.zoomIn(newMap);
@@ -140,20 +138,48 @@ public class MapView extends Pane {
         Image mapImage = MapAssetCache.getImage(mapModel.imageFileName());
         borderMaskImage = MapAssetCache.getImage(mapModel.borderMaskFileName());
         hitboxMaskImage = MapAssetCache.getImage(mapModel.hitboxMaskFileName());
-
         borderCache = MapAssetCache.getMapBorders(mapModel, borderMaskImage);
-        mapImageView.setImage(mapImage);
+
+        mapImageCanvas.setWidth(mapModel.width());
+        mapImageCanvas.setHeight(mapModel.height());
 
         // ensure canvas size accounts for borders being added to the map
-        double canvasWidth = mapModel.width() + BORDER_SIZE * 2;
-        double canvasHeight = mapModel.height() + BORDER_SIZE * 2;
-        hoveredMapBorderCanvas.setWidth(canvasWidth);
-        hoveredMapBorderCanvas.setHeight(canvasHeight);
-        selectedMapBorderCanvas.setWidth(canvasWidth);
-        selectedMapBorderCanvas.setHeight(canvasHeight);
+        double paddedWidth = mapModel.width() + BORDER_SIZE * 2;
+        double paddedHeight = mapModel.height() + BORDER_SIZE * 2;
+        hoveredMapBorderCanvas.setWidth(paddedWidth);
+        hoveredMapBorderCanvas.setHeight(paddedHeight);
+        selectedMapBorderCanvas.setWidth(paddedWidth);
+        selectedMapBorderCanvas.setHeight(paddedHeight);
 
-        hoveredMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, canvasWidth, canvasHeight);
-        selectedMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, canvasWidth, canvasHeight);
+
+        GraphicsContext graphicsContext = mapImageCanvas.getGraphicsContext2D();
+        graphicsContext.setImageSmoothing(false);
+
+        int mapWidth = viewModel.getActiveLayer().mapModel.width();
+        int mapHeight = viewModel.getActiveLayer().mapModel.height();
+
+        double paddedPaneWidth = getWidth() - PADDING;
+        double paddedPaneHeight = getHeight() - PADDING;
+
+        double newScale = Math.min(paddedPaneWidth / mapWidth, paddedPaneHeight / mapHeight);
+
+        double scaledWidth = mapWidth * newScale;
+        double scaledHeight = mapHeight * newScale;
+        graphicsContext.drawImage(
+                mapImage,
+                0, 0,
+                mapImage.getWidth(),
+                mapImage.getHeight(),
+                0, 0,
+                1000,
+                1000
+        );
+        graphicsContext.clearRect(0, 0, mapModel.width(), mapModel.height());
+        graphicsContext.drawImage(mapImage, 0, 0);
+
+        hoveredMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, paddedWidth, paddedHeight);
+        selectedMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, paddedWidth, paddedHeight);
+
 
         hoveredRegionListener = (_, _, newRegion) -> {
             if (newLayer.getHoveredRegion() != newLayer.getSelectedRegion() || newLayer.getHoveredRegion() == null) {
@@ -162,6 +188,7 @@ public class MapView extends Pane {
         };
         selectedRegionListener = (_, _, newRegion) -> {
             updateMapBorder(newRegion, selectedMapBorderCanvas, viewModel.getSelectedBorderColor());
+            hoveredMapBorderCanvas.getGraphicsContext2D().clearRect(0, 0, hoveredMapBorderCanvas.getWidth(), hoveredMapBorderCanvas.getHeight());
         };
 
         newLayer.getHoveredRegionProperty().addListener(hoveredRegionListener);
@@ -178,20 +205,6 @@ public class MapView extends Pane {
 
         if (currentMapModel == null || getWidth() <= 0 || getHeight() <= 0) return;
 
-        int mapWidth = currentMapModel.width();
-        int mapHeight = currentMapModel.height();
-
-        double paddedPaneWidth = getWidth() - PADDING;
-        double paddedPaneHeight = getHeight() - PADDING;
-
-        double newScale = Math.min(paddedPaneWidth / mapWidth, paddedPaneHeight / mapHeight);
-        mapScale.setX(newScale);
-        mapScale.setY(newScale);
-
-        double scaledWidth = mapWidth * newScale;
-        double scaledHeight = mapHeight * newScale;
-        mapTranslate.setX((getWidth() - scaledWidth) / 2);
-        mapTranslate.setY((getHeight() - scaledHeight) / 2);
     }
 
     private void updateMapBorder(RegionSelectionModel region, Canvas canvas, Color borderColor) {
