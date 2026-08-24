@@ -160,16 +160,6 @@ public class MapView extends Pane {
         GraphicsContext graphicsContext = mapImageCanvas.getGraphicsContext2D();
         graphicsContext.setImageSmoothing(false);
 
-        int mapWidth = viewModel.getActiveLayer().mapModel.width();
-        int mapHeight = viewModel.getActiveLayer().mapModel.height();
-
-        double paddedPaneWidth = getWidth() - PADDING;
-        double paddedPaneHeight = getHeight() - PADDING;
-
-        double newScale = Math.min(paddedPaneWidth / mapWidth, paddedPaneHeight / mapHeight);
-
-        double scaledWidth = mapWidth * newScale;
-        double scaledHeight = mapHeight * newScale;
         graphicsContext.drawImage(
                 mapImage,
                 0, 0,
@@ -205,6 +195,19 @@ public class MapView extends Pane {
     @Override
     protected void layoutChildren() {
         super.layoutChildren();
+
+        int mapWidth = viewModel.getActiveLayer().mapModel.width();
+        int mapHeight = viewModel.getActiveLayer().mapModel.height();
+
+        double paddedPaneWidth = getWidth() - PADDING;
+        double paddedPaneHeight = getHeight() - PADDING;
+
+        double newScale = Math.min(paddedPaneWidth / mapWidth, paddedPaneHeight / mapHeight);
+
+        double scaledWidth = mapWidth * newScale;
+        double scaledHeight = mapHeight * newScale;
+
+        rendererView.setZoomFactor(newScale);
 
         rendererView.resizeRelocate(0, 0, getWidth(), getHeight());
 
