@@ -9,8 +9,9 @@ public final class MapRenderer extends JPanel {
 
     private double zoomFactor;
 
-    public void setRenderState(MapRenderState state) {
-        mapImage = state.mapImage();
+    public void setMapImage(BufferedImage mapImage) {
+        this.mapImage = mapImage;
+        repaint();
     }
 
     public void setZoomFactor(double zoomFactor) {
