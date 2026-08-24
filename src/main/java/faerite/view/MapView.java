@@ -56,6 +56,7 @@ public class MapView extends Pane {
 
         rendererView.setMapImage(MapAssetCache.getBufferedImage("british-isles.png"));
         rendererView.setZoomFactor(1);
+        rendererView.setBackgroundColor(viewModel.getOceanColor());
         getChildren().add(rendererView);
 
         mapCanvasGroup.getChildren().addAll(mapImageCanvas, hoveredMapBorderCanvas, selectedMapBorderCanvas);
