@@ -9,22 +9,38 @@ import java.awt.image.BufferedImage;
 public class MapRendererView extends StackPane {
 
     private final SwingNode swingNode = new SwingNode();
+    private MapRenderer renderer;
 
     public MapRendererView() {
         getChildren().add(swingNode);
 
         SwingUtilities.invokeLater(() -> {
-            swingNode.setContent(new MapRenderer());
+            renderer = new MapRenderer();
+            swingNode.setContent(renderer);
         });
     }
 
     public void setMapImage(BufferedImage mapImage) {
-        MapRenderer mapRenderer = (MapRenderer) swingNode.getContent();
-        mapRenderer.setRenderState(new MapRenderState(mapImage, null, null));
+        SwingUtilities.invokeLater(() -> {
+            if (renderer != null) {
+                renderer.setMapImage(mapImage);
+            }
+        });
     }
 
     public void setZoomFactor(double zoomFactor) {
-        MapRenderer mapRenderer = (MapRenderer) swingNode.getContent();
-        mapRenderer.setZoomFactor(zoomFactor);
+        SwingUtilities.invokeLater(() -> {
+            if (renderer != null) {
+                renderer.setZoomFactor(zoomFactor);
+            }
+        });
+    }
+
+    public void setBackgroundColor(int color) {
+        SwingUtilities.invokeLater(() -> {
+            if (renderer != null) {
+                renderer.setBackground(new Color(color));
+            }
+        });
     }
 }
