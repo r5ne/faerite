@@ -7,6 +7,7 @@ import faerite.viewmodel.AtlasViewModel;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,9 @@ public class Faerite extends Application {
         scene.getStylesheets().add(cssPath);
         stage.setScene(scene);
         stage.setTitle("Faerite");
+        Image faeriteIcon16 = new Image(Faerite.class.getResourceAsStream("/faerite-icon-16.png"));
+        Image faeriteIcon32 = new Image(Faerite.class.getResourceAsStream("/faerite-icon-32.png"));
+        stage.getIcons().addAll(faeriteIcon16, faeriteIcon32);
         // Ignored on strict compositors (e.g. tiled, scrolling)
         stage.setMaximized(true);
         stage.show();
