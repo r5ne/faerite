@@ -1,10 +1,9 @@
 package faerite.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.FileNotFoundException;
+import faerite.view.MapView;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 public final class MapDataLoader {
 
@@ -13,13 +12,14 @@ public final class MapDataLoader {
     private MapDataLoader() {}
 
     public static MapModel loadMapModel(String mapModelFileName) {
-        Path filePath = Path.of("src/main/resources/mapdata/" + mapModelFileName);
-        try (var reader = Files.newBufferedReader(filePath)) {
-            return objectMapper.readValue(reader, MapModel.class);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Config file not found at:" + filePath.toString());
+        String resourcePath = "/mapdata/" + mapModelFileName;
+        try (InputStream stream = MapView.class.getResourceAsStream(resourcePath)) {
+            if (stream == null) {
+                throw new IllegalArgumentException("Resource not found at: " + resourcePath);
+            }
+            return objectMapper.readValue(stream, MapModel.class);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to load map model: " + resourcePath, e);
         }
     }
 }
