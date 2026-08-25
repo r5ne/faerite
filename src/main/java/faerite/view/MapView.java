@@ -182,7 +182,19 @@ public class MapView extends StackPane {
         });
 
         setOnKeyPressed(event -> {
+            MapViewModel currentLayer = viewModel.getActiveLayer();
             if (event.getCode().equals(KeyCode.ESCAPE)) {
+                viewModel.zoomOut();
+            }
+
+            if (event.getCode().equals(KeyCode.E)) {
+                RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
+
+                if (currentSelectedRegion != null && currentSelectedRegion.subMapFileName() != null) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                    viewModel.zoomIn(newMap);
+                }
+            } else if (event.getCode().equals(KeyCode.X)) {
                 viewModel.zoomOut();
             }
         });
