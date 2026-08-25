@@ -52,7 +52,38 @@ public class MapDataGenerator {
             null,
             null
         );
-        mapModelFactory("British Isles", RegionType.ARCHIPELAGO, Set.of(greatBritain, ireland, isleOfManGroup));
+        var isleOfWight = regionSelectionModelFactory(
+            "Isle of Wight",
+            RegionType.ISLAND,
+            0xff2d85f7,
+            false,
+            null,
+            null
+        );
+        var channelIslands = regionSelectionModelFactory(
+            "Channel Islands",
+            RegionType.ARCHIPELAGO,
+            0xffffd700,
+            false,
+            null,
+            null
+        );
+        var shetland = regionSelectionModelFactory("Shetland", RegionType.ARCHIPELAGO, 0xff0000ff, false, null, null);
+        var orkney = regionSelectionModelFactory("Orkney", RegionType.ARCHIPELAGO, 0xffffff00, false, null, null);
+        var islesOfScilly = regionSelectionModelFactory(
+            "Isles of Scilly",
+            RegionType.ARCHIPELAGO,
+            0xfff7af1b,
+            false,
+            null,
+            null
+        );
+
+        mapModelFactory(
+            "British Isles",
+            RegionType.ARCHIPELAGO,
+            Set.of(greatBritain, ireland, isleOfManGroup, isleOfWight, channelIslands, shetland, orkney, islesOfScilly)
+        );
 
         var isleOfMan = regionSelectionModelFactory(
             "Isle of Man",
