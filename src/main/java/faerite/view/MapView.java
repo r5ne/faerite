@@ -1,5 +1,9 @@
 package faerite.view;
 
+import static faerite.view.MapGeometry.getColorAtPoint;
+import static faerite.view.MapGeometry.screenToMapPixel;
+
+import faerite.Point;
 import faerite.model.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
@@ -11,13 +15,12 @@ import java.util.Arrays;
 import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.util.Duration;
-
 import javax.swing.*;
 
 public class MapView extends StackPane {
@@ -34,7 +37,7 @@ public class MapView extends StackPane {
     private BufferedImage hoveredMapImage;
     private BufferedImage selectedMapImage;
 
-    private final Tooltip hoveredMapTooltip = new Tooltip();
+    private final Label hoveredRegionTooltip = new Label();
 
     private Image hitboxMaskImage;
     private Image borderMaskImage;
@@ -49,15 +52,17 @@ public class MapView extends StackPane {
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
-        hoveredMapTooltip.setShowDelay(Duration.millis(TOOLTIP_FADE_TIME));
-        hoveredMapTooltip.setHideDelay(Duration.millis(TOOLTIP_FADE_TIME));
+        hoveredRegionTooltip.getStyleClass().add("tooltip");
+        hoveredRegionTooltip.setMouseTransparent(true);
+        hoveredRegionTooltip.setVisible(false);
+        hoveredRegionTooltip.setManaged(false);
 
         SwingUtilities.invokeLater(() -> {
             renderer.setBackgroundColor(viewModel.getOceanColor());
             swingNode.setContent(renderer);
             swingNode.setMouseTransparent(true);
         });
-        getChildren().add(swingNode);
+        getChildren().addAll(swingNode, hoveredRegionTooltip);
 
         viewModel.activeLayerProperty().addListener((_, oldLayer, newLayer) -> {
             loadNewMap(oldLayer, newLayer);
@@ -124,45 +129,8 @@ public class MapView extends StackPane {
     }
 
     private void createEvents() {
-        setOnMouseMoved(event -> {
-            if (hitboxMaskImage == null) return;
-
-            // Gets absolute position regardless of Scale & Transform objects applied.
-            double scaledWidth = mapImage.getWidth() * mapScale;
-            double scaledHeight = mapImage.getHeight() * mapScale;
-            double drawX = (getWidth() - scaledWidth) / 2;
-            double drawY = (getHeight() - scaledHeight) / 2;
-
-            int pixelX = (int) Math.floor((event.getX() - drawX) / mapScale);
-            int pixelY = (int) Math.floor((event.getY() - drawY) / mapScale);
-
-            if (
-                pixelX >= 0 &&
-                pixelX < hitboxMaskImage.getWidth() &&
-                pixelY >= 0 &&
-                pixelY < hitboxMaskImage.getHeight()
-            ) {
-                int color = hitboxMaskImage.getPixelReader().getArgb(pixelX, pixelY);
-                viewModel.getActiveLayer().updateHoveredRegion(color);
-            } else {
-                viewModel.getActiveLayer().updateHoveredRegion(0);
-            }
-
-            RegionSelectionModel hoveredRegion = viewModel.getActiveLayer().getHoveredRegion();
-            if (hoveredRegion != null) {
-                hoveredMapTooltip.setText(String.format("%s (%s)", hoveredRegion.regionData().name(), hoveredRegion.regionData().type().getDisplayName()));
-                if (!hoveredMapTooltip.isShowing()) {
-                    hoveredMapTooltip.show(this, event.getScreenX() + 15, event.getScreenY() + 15);
-                } else {
-                    hoveredMapTooltip.setAnchorX(event.getScreenX() + 15);
-                    hoveredMapTooltip.setAnchorY(event.getScreenY() + 15);
-                }
-            } else {
-                hoveredMapTooltip.hide();
-            }
-        });
-
-        setOnMouseExited(_ -> hoveredMapTooltip.hide());
+        setOnMouseMoved(this::updateHoveredState);
+        setOnMouseExited(_ -> hoveredRegionTooltip.setVisible(false));
 
         setOnMouseClicked(event -> {
             if (event.getButton() != MouseButton.PRIMARY) return;
@@ -182,10 +150,56 @@ public class MapView extends StackPane {
         });
 
         setOnKeyPressed(event -> {
+            MapViewModel currentLayer = viewModel.getActiveLayer();
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 viewModel.zoomOut();
             }
+
+            if (event.getCode().equals(KeyCode.E)) {
+                RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
+
+                if (currentSelectedRegion != null && currentSelectedRegion.subMapFileName() != null) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                    viewModel.zoomIn(newMap);
+                }
+            } else if (event.getCode().equals(KeyCode.X)) {
+                viewModel.zoomOut();
+            }
         });
+    }
+
+    private void updateHoveredState(MouseEvent event) {
+        Point mapPoint = screenToMapPixel(
+            event.getX(),
+            event.getY(),
+            mapImage.getWidth(),
+            mapImage.getHeight(),
+            mapScale,
+            getWidth(),
+            getHeight()
+        );
+        int colorAtPoint = getColorAtPoint(hitboxMaskImage, mapPoint.x(), mapPoint.y());
+        viewModel.getActiveLayer().updateHoveredRegion(colorAtPoint);
+
+        RegionSelectionModel hoveredRegion = viewModel.getActiveLayer().getHoveredRegion();
+        updateHoveredRegionTooltip(hoveredRegion, event.getScreenX(), event.getScreenY());
+    }
+
+    private void updateHoveredRegionTooltip(RegionSelectionModel hoveredRegion, double screenX, double screenY) {
+        if (hoveredRegion != null) {
+            hoveredRegionTooltip.setText(
+                String.format(
+                    "%s (%s)",
+                    hoveredRegion.regionData().name(),
+                    hoveredRegion.regionData().type().getDisplayName()
+                )
+            );
+            hoveredRegionTooltip.autosize();
+            hoveredRegionTooltip.relocate(screenX + 15, screenY + 15);
+            hoveredRegionTooltip.setVisible(true);
+        } else {
+            hoveredRegionTooltip.setVisible(false);
+        }
     }
 
     private double calculateGlobalScale() {
