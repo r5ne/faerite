@@ -12,6 +12,7 @@ import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javax.swing.*;
@@ -146,6 +147,12 @@ public class MapView extends StackPane {
                     MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
                     viewModel.zoomIn(newMap);
                 }
+            }
+        });
+
+        setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                viewModel.zoomOut();
             }
         });
     }
