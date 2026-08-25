@@ -24,6 +24,7 @@ public class MapView extends StackPane {
 
     private static final int PADDING = 40;
     private static final int BORDER_SIZE = 2;
+    private static final double TOOLTIP_FADE_TIME = 1000;
 
     private final AtlasViewModel viewModel;
     private final SwingNode swingNode = new SwingNode();
@@ -48,8 +49,8 @@ public class MapView extends StackPane {
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
-        hoveredMapTooltip.setShowDelay(Duration.ZERO);
-        hoveredMapTooltip.setHideDelay(Duration.ZERO);
+        hoveredMapTooltip.setShowDelay(Duration.millis(TOOLTIP_FADE_TIME));
+        hoveredMapTooltip.setHideDelay(Duration.millis(TOOLTIP_FADE_TIME));
 
         SwingUtilities.invokeLater(() -> {
             renderer.setBackgroundColor(viewModel.getOceanColor());
