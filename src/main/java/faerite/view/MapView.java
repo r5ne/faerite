@@ -58,12 +58,6 @@ public class MapView extends StackPane {
     }
 
     private void loadNewMap(MapViewModel oldMap, MapViewModel newMap) {
-        hoveredRegionListener = (_, _, _) -> syncHoverBorder(newMap);
-        selectedRegionListener = (_, _, _) -> {
-            syncSelectedBorder(newMap);
-            syncHoverBorder(newMap);
-        };
-
         if (oldMap != null) {
             oldMap.getHoveredRegionProperty().removeListener(hoveredRegionListener);
             oldMap.getSelectedRegionProperty().removeListener(selectedRegionListener);
@@ -81,10 +75,33 @@ public class MapView extends StackPane {
         hoveredMapImage = new BufferedImage(paddedWidth, paddedHeight, BufferedImage.TYPE_INT_ARGB);
         selectedMapImage = new BufferedImage(paddedWidth, paddedHeight, BufferedImage.TYPE_INT_ARGB);
 
-        SwingUtilities.invokeLater(() -> renderer.setImages(mapImage, hoveredMapImage, selectedMapImage));
+        hoveredRegionListener = (_, _, _) -> syncHoverBorder(newMap);
+        selectedRegionListener = (_, _, _) -> {
+            syncSelectedBorder(newMap);
+            syncHoverBorder(newMap);
+        };
 
         newMap.getHoveredRegionProperty().addListener(hoveredRegionListener);
         newMap.getSelectedRegionProperty().addListener(selectedRegionListener);
+        syncHoverBorder(newMap);
+        syncSelectedBorder(newMap);
+
+        double scale = 1.0;
+        if (getWidth() > 0 && getHeight() > 0) {
+            scale = Math.min(
+                (getWidth() - PADDING) / mapImage.getWidth(),
+                (getHeight() - PADDING) / mapImage.getHeight()
+            );
+        }
+        mapScale = scale;
+        final double finalScale = scale;
+
+        SwingUtilities.invokeLater(() -> {
+            if (renderer != null) {
+                renderer.setZoomFactor(finalScale); // Set scale FIRST
+                renderer.setImages(mapImage, hoveredMapImage, selectedMapImage); // Then trigger repaint
+            }
+        });
 
         requestLayout();
     }
