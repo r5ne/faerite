@@ -5,19 +5,19 @@ import faerite.model.RegionSelectionModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
 
 public class AtlasViewModel {
+
     private final ObservableList<MapViewModel> layerHistory = FXCollections.observableArrayList();
     private final IntegerProperty currentLayerIndex = new SimpleIntegerProperty(-1);
     private final ObjectProperty<MapViewModel> activeLayer = new SimpleObjectProperty<>();
 
-    private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840);
-    private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty();
-    private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xff3d3d);
+    private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
+    private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty(); // argb
+    private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xffff3d3d); // argb
 
     public AtlasViewModel(MapModel rootMapModel) {
-        hoveredBorderColor.set(deriveColorRGB(oceanColor.get(), 0.7, 3));
+        hoveredBorderColor.set(deriveColorARGB(oceanColor.get(), 0.7, 3));
 
         currentLayerIndex.addListener((_, _, newIndex) -> {
             if (newIndex.intValue() >= 0 && newIndex.intValue() < layerHistory.size()) {
@@ -89,7 +89,7 @@ public class AtlasViewModel {
         return selectedBorderColor;
     }
 
-    private int deriveColorRGB(int rgb, double satFactor, double brightFactor) {
+    private int deriveColorARGB(int rgb, double satFactor, double brightFactor) {
         int r = (rgb >> 16) & 0xFF;
         int g = (rgb >> 8) & 0xFF;
         int b = rgb & 0xFF;

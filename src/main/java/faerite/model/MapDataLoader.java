@@ -13,7 +13,6 @@ public final class MapDataLoader {
     private MapDataLoader() {}
 
     public static MapModel loadMapModel(String mapModelFileName) {
-
         Path filePath = Path.of("src/main/resources/mapdata/" + mapModelFileName);
         try (var reader = Files.newBufferedReader(filePath)) {
             return objectMapper.readValue(reader, MapModel.class);
