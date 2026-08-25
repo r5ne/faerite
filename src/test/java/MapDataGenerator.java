@@ -52,7 +52,38 @@ public class MapDataGenerator {
             null,
             null
         );
-        mapModelFactory("British Isles", RegionType.ARCHIPELAGO, Set.of(greatBritain, ireland, isleOfManGroup));
+        var isleOfWight = regionSelectionModelFactory(
+            "Isle of Wight",
+            RegionType.ISLAND,
+            0xff2d85f7,
+            false,
+            null,
+            null
+        );
+        var channelIslands = regionSelectionModelFactory(
+            "Channel Islands",
+            RegionType.ARCHIPELAGO,
+            0xffffd700,
+            true,
+            null,
+            null
+        );
+        var shetland = regionSelectionModelFactory("Shetland", RegionType.ARCHIPELAGO, 0xff0000ff, false, null, null);
+        var orkney = regionSelectionModelFactory("Orkney", RegionType.ARCHIPELAGO, 0xffffff00, false, null, null);
+        var islesOfScilly = regionSelectionModelFactory(
+            "Isles of Scilly",
+            RegionType.ARCHIPELAGO,
+            0xfff7af1b,
+            false,
+            null,
+            null
+        );
+
+        mapModelFactory(
+            "British Isles",
+            RegionType.ARCHIPELAGO,
+            Set.of(greatBritain, ireland, isleOfManGroup, isleOfWight, channelIslands, shetland, orkney, islesOfScilly)
+        );
 
         var isleOfMan = regionSelectionModelFactory(
             "Isle of Man",
@@ -71,6 +102,43 @@ public class MapDataGenerator {
             null
         );
         subMapModelFromRegion(isleOfManGroup, Set.of(isleOfMan, calfOfMan));
+
+        var jersey = regionSelectionModelFactory("Jersey", RegionType.ISLAND_GROUP, 0xff000000, false, null, null);
+        var guernsey = regionSelectionModelFactory("Guernsey", RegionType.ISLAND_GROUP, 0xffffffff, false, null, null);
+        var alderney = regionSelectionModelFactory("Alderney", RegionType.ISLAND_GROUP, 0xffff0000, false, null, null);
+        var lesCasquets = regionSelectionModelFactory(
+            "Les Casquets",
+            RegionType.ROCK_GROUP,
+            0xff343434,
+            false,
+            null,
+            null
+        );
+        var sark = regionSelectionModelFactory("Sark", RegionType.ISLAND_GROUP, 0xff55c449, false, null, null);
+        var herm = regionSelectionModelFactory("Herm", RegionType.ISLAND_GROUP, 0xffffffb6, false, null, null);
+        var jethou = regionSelectionModelFactory("Jethou", RegionType.ISLAND_GROUP, 0xff36982b, false, null, null);
+        var lesEcrehous = regionSelectionModelFactory(
+            "Les Écrehous",
+            RegionType.ISLAND_GROUP,
+            0xff00ffff,
+            false,
+            null,
+            null
+        );
+        var chausey = regionSelectionModelFactory("Chausey", RegionType.ISLAND_GROUP, 0xffffff00, false, null, null);
+        var lesMinquiers = regionSelectionModelFactory(
+            "Les Minquiers",
+            RegionType.ISLAND_GROUP,
+            0xff0000ff,
+            false,
+            null,
+            null
+        );
+
+        subMapModelFromRegion(
+            channelIslands,
+            Set.of(jersey, guernsey, alderney, chausey, lesCasquets, lesEcrehous, lesMinquiers, sark, herm, jethou)
+        );
     }
 
     public static void writeMapModel(ObjectMapper objectMapper, MapModel mapModel) {
@@ -101,7 +169,11 @@ public class MapDataGenerator {
         );
     }
 
-    private static MapModel mapModelFactory(String name, RegionType regionType, Set<RegionSelectionModel> regions) {
+    private static MapModel mapModelFactory(
+        String name,
+        RegionType regionType,
+        @Nullable Set<RegionSelectionModel> regions
+    ) {
         String fileName = name.replace(" ", "-").toLowerCase();
         String filePath = String.format("%s%s.png", OUTPUT_PATH, fileName);
 
@@ -117,7 +189,7 @@ public class MapDataGenerator {
 
     private static void subMapModelFromRegion(
         RegionSelectionModel regionSelectionModel,
-        Set<RegionSelectionModel> regions
+        @Nullable Set<RegionSelectionModel> regions
     ) {
         mapModelFactory(regionSelectionModel.regionData().name(), regionSelectionModel.regionData().type(), regions);
     }

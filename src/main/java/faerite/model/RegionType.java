@@ -3,7 +3,9 @@ package faerite.model;
 public enum RegionType {
     ARCHIPELAGO("Archipelago"),
     ISLAND("Island"),
-    ISLAND_GROUP("Island group");
+    ISLAND_GROUP("Island group"),
+    ROCK_GROUP("Rock group"),
+    REEF("Reef");
 
     private final String displayName;
 

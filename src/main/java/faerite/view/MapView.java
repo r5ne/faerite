@@ -11,16 +11,20 @@ import java.util.Arrays;
 import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
+
 import javax.swing.*;
 
 public class MapView extends StackPane {
 
     private static final int PADDING = 40;
     private static final int BORDER_SIZE = 2;
+    private static final double TOOLTIP_FADE_TIME = 1000;
 
     private final AtlasViewModel viewModel;
     private final SwingNode swingNode = new SwingNode();
@@ -30,17 +34,23 @@ public class MapView extends StackPane {
     private BufferedImage hoveredMapImage;
     private BufferedImage selectedMapImage;
 
+    private final Tooltip hoveredMapTooltip = new Tooltip();
+
     private Image hitboxMaskImage;
     private Image borderMaskImage;
     private Map<Integer, int[]> borderCache;
 
     private double mapScale = 1.0;
+    private double minScale;
 
     private ChangeListener<RegionSelectionModel> hoveredRegionListener;
     private ChangeListener<RegionSelectionModel> selectedRegionListener;
 
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
+
+        hoveredMapTooltip.setShowDelay(Duration.millis(TOOLTIP_FADE_TIME));
+        hoveredMapTooltip.setHideDelay(Duration.millis(TOOLTIP_FADE_TIME));
 
         SwingUtilities.invokeLater(() -> {
             renderer.setBackgroundColor(viewModel.getOceanColor());
@@ -86,19 +96,11 @@ public class MapView extends StackPane {
         syncHoverBorder(newMap);
         syncSelectedBorder(newMap);
 
-        double scale = 1.0;
-        if (getWidth() > 0 && getHeight() > 0) {
-            scale = Math.min(
-                (getWidth() - PADDING) / mapImage.getWidth(),
-                (getHeight() - PADDING) / mapImage.getHeight()
-            );
-        }
-        mapScale = scale;
-        final double finalScale = scale;
+        mapScale = calculateGlobalScale();
 
         SwingUtilities.invokeLater(() -> {
             if (renderer != null) {
-                renderer.setZoomFactor(finalScale); // Set scale FIRST
+                renderer.setZoomFactor(mapScale); // Set scale FIRST
                 renderer.setImages(mapImage, hoveredMapImage, selectedMapImage); // Then trigger repaint
             }
         });
@@ -112,10 +114,7 @@ public class MapView extends StackPane {
 
         if (viewModel.getActiveLayer() == null || getWidth() <= 0 || getHeight() <= 0) return;
 
-        double paddedWidth = getWidth() - PADDING;
-        double paddedHeight = getHeight() - PADDING;
-
-        mapScale = Math.min(paddedWidth / mapImage.getWidth(), paddedHeight / mapImage.getHeight());
+        mapScale = calculateGlobalScale();
 
         SwingUtilities.invokeLater(() -> {
             renderer.setZoomFactor(mapScale);
@@ -148,7 +147,22 @@ public class MapView extends StackPane {
             } else {
                 viewModel.getActiveLayer().updateHoveredRegion(0);
             }
+
+            RegionSelectionModel hoveredRegion = viewModel.getActiveLayer().getHoveredRegion();
+            if (hoveredRegion != null) {
+                hoveredMapTooltip.setText(String.format("%s (%s)", hoveredRegion.regionData().name(), hoveredRegion.regionData().type().getDisplayName()));
+                if (!hoveredMapTooltip.isShowing()) {
+                    hoveredMapTooltip.show(this, event.getScreenX() + 15, event.getScreenY() + 15);
+                } else {
+                    hoveredMapTooltip.setAnchorX(event.getScreenX() + 15);
+                    hoveredMapTooltip.setAnchorY(event.getScreenY() + 15);
+                }
+            } else {
+                hoveredMapTooltip.hide();
+            }
         });
+
+        setOnMouseExited(_ -> hoveredMapTooltip.hide());
 
         setOnMouseClicked(event -> {
             if (event.getButton() != MouseButton.PRIMARY) return;
@@ -172,6 +186,18 @@ public class MapView extends StackPane {
                 viewModel.zoomOut();
             }
         });
+    }
+
+    private double calculateGlobalScale() {
+        MapModel rootModel = viewModel.getRootLayer().mapModel;
+        if (rootModel == null || getWidth() <= 0 || getHeight() <= 0) {
+            return 1.0;
+        }
+
+        double paddedWidth = getWidth() - PADDING;
+        double paddedHeight = getHeight() - PADDING;
+
+        return Math.min(paddedWidth / rootModel.width(), paddedHeight / rootModel.height());
     }
 
     private void syncHoverBorder(MapViewModel currentLayer) {

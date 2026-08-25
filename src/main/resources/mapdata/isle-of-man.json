@@ -8,15 +8,6 @@
   },
   "regions" : [ {
     "regionData" : {
-      "name" : "Isle of Man",
-      "type" : "ISLAND"
-    },
-    "maskColor" : -16777216,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : -65536
-  }, {
-    "regionData" : {
       "name" : "Calf of Man",
       "type" : "ISLAND"
     },
@@ -27,5 +18,14 @@
       "y" : 771
     },
     "parentMapMaskColor" : null
+  }, {
+    "regionData" : {
+      "name" : "Isle of Man",
+      "type" : "ISLAND"
+    },
+    "maskColor" : -16777216,
+    "subMapFileName" : null,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : -65536
   } ]
 }

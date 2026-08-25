@@ -73,13 +73,13 @@ public final class MapRenderer extends JPanel {
             transform.scale(zoomFactor, zoomFactor);
             g2.transform(transform);
 
-            g2.drawImage(mapImage, 0, 0, null);
             if (selectedBorderImage != null) {
                 g2.drawImage(selectedBorderImage, -borderSize, -borderSize, null);
             }
             if (hoveredBorderImage != null) {
                 g2.drawImage(hoveredBorderImage, -borderSize, -borderSize, null);
             }
+            g2.drawImage(mapImage, 0, 0, null);
         } finally {
             g2.dispose();
         }
