@@ -35,6 +35,7 @@ public class MapView extends StackPane {
     private Map<Integer, int[]> borderCache;
 
     private double mapScale = 1.0;
+    private double minScale;
 
     private ChangeListener<RegionSelectionModel> hoveredRegionListener;
     private ChangeListener<RegionSelectionModel> selectedRegionListener;
@@ -86,19 +87,11 @@ public class MapView extends StackPane {
         syncHoverBorder(newMap);
         syncSelectedBorder(newMap);
 
-        double scale = 1.0;
-        if (getWidth() > 0 && getHeight() > 0) {
-            scale = Math.min(
-                (getWidth() - PADDING) / mapImage.getWidth(),
-                (getHeight() - PADDING) / mapImage.getHeight()
-            );
-        }
-        mapScale = scale;
-        final double finalScale = scale;
+        mapScale = calculateGlobalScale();
 
         SwingUtilities.invokeLater(() -> {
             if (renderer != null) {
-                renderer.setZoomFactor(finalScale); // Set scale FIRST
+                renderer.setZoomFactor(mapScale); // Set scale FIRST
                 renderer.setImages(mapImage, hoveredMapImage, selectedMapImage); // Then trigger repaint
             }
         });
@@ -112,10 +105,7 @@ public class MapView extends StackPane {
 
         if (viewModel.getActiveLayer() == null || getWidth() <= 0 || getHeight() <= 0) return;
 
-        double paddedWidth = getWidth() - PADDING;
-        double paddedHeight = getHeight() - PADDING;
-
-        mapScale = Math.min(paddedWidth / mapImage.getWidth(), paddedHeight / mapImage.getHeight());
+        mapScale = calculateGlobalScale();
 
         SwingUtilities.invokeLater(() -> {
             renderer.setZoomFactor(mapScale);
@@ -172,6 +162,18 @@ public class MapView extends StackPane {
                 viewModel.zoomOut();
             }
         });
+    }
+
+    private double calculateGlobalScale() {
+        MapModel rootModel = viewModel.getRootLayer().mapModel;
+        if (rootModel == null || getWidth() <= 0 || getHeight() <= 0) {
+            return 1.0;
+        }
+
+        double paddedWidth = getWidth() - PADDING;
+        double paddedHeight = getHeight() - PADDING;
+
+        return Math.min(paddedWidth / rootModel.width(), paddedHeight / rootModel.height());
     }
 
     private void syncHoverBorder(MapViewModel currentLayer) {

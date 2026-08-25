@@ -57,6 +57,8 @@ public class AtlasViewModel {
         }
     }
 
+    public MapViewModel getRootLayer() { return layerHistory.getFirst(); }
+
     public MapViewModel getActiveLayer() {
         return activeLayer.get();
     }
