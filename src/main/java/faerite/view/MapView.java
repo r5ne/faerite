@@ -11,10 +11,13 @@ import java.util.Arrays;
 import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
+
 import javax.swing.*;
 
 public class MapView extends StackPane {
@@ -30,6 +33,8 @@ public class MapView extends StackPane {
     private BufferedImage hoveredMapImage;
     private BufferedImage selectedMapImage;
 
+    private final Tooltip hoveredMapTooltip = new Tooltip();
+
     private Image hitboxMaskImage;
     private Image borderMaskImage;
     private Map<Integer, int[]> borderCache;
@@ -42,6 +47,9 @@ public class MapView extends StackPane {
 
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
+
+        hoveredMapTooltip.setShowDelay(Duration.ZERO);
+        hoveredMapTooltip.setHideDelay(Duration.ZERO);
 
         SwingUtilities.invokeLater(() -> {
             renderer.setBackgroundColor(viewModel.getOceanColor());
@@ -138,7 +146,22 @@ public class MapView extends StackPane {
             } else {
                 viewModel.getActiveLayer().updateHoveredRegion(0);
             }
+
+            RegionSelectionModel hoveredRegion = viewModel.getActiveLayer().getHoveredRegion();
+            if (hoveredRegion != null) {
+                hoveredMapTooltip.setText(String.format("%s (%s)", hoveredRegion.regionData().name(), hoveredRegion.regionData().type().getDisplayName()));
+                if (!hoveredMapTooltip.isShowing()) {
+                    hoveredMapTooltip.show(this, event.getScreenX() + 15, event.getScreenY() + 15);
+                } else {
+                    hoveredMapTooltip.setAnchorX(event.getScreenX() + 15);
+                    hoveredMapTooltip.setAnchorY(event.getScreenY() + 15);
+                }
+            } else {
+                hoveredMapTooltip.hide();
+            }
         });
+
+        setOnMouseExited(_ -> hoveredMapTooltip.hide());
 
         setOnMouseClicked(event -> {
             if (event.getButton() != MouseButton.PRIMARY) return;
