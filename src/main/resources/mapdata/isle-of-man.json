@@ -1,7 +1,7 @@
 {
   "name" : "isle-of-man",
-  "width" : 500,
-  "height" : 500,
+  "width" : 377,
+  "height" : 459,
   "regionData" : {
     "name" : "Isle of Man",
     "type" : "ISLAND_GROUP"
