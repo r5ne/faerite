@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 public final class MapRenderer extends JPanel {
+
     private static final double BILINEAR_ZOOM_CAP = 1.5;
 
     private BufferedImage mapImage;
@@ -56,7 +57,6 @@ public final class MapRenderer extends JPanel {
             Object interpolationValue;
             if (zoomFactor > BILINEAR_ZOOM_CAP) {
                 interpolationValue = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
-
             } else {
                 interpolationValue = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
             }

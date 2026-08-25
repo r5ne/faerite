@@ -5,16 +5,16 @@ import faerite.model.RegionSelectionModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
 
 public class AtlasViewModel {
+
     private final ObservableList<MapViewModel> layerHistory = FXCollections.observableArrayList();
     private final IntegerProperty currentLayerIndex = new SimpleIntegerProperty(-1);
     private final ObjectProperty<MapViewModel> activeLayer = new SimpleObjectProperty<>();
 
-    private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840);  // rgb
-    private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty();  // argb
-    private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xffff3d3d);  // argb
+    private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
+    private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty(); // argb
+    private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xffff3d3d); // argb
 
     public AtlasViewModel(MapModel rootMapModel) {
         hoveredBorderColor.set(deriveColorARGB(oceanColor.get(), 0.7, 3));

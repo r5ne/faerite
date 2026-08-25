@@ -2,7 +2,6 @@ package faerite.view;
 
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.scene.image.Image;
-
 import javax.imageio.ImageIO;
 
 public final class MapAssetCache {

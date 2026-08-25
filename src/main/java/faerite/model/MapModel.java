@@ -1,9 +1,8 @@
 package faerite.model;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Collections;
 import java.util.Set;
+import org.jetbrains.annotations.Nullable;
 
 public record MapModel(
     String name,

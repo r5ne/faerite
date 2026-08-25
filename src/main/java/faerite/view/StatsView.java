@@ -1,5 +1,7 @@
 package faerite.view;
 
+import faerite.model.RegionData;
+import faerite.model.RegionSelectionModel;
 import faerite.viewmodel.AtlasViewModel;
 import faerite.model.RegionData;
 import javafx.scene.control.Label;
