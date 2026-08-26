@@ -1,7 +1,8 @@
-package faerite.viewmodel;
+package faerite.atlas;
 
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
+import faerite.util.Colors;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +21,7 @@ public class AtlasViewModel {
     /// Creates the view model and adds the first map view model to the stack using the map model data.
     /// @param rootMapModel The map model used to create the first map view model.
     public AtlasViewModel(MapModel rootMapModel) {
-        hoveredBorderColor.set(deriveColorARGB(oceanColor.get(), 0.7, 3));
+        hoveredBorderColor.set(Colors.deriveColorARGB(oceanColor.get(), 0.7, 3));
 
         currentLayerIndex.addListener((_, _, newIndex) -> {
             if (newIndex.intValue() >= 0 && newIndex.intValue() < layerHistory.size()) {
@@ -97,15 +98,4 @@ public class AtlasViewModel {
         return selectedBorderColor;
     }
 
-    private int deriveColorARGB(int rgb, double satFactor, double brightFactor) {
-        int r = (rgb >> 16) & 0xFF;
-        int g = (rgb >> 8) & 0xFF;
-        int b = rgb & 0xFF;
-
-        float[] hsb = java.awt.Color.RGBtoHSB(r, g, b, null);
-        hsb[1] = (float) Math.clamp(hsb[1] * satFactor, 0.0, 1.0);
-        hsb[2] = (float) Math.clamp(hsb[2] * brightFactor, 0.0, 1.0);
-
-        return java.awt.Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
-    }
 }
