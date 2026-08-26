@@ -5,7 +5,7 @@ import java.util.Set;
 import org.jetbrains.annotations.Nullable;
 
 public record MapModel(
-    String name,
+    String fileName,
     int width,
     int height,
     RegionData regionData,
@@ -18,14 +18,14 @@ public record MapModel(
     }
 
     public String imageFileName() {
-        return name + ".png";
+        return fileName + ".png";
     }
 
     public String borderMaskFileName() {
-        return name + "-bordermask.png";
+        return fileName + "-bordermask.png";
     }
 
     public String hitboxMaskFileName() {
-        return name + "-hitboxmask.png";
+        return fileName + "-hitboxmask.png";
     }
 }

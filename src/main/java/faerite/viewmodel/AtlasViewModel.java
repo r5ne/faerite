@@ -32,7 +32,7 @@ public class AtlasViewModel {
         int nextIndex = currentLayerIndex.get() + 1;
 
         if (nextIndex < layerHistory.size()) {
-            if (layerHistory.get(nextIndex).mapModel.name().equals(mapModel.name())) {
+            if (layerHistory.get(nextIndex).mapModel.fileName().equals(mapModel.fileName())) {
                 currentLayerIndex.set(nextIndex);
                 return;
             } else {

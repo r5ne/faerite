@@ -30,7 +30,7 @@ public final class MapAssetCache {
     }
 
     public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
-        return mapBordersCache.computeIfAbsent(mapModel.name(), k ->
+        return mapBordersCache.computeIfAbsent(mapModel.fileName(), k ->
             MaskUtils.createBorderMasks(
                 borderMaskImage,
                 mapModel.regions().stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),
