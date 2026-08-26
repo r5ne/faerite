@@ -9,7 +9,7 @@ import javafx.scene.image.PixelReader;
 /// Contains utilities for creating borders.
 public final class BorderGenerator {
 
-    private MaskUtils() {}
+    private BorderGenerator() {}
 
     /// Creates a map of sparse indices for the borders from the mask image.
     /// @param maskImage The mask image to generate the borders from.

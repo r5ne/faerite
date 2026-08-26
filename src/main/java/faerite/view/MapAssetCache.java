@@ -42,7 +42,7 @@ public final class MapAssetCache {
     /// @return A map of sparse indices for all the borders.
     public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
         return mapBordersCache.computeIfAbsent(mapModel.fileName(), k ->
-            MaskUtils.createBorderMasks(
+            BorderGenerator.createBorderMasks(
                 borderMaskImage,
                 mapModel.regions().stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),
                 BORDER_SIZE
