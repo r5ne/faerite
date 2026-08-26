@@ -20,7 +20,7 @@ public class IsleOfManDataset implements MapDataset {
     @Override
     public Set<RegionSelectionModel> buildRegions() {
         return Set.of(
-            new RegionBuilder("Isle of Man", RegionType.ISLAND, 0xffff0000).build(),
+            new RegionBuilder("Isle of Man", RegionType.ISLAND, 0xff000000).build(),
             new RegionBuilder("Calf of Man", RegionType.ISLAND, 0xffffffff).build()
         );
     }
