@@ -10,6 +10,7 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 
+/// A view model storing data for a singular map model
 public class MapViewModel {
 
     public final MapModel mapModel;
@@ -19,6 +20,8 @@ public class MapViewModel {
 
     private final Map<Integer, RegionSelectionModel> colorToRegionMap = new HashMap<>();
 
+    /// Creates the view model using data from the map model.
+    /// @param mapModel The map model to use.
     public MapViewModel(MapModel mapModel) {
         this.mapModel = mapModel;
 
@@ -27,6 +30,8 @@ public class MapViewModel {
         }
     }
 
+    /// Updates the stored hovered region data.
+    /// @param color The ARGB mask color of the region to mark as hovered.
     public void updateHoveredRegion(int color) {
         RegionSelectionModel region = colorToRegionMap.get(color);
 
@@ -35,6 +40,7 @@ public class MapViewModel {
         }
     }
 
+    /// Updates the stored selected region data to the currently hovered region.
     public void updateSelectedRegion() {
         RegionSelectionModel currentHoveredRegion = hoveredRegion.get();
 
@@ -43,6 +49,8 @@ public class MapViewModel {
         }
     }
 
+    /// Updates the stored selected regino data
+    /// @param color The ARGB mask color of the region update as selected.
     public void setSelectedRegionByColor(int color) {
         RegionSelectionModel region = colorToRegionMap.get(color);
         selectedRegion.set(region);

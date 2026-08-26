@@ -6,7 +6,9 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-public class InfoView extends AnchorPane {
+/// Contains the information UI for the selected region.
+public class InfoView extends VBox {
+    private final AtlasViewModel viewModel;
 
     private static final double PADDING = 40.0;
     private static final int INFO_CARD_MIN_WIDTH = 300;
@@ -14,6 +16,8 @@ public class InfoView extends AnchorPane {
 
     AtlasViewModel viewModel;
 
+    /// Creates the information UI using data from the view model.
+    /// @param viewModel The global view model instance.
     public InfoView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 

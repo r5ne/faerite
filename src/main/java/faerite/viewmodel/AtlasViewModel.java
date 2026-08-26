@@ -6,6 +6,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/// A composite view model storing a stack of individual map view models for each displayed map.
 public class AtlasViewModel {
 
     private final ObservableList<MapViewModel> layerHistory = FXCollections.observableArrayList();
@@ -16,6 +17,8 @@ public class AtlasViewModel {
     private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty(); // argb
     private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xffff3d3d); // argb
 
+    /// Creates the view model and adds the first map view model to the stack using the map model data.
+    /// @param rootMapModel The map model used to create the first map view model.
     public AtlasViewModel(MapModel rootMapModel) {
         hoveredBorderColor.set(deriveColorARGB(oceanColor.get(), 0.7, 3));
 
@@ -28,6 +31,8 @@ public class AtlasViewModel {
         zoomIn(rootMapModel);
     }
 
+    /// Creates a new map view model using the map model and adds it to the stack.
+    /// @param mapModel The map model used to create the map view model.
     public void zoomIn(MapModel mapModel) {
         int nextIndex = currentLayerIndex.get() + 1;
 
@@ -44,6 +49,7 @@ public class AtlasViewModel {
         currentLayerIndex.set(nextIndex);
     }
 
+    /// Removes the map view model at the top of the stack.
     public void zoomOut() {
         if (currentLayerIndex.get() > 0) {
             MapViewModel oldMap = activeLayer.get();

@@ -12,6 +12,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+/// The entrypoint into the JavaFX application that Faerite uses.
 public class Faerite extends Application {
 
     @Override
@@ -30,8 +31,6 @@ public class Faerite extends Application {
     }
 
     private static @NotNull Scene initScene(String mapModelFileName) {
-        /// @param mapModelFileName The name of the mapModel json file to load.
-        /// @return The Scene with the views initialised and the mapModel loaded as the first Map in the AtlasViewModel.
         MapModel mapModel = MapDataLoader.loadMapModel(mapModelFileName);
         AtlasViewModel viewModel = new AtlasViewModel(mapModel);
         RootView root = new RootView(viewModel);

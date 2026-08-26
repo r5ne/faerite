@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 
+/// Stores and allows for interacting with caches for expensive map assets.
 public final class MapAssetCache {
 
     private static final int BORDER_SIZE = 2;
@@ -21,14 +22,24 @@ public final class MapAssetCache {
 
     private MapAssetCache() {}
 
+    /// Gets the JavaFX Image from an image file from the cache or disk.
+    /// @param fileName The file name of the image to query from the cache or load.
+    /// @return The image object of the file.
     public static Image getImage(String fileName) {
         return imageCache.computeIfAbsent(fileName, MapAssetCache::loadImage);
     }
 
+    /// Gets the AWT BufferedImage from the cache or disk.
+    /// @param fileName The file name of the image to query from the cache of load.
+    /// @return The buffered image object of the file.
     public static BufferedImage getBufferedImage(String fileName) {
         return bufferedImageCache.computeIfAbsent(fileName, MapAssetCache::loadBufferedImage);
     }
 
+    /// Gets the complete map of sparse indices for the borders of the regions in a map model from the cache or disk.
+    /// @param mapModel The map model defining the mask colors from which to get the sparse indices.
+    /// @param borderMaskImage The image containing the border mask.
+    /// @return A map of sparse indices for all the borders.
     public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
         return mapBordersCache.computeIfAbsent(mapModel.fileName(), k ->
             MaskUtils.createBorderMasks(

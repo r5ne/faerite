@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javax.swing.*;
 
+/// Contains the map and any borders or tooltips displayed over its regions.
 public class MapView extends StackPane {
 
     private static final int PADDING = 40;
@@ -49,6 +50,8 @@ public class MapView extends StackPane {
     private ChangeListener<RegionSelectionModel> hoveredRegionListener;
     private ChangeListener<RegionSelectionModel> selectedRegionListener;
 
+    /// Creates the map using data from the view model.
+    /// @param viewModel The global view model instance.
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
