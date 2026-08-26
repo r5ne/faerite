@@ -1,15 +1,13 @@
 package faerite.view;
 
+import faerite.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.scene.image.Image;
-import javax.imageio.ImageIO;
 
 /// Stores and allows for interacting with caches for expensive map assets.
 public final class MapAssetCache {
@@ -26,14 +24,14 @@ public final class MapAssetCache {
     /// @param fileName The file name of the image to query from the cache or load.
     /// @return The image object of the file.
     public static Image getImage(String fileName) {
-        return imageCache.computeIfAbsent(fileName, MapAssetCache::loadImage);
+        return imageCache.computeIfAbsent(fileName, MapDataLoader::loadImage);
     }
 
     /// Gets the AWT BufferedImage from the cache or disk.
     /// @param fileName The file name of the image to query from the cache of load.
     /// @return The buffered image object of the file.
     public static BufferedImage getBufferedImage(String fileName) {
-        return bufferedImageCache.computeIfAbsent(fileName, MapAssetCache::loadBufferedImage);
+        return bufferedImageCache.computeIfAbsent(fileName, MapDataLoader::loadBufferedImage);
     }
 
     /// Gets the complete map of sparse indices for the borders of the regions in a map model from the cache or disk.
@@ -48,26 +46,5 @@ public final class MapAssetCache {
                 BORDER_SIZE
             )
         );
-    }
-
-    private static Image loadImage(String fileName) {
-        String path = String.format("/mapdata/" + fileName);
-        InputStream stream = MapView.class.getResourceAsStream(path);
-        if (stream == null) {
-            throw new IllegalArgumentException("No file exists at: " + path);
-        }
-        return new Image(stream);
-    }
-
-    private static BufferedImage loadBufferedImage(String fileName) {
-        String path = String.format("/mapdata/" + fileName);
-        try (var stream = MapView.class.getResourceAsStream(path)) {
-            if (stream == null) {
-                throw new IllegalArgumentException("No file exists at: " + path);
-            }
-            return ImageIO.read(stream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

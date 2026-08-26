@@ -1,6 +1,5 @@
 package faerite;
 
-import faerite.model.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.view.RootView;
 import faerite.viewmodel.AtlasViewModel;

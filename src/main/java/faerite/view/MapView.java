@@ -4,7 +4,7 @@ import static faerite.view.MapGeometry.getColorAtPoint;
 import static faerite.view.MapGeometry.screenToMapPixel;
 
 import faerite.Point;
-import faerite.model.MapDataLoader;
+import faerite.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
 import faerite.viewmodel.AtlasViewModel;
