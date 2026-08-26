@@ -1,4 +1,4 @@
-package faerite.view;
+package faerite.atlas.map;
 
 import java.util.HashMap;
 import java.util.Map;
