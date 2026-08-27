@@ -17,7 +17,6 @@ public class InfoView extends VBox {
 
     private final StackPane viewStack = new StackPane();
 
-    private final Label titleLabel = new Label();
     private final Label typeLabel = new Label();
 
     MarkdownView overview = new MarkdownView();
@@ -29,8 +28,6 @@ public class InfoView extends VBox {
     public InfoView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
-        setSpacing(15.0);
-        titleLabel.getStyleClass().add("h1");
         AtlasStyle style = viewModel.getStyle();
         int paddingX = style.infoBoxHorisontalPadding();
         int paddingY = style.infoBoxVerticalPadding();
@@ -41,7 +38,7 @@ public class InfoView extends VBox {
         geographyInfo.setVisible(false);
         viewStack.getChildren().add(overview);
 
-        getChildren().addAll(titleLabel, titleBodySeparator, viewStack);
+        getChildren().add(viewStack);
 
         viewModel.selectedRegionProperty().addListener((_, _, newRegion) -> {updateLabels(newRegion); updateMarkdown(newRegion);});
         updateLabels(viewModel.getSelectedRegion());
@@ -55,7 +52,6 @@ public class InfoView extends VBox {
         } else {
             regionData = viewModel.getActiveLayer().mapModel.regionData();
         }
-        titleLabel.setText(regionData.name());
         typeLabel.setText(String.format("Type: %s", regionData.type().getDisplayName()));
     }
 
