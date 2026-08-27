@@ -1,5 +1,5 @@
 {
-  "mapId" : "isle-of-man",
+  "id" : "isle-of-man",
   "width" : 377,
   "height" : 459,
   "regionData" : {
@@ -7,22 +7,22 @@
     "type" : "ISLAND_GROUP"
   },
   "regions" : [ {
-    "regionId" : "isle-of-man",
-    "regionData" : {
-      "name" : "Isle of Man",
-      "type" : "ISLAND"
-    },
-    "maskColor" : -16777216,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionId" : "calf-of-man",
+    "id" : "calf-of-man",
     "regionData" : {
       "name" : "Calf of Man",
       "type" : "ISLAND"
     },
     "maskColor" : -1,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "isle-of-man",
+    "regionData" : {
+      "name" : "Isle of Man",
+      "type" : "ISLAND"
+    },
+    "maskColor" : -16777216,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null

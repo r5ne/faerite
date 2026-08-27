@@ -36,7 +36,7 @@ public final class MapDataLoader {
     /// @param fileName The file name of the image to load from the disk.
     /// @return The image object of the file.
     public static Image loadImage(String fileName) {
-        String path = String.format("/mapdata/" + fileName);
+        String path = "/maps/" + fileName;
         InputStream stream = MapView.class.getResourceAsStream(path);
         if (stream == null) {
             throw new IllegalArgumentException("No file exists at: " + path);
@@ -48,7 +48,7 @@ public final class MapDataLoader {
     /// @param fileName The file name of the image to load from the disk.
     /// @return The buffered image object of the file.
     public static BufferedImage loadBufferedImage(String fileName) {
-        String path = String.format("/mapdata/" + fileName);
+        String path = "/maps/" + fileName;
         try (var stream = MapView.class.getResourceAsStream(path)) {
             if (stream == null) {
                 throw new IllegalArgumentException("No file exists at: " + path);
