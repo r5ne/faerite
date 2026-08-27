@@ -18,7 +18,7 @@ public final class MapDataLoader {
     private MapDataLoader() {}
 
     /// Loads the specified .json file as a MapModel object.
-    /// @param mapModelFileName The full file name of the .json file to load.
+    /// @param mapId The id of the map model to load.
     /// @return A MapModel object representation of the .json file.
     public static MapModel loadMapModel(String mapId) {
         String resourcePath = "/mapdata/" + mapId + ".json";
