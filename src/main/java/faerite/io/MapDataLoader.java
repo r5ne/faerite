@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /// Loads various forms of data associated with a map.
 public final class MapDataLoader {
@@ -57,5 +58,24 @@ public final class MapDataLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String loadMarkdown(String fileName) {
+        String path = "/mapinfo/" + fileName;
+
+        try (var stream = MapView.class.getResourceAsStream(path)) {
+            if (stream == null) {
+                System.err.println("Failed to load Markdown: " + path);
+                return "";
+            }
+            return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.err.println("Failed to load Markdown: " + path);
+            return "Error loading content from " + path;
+        }
+    }
+
+    public static String nameToFileName(String name) {
+        return name.replace(" ", "-").toLowerCase();
     }
 }

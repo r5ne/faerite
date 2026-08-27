@@ -4,4 +4,6 @@ package faerite.model;
 public interface RegionModel {
     String id();
     RegionData regionData();
+
+    String markdownFileName(String section);
 }

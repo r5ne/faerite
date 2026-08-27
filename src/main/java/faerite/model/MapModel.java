@@ -37,4 +37,9 @@ public record MapModel(
     public String hitboxMaskFileName() {
         return id + "-hitboxmask.png";
     }
+
+    @Override
+    public String markdownFileName(String section) {
+        return String.format("%s-%s.md", id, section);
+    }
 }

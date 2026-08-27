@@ -17,6 +17,8 @@ public final class MapAssetCache {
     private static final Map<String, BufferedImage> bufferedImageCache = new HashMap<>();
     private static final Map<String, Map<Integer, int[]>> mapBordersCache = new HashMap<>();
 
+    private static final Map<String, String> markdownCache = new HashMap<>();
+
     private MapAssetCache() {}
 
     /// Gets the JavaFX Image from an image file.
@@ -38,12 +40,16 @@ public final class MapAssetCache {
     /// @param borderMaskImage The image containing the border mask.
     /// @return A map of sparse indices for all the borders.
     public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
-        return mapBordersCache.computeIfAbsent(mapModel.mapId(), k ->
+        return mapBordersCache.computeIfAbsent(mapModel.id(), k ->
             BorderGenerator.createBorderMasks(
                 borderMaskImage,
                 mapModel.regions().stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),
                 MapView.BORDER_SIZE
             )
         );
+    }
+
+    public static String getMarkdown(String fileName) {
+        return markdownCache.computeIfAbsent(fileName, MapDataLoader::loadMarkdown);
     }
 }
