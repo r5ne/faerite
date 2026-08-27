@@ -1,4 +1,4 @@
-package faerite.view;
+package faerite.atlas.map;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,10 +6,16 @@ import java.util.Set;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
-public final class MaskUtils {
+/// Contains utilities for creating borders.
+public final class BorderGenerator {
 
-    private MaskUtils() {}
+    private BorderGenerator() {}
 
+    /// Creates a map of sparse indices for the borders from the mask image.
+    /// @param maskImage The mask image to generate the borders from.
+    /// @param maskColors The set of all colors to check for and generate borders from.
+    /// @param borderSize The size of the border to generate.
+    /// @return A map of sparse indices for the borders from the mask image.
     public static Map<Integer, int[]> createBorderMasks(Image maskImage, Set<Integer> maskColors, int borderSize) {
         int width = (int) maskImage.getWidth();
         int height = (int) maskImage.getHeight();

@@ -1,9 +1,10 @@
-package mapdata;
+package mapdata.datasets;
 
 import faerite.model.RegionSelectionModel;
 import faerite.model.RegionType;
 import java.util.Set;
-import mapdata.datasets.MapDataset;
+
+import mapdata.RegionBuilder;
 
 public class BritishIslesDataset implements MapDataset {
 

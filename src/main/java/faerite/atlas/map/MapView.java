@@ -1,18 +1,18 @@
-package faerite.view;
+package faerite.atlas.map;
 
-import static faerite.view.MapGeometry.getColorAtPoint;
-import static faerite.view.MapGeometry.screenToMapPixel;
-
-import faerite.Point;
-import faerite.model.MapDataLoader;
+import faerite.atlas.AtlasViewModel;
+import faerite.atlas.MapViewModel;
+import faerite.model.Point;
+import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
-import faerite.viewmodel.AtlasViewModel;
-import faerite.viewmodel.MapViewModel;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 import java.util.Map;
+
+import faerite.io.MapAssetCache;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Label;
@@ -23,11 +23,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javax.swing.*;
 
+/// Contains the map and any borders or tooltips displayed over its regions.
 public class MapView extends StackPane {
 
-    private static final int PADDING = 40;
-    private static final int BORDER_SIZE = 2;
-    private static final double TOOLTIP_FADE_TIME = 1000;
+    public static final int PADDING = 40;
+    public static final int BORDER_SIZE = 2;
 
     private final AtlasViewModel viewModel;
     private final SwingNode swingNode = new SwingNode();
@@ -49,6 +49,8 @@ public class MapView extends StackPane {
     private ChangeListener<RegionSelectionModel> hoveredRegionListener;
     private ChangeListener<RegionSelectionModel> selectedRegionListener;
 
+    /// Creates the map using data from the view model.
+    /// @param viewModel The global view model instance.
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
@@ -142,8 +144,8 @@ public class MapView extends StackPane {
             } else if (event.getClickCount() > 1) {
                 RegionSelectionModel currentHoveredRegion = currentLayer.getHoveredRegion();
 
-                if (currentHoveredRegion != null && currentHoveredRegion.subMapFileName() != null) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                if (currentHoveredRegion != null && currentHoveredRegion.hasSubMap()) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
                     viewModel.zoomIn(newMap);
                 }
             }
@@ -158,8 +160,8 @@ public class MapView extends StackPane {
             if (event.getCode().equals(KeyCode.E)) {
                 RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
 
-                if (currentSelectedRegion != null && currentSelectedRegion.subMapFileName() != null) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                if (currentSelectedRegion != null && currentSelectedRegion.hasSubMap()) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
                     viewModel.zoomIn(newMap);
                 }
             } else if (event.getCode().equals(KeyCode.X)) {
@@ -169,7 +171,7 @@ public class MapView extends StackPane {
     }
 
     private void updateHoveredState(MouseEvent event) {
-        Point mapPoint = screenToMapPixel(
+        Point mapPoint = MapGeometry.screenToMapPixel(
             event.getX(),
             event.getY(),
             mapImage.getWidth(),
@@ -178,7 +180,7 @@ public class MapView extends StackPane {
             getWidth(),
             getHeight()
         );
-        int colorAtPoint = getColorAtPoint(hitboxMaskImage, mapPoint.x(), mapPoint.y());
+        int colorAtPoint = HitboxDetector.getColorAtPoint(hitboxMaskImage, mapPoint.x(), mapPoint.y());
         viewModel.getActiveLayer().updateHoveredRegion(colorAtPoint);
 
         RegionSelectionModel hoveredRegion = viewModel.getActiveLayer().getHoveredRegion();

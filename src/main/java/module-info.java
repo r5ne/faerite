@@ -6,9 +6,13 @@ module faerite {
     requires org.jetbrains.annotations;
     requires java.desktop;
     requires javafx.swing;
+    requires org.commonmark;
 
     exports faerite;
     exports faerite.model;
-    exports faerite.view;
-    exports faerite.viewmodel;
+    exports faerite.atlas.map;
+    exports faerite.io;
+    exports faerite.atlas.overlay;
+    exports faerite.util;
+    exports faerite.atlas;
 }

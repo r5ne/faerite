@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
+import mapdata.datasets.BritishIslesDataset;
 import mapdata.datasets.ChannelIslandsDataset;
 import mapdata.datasets.IsleOfManDataset;
 import mapdata.datasets.MapDataset;

@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Generate Mapdata" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="mapdata.MapDataGenerator" />
+    <module name="faerite" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

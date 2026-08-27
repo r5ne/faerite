@@ -29,7 +29,7 @@ public class ChannelIslandsDataset implements MapDataset {
             new RegionBuilder("Herm", RegionType.ISLAND_GROUP, 0xffffffb6).build(),
             new RegionBuilder("Jethou", RegionType.ISLAND_GROUP, 0xff36982b).build(),
 
-            new RegionBuilder("Les Écrehous", RegionType.ISLAND_GROUP, 0xff00ffff).build(),
+            new RegionBuilder("Les Écrehous", RegionType.ISLAND_GROUP, 0xff00ffff).regionId("les-ecrehous").build(),
             new RegionBuilder("Les Minquiers", RegionType.ISLAND_GROUP, 0xff0000ff).build(),
 
             new RegionBuilder("Les Casquets", RegionType.ROCK_GROUP, 0xff343434).build()

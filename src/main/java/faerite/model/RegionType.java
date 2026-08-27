@@ -1,5 +1,6 @@
 package faerite.model;
 
+/// The possible geographic types that a region can have.
 public enum RegionType {
     ARCHIPELAGO("Archipelago"),
     ISLAND("Island"),
