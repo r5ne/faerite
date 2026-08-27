@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class MapDataGenerator {
 
+    private static final Path MAP_IMAGE_PATH = Path.of("src/main/resources/maps/");
     private static final Path OUTPUT_PATH = Path.of("src/main/resources/mapdata/");
     private static final ObjectMapper objectMapper = JsonMapper.builder().enable(SerializationFeature.INDENT_OUTPUT).build();
 
@@ -44,7 +45,7 @@ public class MapDataGenerator {
 
     private static void writeMapModel(String name, RegionType type, @Nullable Set<RegionSelectionModel> regions) {
         String fileName = name.replace(" ", "-").toLowerCase();
-        Path imagePath = OUTPUT_PATH.resolve(fileName + ".png");
+        Path imagePath = MAP_IMAGE_PATH.resolve(fileName + ".png");
         int[] imageSize = ImageMetadataReader.getDimensions(imagePath);
 
         RegionData mapRegionData = new RegionData(name, type);
