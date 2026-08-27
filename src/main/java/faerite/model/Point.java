@@ -1,4 +1,4 @@
-package faerite;
+package faerite.model;
 
 /// Coordinates to a point on a 2D plane.
 /// @param x The x coordinate.

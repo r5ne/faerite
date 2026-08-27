@@ -1,8 +1,8 @@
-package faerite;
+package faerite.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import faerite.model.MapModel;
-import faerite.view.MapView;
+import faerite.atlas.map.MapView;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;

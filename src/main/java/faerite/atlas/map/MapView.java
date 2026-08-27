@@ -1,18 +1,18 @@
-package faerite.view;
+package faerite.atlas.map;
 
-import static faerite.view.MapGeometry.getColorAtPoint;
-import static faerite.view.MapGeometry.screenToMapPixel;
-
-import faerite.Point;
-import faerite.MapDataLoader;
+import faerite.atlas.AtlasViewModel;
+import faerite.atlas.MapViewModel;
+import faerite.model.Point;
+import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
-import faerite.viewmodel.AtlasViewModel;
-import faerite.viewmodel.MapViewModel;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 import java.util.Map;
+
+import faerite.io.MapAssetCache;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Label;
@@ -26,9 +26,8 @@ import javax.swing.*;
 /// Contains the map and any borders or tooltips displayed over its regions.
 public class MapView extends StackPane {
 
-    private static final int PADDING = 40;
-    private static final int BORDER_SIZE = 2;
-    private static final double TOOLTIP_FADE_TIME = 1000;
+    public static final int PADDING = 40;
+    public static final int BORDER_SIZE = 2;
 
     private final AtlasViewModel viewModel;
     private final SwingNode swingNode = new SwingNode();

@@ -1,8 +1,9 @@
 package faerite;
 
+import faerite.atlas.AtlasViewModel;
+import faerite.atlas.overlay.RootView;
+import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
-import faerite.view.RootView;
-import faerite.viewmodel.AtlasViewModel;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ public class Faerite extends Application {
     @Override
     public void start(Stage stage) {
         Scene scene = initScene("british-isles");
-        String cssPath = getClass().getResource("/stylesheet.css" ).toExternalForm();
+        String cssPath = getClass().getResource("/stylesheet.css").toExternalForm();
         scene.getStylesheets().add(cssPath);
         stage.setScene(scene);
         stage.setTitle("Faerite");

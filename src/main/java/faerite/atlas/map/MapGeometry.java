@@ -1,7 +1,6 @@
-package faerite.view;
+package faerite.atlas.map;
 
-import faerite.Point;
-import javafx.scene.image.Image;
+import faerite.model.Point;
 
 /// Contains helper methods for interacting with map geometry.
 public final class MapGeometry {

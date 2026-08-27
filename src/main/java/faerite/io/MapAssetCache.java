@@ -1,6 +1,7 @@
-package faerite.view;
+package faerite.io;
 
-import faerite.MapDataLoader;
+import faerite.atlas.map.BorderGenerator;
+import faerite.atlas.map.MapView;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
 import java.awt.image.BufferedImage;

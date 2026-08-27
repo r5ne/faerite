@@ -1,9 +1,13 @@
-package faerite.view;
+package faerite.atlas.overlay;
 
+import faerite.io.MapAssetCache;
 import faerite.model.RegionData;
+import faerite.model.RegionModel;
 import faerite.model.RegionSelectionModel;
 import faerite.viewmodel.AtlasViewModel;
 import faerite.viewmodel.MapViewModel;
+import faerite.atlas.AtlasViewModel;
+import faerite.atlas.MapViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;

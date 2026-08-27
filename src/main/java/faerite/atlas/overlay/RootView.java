@@ -1,6 +1,7 @@
-package faerite.view;
+package faerite.atlas.overlay;
 
-import faerite.viewmodel.AtlasViewModel;
+import faerite.atlas.AtlasViewModel;
+import faerite.atlas.map.MapView;
 import javafx.scene.layout.StackPane;
 
 /// The root pane on which all content is drawn on.

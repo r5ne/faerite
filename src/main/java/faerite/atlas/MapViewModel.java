@@ -1,4 +1,4 @@
-package faerite.viewmodel;
+package faerite.atlas;
 
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
