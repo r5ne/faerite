@@ -144,8 +144,8 @@ public class MapView extends StackPane {
             } else if (event.getClickCount() > 1) {
                 RegionSelectionModel currentHoveredRegion = currentLayer.getHoveredRegion();
 
-                if (currentHoveredRegion != null && currentHoveredRegion.subMapFileName() != null) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                if (currentHoveredRegion != null && currentHoveredRegion.hasSubMap()) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
                     viewModel.zoomIn(newMap);
                 }
             }
@@ -160,8 +160,8 @@ public class MapView extends StackPane {
             if (event.getCode().equals(KeyCode.E)) {
                 RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
 
-                if (currentSelectedRegion != null && currentSelectedRegion.subMapFileName() != null) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().subMapFileName());
+                if (currentSelectedRegion != null && currentSelectedRegion.hasSubMap()) {
+                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
                     viewModel.zoomIn(newMap);
                 }
             } else if (event.getCode().equals(KeyCode.X)) {
@@ -171,7 +171,7 @@ public class MapView extends StackPane {
     }
 
     private void updateHoveredState(MouseEvent event) {
-        Point mapPoint = screenToMapPixel(
+        Point mapPoint = MapGeometry.screenToMapPixel(
             event.getX(),
             event.getY(),
             mapImage.getWidth(),
@@ -180,7 +180,7 @@ public class MapView extends StackPane {
             getWidth(),
             getHeight()
         );
-        int colorAtPoint = getColorAtPoint(hitboxMaskImage, mapPoint.x(), mapPoint.y());
+        int colorAtPoint = HitboxDetector.getColorAtPoint(hitboxMaskImage, mapPoint.x(), mapPoint.y());
         viewModel.getActiveLayer().updateHoveredRegion(colorAtPoint);
 
         RegionSelectionModel hoveredRegion = viewModel.getActiveLayer().getHoveredRegion();
