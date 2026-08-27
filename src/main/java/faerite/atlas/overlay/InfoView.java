@@ -12,8 +12,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class StatsView extends VBox {
-
+/// Contains the information UI for the selected region.
+public class InfoView extends VBox {
     private final AtlasViewModel viewModel;
 
     private final Label titleLabel = new Label();
