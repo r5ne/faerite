@@ -37,7 +37,7 @@ public final class MapAssetCache {
     /// @param borderMaskImage The image containing the border mask.
     /// @return A map of sparse indices for all the borders.
     public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
-        return mapBordersCache.computeIfAbsent(mapModel.fileName(), k ->
+        return mapBordersCache.computeIfAbsent(mapModel.mapId(), k ->
             BorderGenerator.createBorderMasks(
                 borderMaskImage,
                 mapModel.regions().stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),

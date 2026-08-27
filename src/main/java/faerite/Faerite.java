@@ -16,8 +16,8 @@ public class Faerite extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene scene = initScene("british-isles.json");
-        String cssPath = getClass().getResource("/stylesheet.css").toExternalForm();
+        Scene scene = initScene("british-isles");
+        String cssPath = getClass().getResource("/stylesheet.css" ).toExternalForm();
         scene.getStylesheets().add(cssPath);
         stage.setScene(scene);
         stage.setTitle("Faerite");
@@ -29,8 +29,8 @@ public class Faerite extends Application {
         stage.show();
     }
 
-    private static @NotNull Scene initScene(String mapModelFileName) {
-        MapModel mapModel = MapDataLoader.loadMapModel(mapModelFileName);
+    private static @NotNull Scene initScene(String mapId) {
+        MapModel mapModel = MapDataLoader.loadMapModel(mapId);
         AtlasViewModel viewModel = new AtlasViewModel(mapModel);
         RootView root = new RootView(viewModel);
 
@@ -38,7 +38,7 @@ public class Faerite extends Application {
 
         // Screen dimensions are ignored on non-strict compositors where the setMaximised call ensures the window is
         // as big as the monitor.
-        // On strict compositors ensures the window gets treated as non-maximised, and is forced to the screen size.
+        // On strict compositors ensures the window gets treated as non-maximized, and is forced to the screen size.
         return new Scene(root, screenRect.getWidth() / 2, screenRect.getHeight() / 2);
     }
 }

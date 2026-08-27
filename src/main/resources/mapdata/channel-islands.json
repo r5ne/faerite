@@ -1,5 +1,5 @@
 {
-  "name" : "channel-islands",
+  "mapId" : "channel-islands",
   "width" : 825,
   "height" : 1129,
   "regionData" : {
@@ -7,93 +7,103 @@
     "type" : "ARCHIPELAGO"
   },
   "regions" : [ {
-    "regionData" : {
-      "name" : "Les Minquiers",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -16776961,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Jethou",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -13199317,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Chausey",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -256,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Alderney",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -65536,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
+    "regionId" : "les-casquets",
     "regionData" : {
       "name" : "Les Casquets",
       "type" : "ROCK_GROUP"
     },
     "maskColor" : -13355980,
-    "subMapFileName" : null,
+    "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "regionData" : {
-      "name" : "Herm",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -74,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Jersey",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -16777216,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Les Écrehous",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -16711681,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
+    "regionId" : "sark",
     "regionData" : {
       "name" : "Sark",
       "type" : "ISLAND_GROUP"
     },
     "maskColor" : -11156407,
-    "subMapFileName" : null,
+    "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
+    "regionId" : "jersey",
+    "regionData" : {
+      "name" : "Jersey",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -16777216,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "herm",
+    "regionData" : {
+      "name" : "Herm",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -74,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "chausey",
+    "regionData" : {
+      "name" : "Chausey",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -256,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "alderney",
+    "regionData" : {
+      "name" : "Alderney",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -65536,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "jethou",
+    "regionData" : {
+      "name" : "Jethou",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -13199317,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "les-minquiers",
+    "regionData" : {
+      "name" : "Les Minquiers",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -16776961,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "les-ecrehous",
+    "regionData" : {
+      "name" : "Les Écrehous",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -16711681,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "guernsey",
     "regionData" : {
       "name" : "Guernsey",
       "type" : "ISLAND_GROUP"
     },
     "maskColor" : -1,
-    "subMapFileName" : null,
+    "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   } ]

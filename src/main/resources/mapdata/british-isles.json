@@ -1,5 +1,5 @@
 {
-  "name" : "british-isles",
+  "mapId" : "british-isles",
   "width" : 724,
   "height" : 1205,
   "regionData" : {
@@ -7,75 +7,83 @@
     "type" : "ARCHIPELAGO"
   },
   "regions" : [ {
-    "regionData" : {
-      "name" : "Isle of Man",
-      "type" : "ISLAND_GROUP"
-    },
-    "maskColor" : -65536,
-    "subMapFileName" : "isle-of-man.json",
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Isle of Wight",
-      "type" : "ISLAND"
-    },
-    "maskColor" : -13793801,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Channel Islands",
-      "type" : "ARCHIPELAGO"
-    },
-    "maskColor" : -10496,
-    "subMapFileName" : "channel-islands.json",
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Shetland",
-      "type" : "ARCHIPELAGO"
-    },
-    "maskColor" : -16776961,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Great Britain",
-      "type" : "ISLAND"
-    },
-    "maskColor" : -16777216,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "regionData" : {
-      "name" : "Orkney",
-      "type" : "ARCHIPELAGO"
-    },
-    "maskColor" : -256,
-    "subMapFileName" : null,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
+    "regionId" : "ireland",
     "regionData" : {
       "name" : "Ireland",
       "type" : "ISLAND"
     },
     "maskColor" : -1,
-    "subMapFileName" : null,
+    "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
+    "regionId" : "orkney",
+    "regionData" : {
+      "name" : "Orkney",
+      "type" : "ARCHIPELAGO"
+    },
+    "maskColor" : -256,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "isle-of-wight",
+    "regionData" : {
+      "name" : "Isle of Wight",
+      "type" : "ISLAND"
+    },
+    "maskColor" : -13793801,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "great-britain",
+    "regionData" : {
+      "name" : "Great Britain",
+      "type" : "ISLAND"
+    },
+    "maskColor" : -16777216,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "isle-of-man",
+    "regionData" : {
+      "name" : "Isle of Man",
+      "type" : "ISLAND_GROUP"
+    },
+    "maskColor" : -65536,
+    "hasSubMap" : true,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "channel-islands",
+    "regionData" : {
+      "name" : "Channel Islands",
+      "type" : "ARCHIPELAGO"
+    },
+    "maskColor" : -10496,
+    "hasSubMap" : true,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "shetland",
+    "regionData" : {
+      "name" : "Shetland",
+      "type" : "ARCHIPELAGO"
+    },
+    "maskColor" : -16776961,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "regionId" : "isles-of-scilly",
     "regionData" : {
       "name" : "Isles of Scilly",
       "type" : "ARCHIPELAGO"
     },
     "maskColor" : -544997,
-    "subMapFileName" : null,
+    "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   } ]

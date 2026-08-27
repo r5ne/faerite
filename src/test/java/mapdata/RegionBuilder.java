@@ -7,6 +7,7 @@ import faerite.model.RegionType;
 
 
 public class RegionBuilder {
+    private String regionId;
     private final String name;
     private final RegionType type;
     private final int maskColor;
@@ -18,6 +19,11 @@ public class RegionBuilder {
         this.name = name;
         this.type = type;
         this.maskColor = maskColor;
+    }
+
+    public RegionBuilder regionId(String id) {
+        this.regionId = id;
+        return this;
     }
 
     public RegionBuilder subMap() {
