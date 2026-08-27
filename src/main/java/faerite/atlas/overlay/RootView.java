@@ -11,7 +11,7 @@ public class RootView extends StackPane {
     /// @param viewModel The global view model to pass to all other panes.
     public RootView(AtlasViewModel viewModel) {
         MapView map = new MapView(viewModel);
-        InfoView info = new InfoView(viewModel);
+        OverlayView info = new OverlayView(viewModel);
         this.getChildren().addAll(map, info);
     }
 }
