@@ -113,24 +113,11 @@ public class AtlasViewModel {
         return oceanColor.get();
     }
 
-    public IntegerProperty oceanColorProperty() {
-        return oceanColor;
-    }
-
     public int getHoveredBorderColor() {
         return hoveredBorderColor.get();
-    }
-
-    public IntegerProperty hoveredBorderColorProperty() {
-        return hoveredBorderColor;
     }
 
     public int getSelectedBorderColor() {
         return selectedBorderColor.get();
     }
-
-    public IntegerProperty selectedBorderColorProperty() {
-        return selectedBorderColor;
-    }
-
 }
