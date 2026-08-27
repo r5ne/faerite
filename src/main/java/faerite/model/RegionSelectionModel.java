@@ -18,4 +18,9 @@ public record RegionSelectionModel(
     boolean hasSubMap,
     @Nullable Point parentMapPointCoordinates,
     @Nullable Integer parentMapMaskColor
-) implements RegionModel {}
+) implements RegionModel {
+    @Override
+    public String markdownFileName(String section) {
+        return String.format("%s-%s.md", id, section);
+    }
+}
