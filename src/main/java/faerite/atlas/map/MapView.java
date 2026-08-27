@@ -7,13 +7,10 @@ import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.Point;
 import faerite.model.RegionSelectionModel;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 import java.util.Map;
-
-import faerite.io.MapAssetCache;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Label;

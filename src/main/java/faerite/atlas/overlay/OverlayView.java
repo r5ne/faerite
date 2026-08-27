@@ -1,5 +1,6 @@
 package faerite.atlas.overlay;
 
+import faerite.atlas.AtlasStyle;
 import faerite.atlas.AtlasViewModel;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
