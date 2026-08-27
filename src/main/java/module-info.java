@@ -6,6 +6,7 @@ module faerite {
     requires org.jetbrains.annotations;
     requires java.desktop;
     requires javafx.swing;
+    requires org.commonmark;
 
     exports faerite;
     exports faerite.model;
