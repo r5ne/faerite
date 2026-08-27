@@ -1,5 +1,6 @@
 package faerite.atlas.overlay;
 
+import faerite.atlas.AtlasStyle;
 import faerite.io.MapAssetCache;
 import faerite.model.RegionData;
 import faerite.model.RegionModel;
@@ -34,6 +35,10 @@ public class InfoView extends VBox {
 
         setSpacing(15.0);
         titleLabel.getStyleClass().add("h1");
+        AtlasStyle style = viewModel.getStyle();
+        int paddingX = style.infoBoxHorisontalPadding();
+        int paddingY = style.infoBoxVerticalPadding();
+        setPadding(new Insets(paddingY, paddingX, paddingY, paddingX));
         typeLabel.getStyleClass().add("body-text");
         selectedRegionListener = (_, _, newRegion) -> { updateLabels(newRegion); updateMarkdown(newRegion); };
 

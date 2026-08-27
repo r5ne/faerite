@@ -64,7 +64,33 @@ public class AtlasViewModel {
         }
     }
 
-    public MapViewModel getRootLayer() { return layerHistory.getFirst(); }
+    public AtlasStyle getStyle() {
+        return style.get();
+    }
+
+    public ObjectProperty<AtlasStyle> styleProperty() {
+        return style;
+    }
+
+    public RegionSelectionModel getSelectedRegion() {
+        return selectedRegion.getValue();
+    }
+
+    public ObservableValue<RegionSelectionModel> selectedRegionProperty() {
+        return selectedRegion;
+    }
+
+    public RegionSelectionModel getHoveredRegion() {
+        return hoveredRegion.getValue();
+    }
+
+    public ObservableValue<RegionSelectionModel> hoveredRegionProperty() {
+        return hoveredRegion;
+    }
+
+    public MapViewModel getRootLayer() {
+        return layerHistory.getFirst();
+    }
 
     public MapViewModel getActiveLayer() {
         return activeLayer.get();

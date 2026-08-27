@@ -9,9 +9,8 @@ import javafx.scene.paint.Color;
 /// Contains all the UI elements overlaid over the map.
 public class OverlayView extends AnchorPane {
 
-    private static final double PADDING = 40.0;
-    private static final int INFO_CARD_MIN_WIDTH = 300;
-    private static final int INFO_CARD_MAX_WIDTH = 1000;
+    private static final int WINDOW_MIN_WIDTH = 300;
+    private static final int WINDOW_MAX_WIDTH = 1000;
 
     AtlasViewModel viewModel;
 
@@ -23,25 +22,28 @@ public class OverlayView extends AnchorPane {
         // passes events to the pane behind if not directly over this pane's components
         pickOnBoundsProperty().set(false);
 
-        BorderPane overlayPane = new BorderPane();
-        // positioning
-        overlayPane.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
-        overlayPane.setMinWidth(INFO_CARD_MIN_WIDTH);
-        overlayPane.setMaxWidth(INFO_CARD_MAX_WIDTH);
+        BorderPane infoWindow = new BorderPane();
 
-        setTopAnchor(overlayPane, PADDING);
-        setBottomAnchor(overlayPane, PADDING);
-        setRightAnchor(overlayPane, PADDING);
+        // positioning
+        infoWindow.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
+        infoWindow.setMinWidth(WINDOW_MIN_WIDTH);
+        infoWindow.setMaxWidth(WINDOW_MAX_WIDTH);
+
+        AtlasStyle style = viewModel.getStyle();
+        setTopAnchor(infoWindow, style.mapPadding());
+        setBottomAnchor(infoWindow, style.mapPadding());
+        setRightAnchor(infoWindow, style.mapPadding());
 
         // styling
-        overlayPane.getStyleClass().add("info-card");
+        infoWindow.getStyleClass().add("info-window");
 
         DropShadow dropShadow = new DropShadow(15, 0, 5, Color.color(0, 0, 0, 0.3));
-        overlayPane.setEffect(dropShadow);
+        infoWindow.setEffect(dropShadow);
 
         // layout
-        HBox navigationBar = new HBox();
-        overlayPane.setTop(navigationBar);
+        VBox titleBar = new InfoTitleView(viewModel);
+
+        infoWindow.setTop(titleBar);
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -51,8 +53,8 @@ public class OverlayView extends AnchorPane {
         VBox infoBox = new InfoView(viewModel);
         scrollPane.setContent(infoBox);
 
-        overlayPane.setCenter(scrollPane);
+        infoWindow.setCenter(scrollPane);
 
-        getChildren().add(overlayPane);
+        getChildren().add(infoWindow);
     }
 }
