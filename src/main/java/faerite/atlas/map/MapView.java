@@ -2,17 +2,15 @@ package faerite.atlas.map;
 
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.MapViewModel;
-import faerite.model.Point;
+import faerite.io.MapAssetCache;
 import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
+import faerite.model.Point;
 import faerite.model.RegionSelectionModel;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 import java.util.Map;
-
-import faerite.io.MapAssetCache;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.control.Label;
@@ -31,7 +29,7 @@ public class MapView extends StackPane {
 
     private final AtlasViewModel viewModel;
     private final SwingNode swingNode = new SwingNode();
-    private final MapRenderer renderer = new MapRenderer(BORDER_SIZE);
+    private final MapRenderer renderer;
 
     private BufferedImage mapImage;
     private BufferedImage hoveredMapImage;
@@ -53,6 +51,7 @@ public class MapView extends StackPane {
     /// @param viewModel The global view model instance.
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
+        renderer = new MapRenderer(viewModel.getStyle().mapBorderSize());
 
         hoveredRegionTooltip.getStyleClass().add("tooltip");
         hoveredRegionTooltip.setMouseTransparent(true);
@@ -87,8 +86,8 @@ public class MapView extends StackPane {
         borderCache = MapAssetCache.getMapBorders(mapModel, borderMaskImage);
 
         // ensure canvas size accounts for borders being added to the map
-        int paddedWidth = mapModel.width() + BORDER_SIZE * 2;
-        int paddedHeight = mapModel.height() + BORDER_SIZE * 2;
+        int paddedWidth = mapModel.width() + viewModel.getStyle().mapBorderSize() * 2;
+        int paddedHeight = mapModel.height() + viewModel.getStyle().mapBorderSize() * 2;
         hoveredMapImage = new BufferedImage(paddedWidth, paddedHeight, BufferedImage.TYPE_INT_ARGB);
         selectedMapImage = new BufferedImage(paddedWidth, paddedHeight, BufferedImage.TYPE_INT_ARGB);
 
@@ -210,8 +209,8 @@ public class MapView extends StackPane {
             return 1.0;
         }
 
-        double paddedWidth = getWidth() - PADDING;
-        double paddedHeight = getHeight() - PADDING;
+        double paddedWidth = getWidth() - viewModel.getStyle().mapPadding();
+        double paddedHeight = getHeight() - viewModel.getStyle().mapPadding();
 
         return Math.min(paddedWidth / rootModel.width(), paddedHeight / rootModel.height());
     }
