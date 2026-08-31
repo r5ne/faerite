@@ -3,6 +3,7 @@ package faerite.atlas.overlay;
 import faerite.atlas.AtlasStyle;
 import faerite.io.MapAssetCache;
 import faerite.model.RegionData;
+import faerite.model.RegionInfoSection;
 import faerite.model.RegionModel;
 import faerite.model.RegionSelectionModel;
 import faerite.atlas.AtlasViewModel;
@@ -10,6 +11,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /// Contains the information UI for the selected region.
 public class InfoView extends VBox {
@@ -22,17 +26,30 @@ public class InfoView extends VBox {
     MarkdownView overview = new MarkdownView();
     MarkdownView historyInfo = new MarkdownView();
     MarkdownView geographyInfo = new MarkdownView();
+    private final Map<RegionInfoSection, MarkdownView> infoSectionViewMap = new HashMap<>(Map.of(
+            RegionInfoSection.OVERVIEW, overview,
+            RegionInfoSection.HISTORY, historyInfo,
+            RegionInfoSection.GEOGRAPHY, geographyInfo
+    ));
 
     /// Creates the information UI using data from the view model.
     /// @param viewModel The global view model instance.
     public InfoView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
+
         AtlasStyle style = viewModel.getStyle();
         int paddingX = style.infoBoxHorisontalPadding();
         int paddingY = style.infoBoxVerticalPadding();
         setPadding(new Insets(paddingY, paddingX, paddingY, paddingX));
         typeLabel.getStyleClass().add("body-text");
+
+        viewModel.selectedInfoSectionProperty().addListener((_, oldSection, newSection) -> {
+            infoSectionViewMap.get(oldSection).setVisible(false);
+            MarkdownView newSectionView = infoSectionViewMap.get(newSection);
+            newSectionView.setVisible(true);
+            viewStack.getChildren().setAll(newSectionView);
+        });
 
         historyInfo.setVisible(false);
         geographyInfo.setVisible(false);

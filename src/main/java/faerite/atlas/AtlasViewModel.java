@@ -1,6 +1,7 @@
 package faerite.atlas;
 
 import faerite.model.MapModel;
+import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import faerite.util.Colors;
 import javafx.beans.property.*;
@@ -21,6 +22,7 @@ public class AtlasViewModel {
     private final ObservableValue<RegionSelectionModel> hoveredRegion = activeLayer.flatMap(
         MapViewModel::getHoveredRegionProperty
     );
+    private final ObjectProperty<RegionInfoSection> selectedInfoSection = new SimpleObjectProperty<>(RegionInfoSection.OVERVIEW);
 
     private final ObjectProperty<AtlasStyle> style = new SimpleObjectProperty<>(AtlasStyle.DEFAULTS);
     private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
@@ -71,6 +73,18 @@ public class AtlasViewModel {
                 newMap.setSelectedRegionByColor(oldSelectedRegion.parentMapMaskColor());
             }
         }
+    }
+
+    public RegionInfoSection getSelectedInfoSection() {
+        return selectedInfoSection.get();
+    }
+
+    public ObjectProperty<RegionInfoSection> selectedInfoSectionProperty() {
+        return selectedInfoSection;
+    }
+
+    public IntegerProperty oceanColorProperty() {
+        return oceanColor;
     }
 
     public AtlasStyle getStyle() {

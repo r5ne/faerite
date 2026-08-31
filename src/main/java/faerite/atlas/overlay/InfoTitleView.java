@@ -3,6 +3,7 @@ package faerite.atlas.overlay;
 import faerite.atlas.AtlasStyle;
 import faerite.atlas.AtlasViewModel;
 import faerite.model.RegionData;
+import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class InfoTitleView extends VBox {
+
     AtlasViewModel viewModel;
 
     private final Label titleLabel = new Label();
@@ -36,6 +38,10 @@ public class InfoTitleView extends VBox {
         Button overviewButton = new Button("Overview");
         Button historyButton = new Button("History");
         Button geographyButton = new Button("Geography");
+
+        overviewButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.OVERVIEW));
+        historyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.HISTORY));
+        geographyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.GEOGRAPHY));
 
         overviewButton.setMaxWidth(Integer.MAX_VALUE);
         historyButton.setMaxWidth(Integer.MAX_VALUE);
