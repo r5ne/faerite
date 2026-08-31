@@ -30,12 +30,24 @@ public record MapModel(
 
     /// Returns the full border mask image file name associated with the map.
     public String borderMaskFileName() {
-        return id + "-bordermask.png";
+        return id + "-bordermask-0.png";
     }
 
-    /// Returns the full hitbox mask image file name associated with the map.
+    /// Returns the full border mask image file name for the base level associated with the map.
+    /// @param level the border level to use.
+    public String borderMaskFileName(int level) {
+        return id + "-hitboxmask-" + level + ".png";
+    }
+
+    /// Returns the full hitbox mask image file name for the base level associated with the map.
     public String hitboxMaskFileName() {
-        return id + "-hitboxmask.png";
+        return id + "-hitboxmask-0.png";
+    }
+
+    /// Returns the full hitbox mask image file name at the level specified.
+    /// @param level the hitbox level to use.
+    public String hitboxMaskFileName(int level) {
+        return id + "-hitboxmask-" + level + ".png";
     }
 
     @Override
