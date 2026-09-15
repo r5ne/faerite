@@ -73,3 +73,47 @@
 .nav-button:selected {
     -fx-background-color: rgba(255, 255, 255, 0.2);
 }
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #a0a0a0;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+}
+
+.scroll-bar:vertical:hover .thumb,
+.scroll-bar:horizontal:hover .thumb {
+    -fx-background-color: #787878;
+}
+
+.scroll-bar:vertical:pressed .thumb,
+.scroll-bar:horizontal:pressed .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
