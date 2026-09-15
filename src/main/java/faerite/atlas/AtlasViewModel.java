@@ -12,18 +12,23 @@ import javafx.collections.ObservableList;
 /// A composite view model storing a stack of individual map view models for each displayed map.
 public class AtlasViewModel {
 
+    // map navigation fields
     private final ObservableList<MapViewModel> layerHistory = FXCollections.observableArrayList();
     private final IntegerProperty currentLayerIndex = new SimpleIntegerProperty(-1);
     private final ObjectProperty<MapViewModel> activeLayer = new SimpleObjectProperty<>();
 
+    // region fields
     private final ObservableValue<RegionSelectionModel> selectedRegion = activeLayer.flatMap(
         MapViewModel::getSelectedRegionProperty
     );
     private final ObservableValue<RegionSelectionModel> hoveredRegion = activeLayer.flatMap(
         MapViewModel::getHoveredRegionProperty
     );
+
+    // overlay fields
     private final ObjectProperty<RegionInfoSection> selectedInfoSection = new SimpleObjectProperty<>(RegionInfoSection.OVERVIEW);
 
+    // style fields
     private final ObjectProperty<AtlasStyle> style = new SimpleObjectProperty<>(AtlasStyle.DEFAULTS);
     private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
     private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty(
