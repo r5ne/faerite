@@ -6,8 +6,8 @@ import faerite.model.RegionData;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -35,9 +35,10 @@ public class InfoTitleView extends VBox {
         navigationBar.setAlignment(style.infoBoxTitleAlignment());
         navigationBar.getStyleClass().add("nav-bar");
 
-        Button overviewButton = new Button("Overview");
-        Button historyButton = new Button("History");
-        Button geographyButton = new Button("Geography");
+
+        ToggleButton overviewButton = new ToggleButton("Overview");
+        ToggleButton historyButton = new ToggleButton("History");
+        ToggleButton geographyButton = new ToggleButton("Geography");
 
         overviewButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.OVERVIEW));
         historyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.HISTORY));
@@ -52,6 +53,14 @@ public class InfoTitleView extends VBox {
         overviewButton.getStyleClass().add("nav-button");
         historyButton.getStyleClass().add("nav-button");
         geographyButton.getStyleClass().add("nav-button");
+
+        viewModel.selectedInfoSectionProperty().addListener((_, _, selectedSection) -> {
+            overviewButton.setSelected(selectedSection == RegionInfoSection.OVERVIEW);
+            historyButton.setSelected(selectedSection == RegionInfoSection.HISTORY);
+            geographyButton.setSelected(selectedSection == RegionInfoSection.GEOGRAPHY);
+        });
+
+        overviewButton.setSelected(true);
 
         navigationBar.getChildren().addAll(overviewButton, historyButton, geographyButton);
 
