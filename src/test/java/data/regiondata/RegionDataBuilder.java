@@ -87,6 +87,7 @@ public class RegionDataBuilder {
         id = id != null ? id : name.toLowerCase().replace(" ", "-");
         if (wikidataId != null) {
             HttpResponse<String> response = WikidataFetcher.fetch(wikidataId);
+            System.out.println("Got response: " + response.body() + "Status code: " + response.statusCode());
             if (response != null) {
                 if (response.statusCode() != 200) {
                     System.err.println("API Error: " + response.body());
@@ -101,9 +102,11 @@ public class RegionDataBuilder {
                             if (data.has("area")) {
                                 area = data.get("area").get("value").asDouble();
                             }
+                            System.out.println("Parsed area");
                             if (data.has("population")) {
                                 population = data.get("population").get("value").asLong();
                             }
+                            System.out.println("Parsed population");
                         }
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);

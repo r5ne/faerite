@@ -27,6 +27,7 @@ public final class WikidataFetcher {
                                              .header("User-Agent", "Faerite")
                                              .GET()
                                              .build();
+            System.out.println("Creating request: " + request + ", URI: " + uri);
             return client.send(request, HttpResponse.BodyHandlers.ofString());
         }
         catch (Exception e) {
