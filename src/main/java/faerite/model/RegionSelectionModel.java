@@ -19,8 +19,3 @@ public record RegionSelectionModel(
     @Nullable Point parentMapPointCoordinates,
     @Nullable Integer parentMapMaskColor
 ) implements RegionModel {
-    @Override
-    public String markdownFileName(String section) {
-        return String.format("%s-%s.md", id, section);
-    }
-}
