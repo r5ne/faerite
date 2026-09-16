@@ -1,0 +1,11 @@
+{
+  "id" : "jethou",
+  "name" : "Jethou",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

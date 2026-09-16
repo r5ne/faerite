@@ -1,0 +1,11 @@
+{
+  "id" : "jersey",
+  "name" : "Jersey",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

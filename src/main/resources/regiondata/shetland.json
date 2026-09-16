@@ -1,0 +1,11 @@
+{
+  "id" : "shetland",
+  "name" : "Shetland",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

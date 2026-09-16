@@ -1,0 +1,11 @@
+{
+  "id" : "channel-islands",
+  "name" : "Channel Islands",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

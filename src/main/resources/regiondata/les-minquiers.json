@@ -1,0 +1,11 @@
+{
+  "id" : "les-minquiers",
+  "name" : "Les Minquiers",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

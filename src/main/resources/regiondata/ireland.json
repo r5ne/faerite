@@ -1,0 +1,11 @@
+{
+  "id" : "ireland",
+  "name" : "Ireland",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

@@ -1,0 +1,11 @@
+{
+  "id" : "guernsey",
+  "name" : "Guernsey",
+  "type" : null,
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}
