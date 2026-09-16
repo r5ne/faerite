@@ -142,7 +142,9 @@ public class MapView extends StackPane {
                 RegionSelectionModel currentHoveredRegion = currentLayer.getHoveredRegion();
 
                 if (currentHoveredRegion != null && currentHoveredRegion.hasSubMap()) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
+                    MapModel newMap = MapDataLoader.loadMapModel(
+                        AssetPaths.getMapDataPath(currentLayer.getSelectedRegion().id())
+                    );
                     viewModel.zoomIn(newMap.id());
                 }
             }
@@ -158,7 +160,9 @@ public class MapView extends StackPane {
                 RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
 
                 if (currentSelectedRegion != null && currentSelectedRegion.hasSubMap()) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
+                    MapModel newMap = MapDataLoader.loadMapModel(
+                        AssetPaths.getMapDataPath(currentLayer.getSelectedRegion().id())
+                    );
                     viewModel.zoomIn(newMap.id());
                 }
             } else if (event.getCode().equals(KeyCode.X)) {
@@ -188,11 +192,7 @@ public class MapView extends StackPane {
         if (hoveredRegion != null) {
             RegionDataModel hoveredRegionData = RegionDataCache.get(hoveredRegion.id());
             hoveredRegionTooltip.setText(
-                String.format(
-                    "%s (%s)",
-                    hoveredRegionData.name(),
-                    hoveredRegionData.type().getDisplayName()
-                )
+                String.format("%s (%s)", hoveredRegionData.name(), hoveredRegionData.type().getDisplayName())
             );
             hoveredRegionTooltip.autosize();
             hoveredRegionTooltip.relocate(screenX + 15, screenY + 15);
