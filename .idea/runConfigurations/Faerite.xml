@@ -2,9 +2,6 @@
   <configuration default="false" name="Faerite" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="faerite.Main" />
     <module name="faerite" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-      <option name="RunConfigurationTask" enabled="false" run_configuration_name="MapDataGenerator" run_configuration_type="Application" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>
