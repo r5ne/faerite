@@ -1,0 +1,11 @@
+{
+  "id" : "alderney",
+  "name" : "Alderney",
+  "type" : "ISLAND_GROUP",
+  "area" : 7.8,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 2167,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

@@ -25,6 +25,8 @@ public class BritishIslesRegionDataset implements RegionDataset {
             new RegionDataBuilder("Channel Islands", RegionType.ARCHIPELAGO).wikidataId("Q42314").build(),
             new RegionDataBuilder("Jersey", RegionType.ISLAND_GROUP).wikidataId("Q15706498").build(),
             new RegionDataBuilder("Guernsey", RegionType.ISLAND_GROUP).wikidataId("Q3311985").build(),
+            new RegionDataBuilder("Alderney", RegionType.ISLAND_GROUP).wikidataId("Q179313").build(),
+            new RegionDataBuilder("Chausey", RegionType.ARCHIPELAGO).wikidataId("Q292600").build(),
             new RegionDataBuilder("Sark", RegionType.ISLAND_GROUP).wikidataId("Q3405693").build(),
             new RegionDataBuilder("Herm", RegionType.ISLAND_GROUP).wikidataId("Q202023").build(),
             new RegionDataBuilder("Jethou", RegionType.ISLAND_GROUP).wikidataId("Q898856").build(),
