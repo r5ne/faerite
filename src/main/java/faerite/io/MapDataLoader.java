@@ -3,6 +3,7 @@ package faerite.io;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import faerite.model.MapModel;
 import faerite.atlas.map.MapView;
+import faerite.model.RegionDataModel;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
@@ -19,25 +20,20 @@ public final class MapDataLoader {
     private MapDataLoader() {}
 
     /// Loads the specified .json file as a MapModel object.
-    /// @param mapId The id of the map model to load.
+    /// @param path The path of the map model to load.
     /// @return A MapModel object representation of the .json file.
-    public static MapModel loadMapModel(String mapId) {
-        String resourcePath = "/mapdata/" + mapId + ".json";
-        try (InputStream stream = MapView.class.getResourceAsStream(resourcePath)) {
-            if (stream == null) {
-                throw new IllegalArgumentException("Resource not found at: " + resourcePath);
-            }
-            return objectMapper.readValue(stream, MapModel.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load map model: " + resourcePath, e);
-        }
+    public static MapModel loadMapModel(String path) {
+        return loadJson(path, MapModel.class);
+    }
+
+    public static RegionDataModel loadRegionDataModel(String path) {
+        return loadJson(path, RegionDataModel.class);
     }
 
     /// Loads the JavaFX Image from an image file.
-    /// @param fileName The file name of the image to load from the disk.
+    /// @param path The path of the image to load from the disk.
     /// @return The image object of the file.
-    public static Image loadImage(String fileName) {
-        String path = "/maps/" + fileName;
+    public static Image loadImage(String path) {
         InputStream stream = MapView.class.getResourceAsStream(path);
         if (stream == null) {
             throw new IllegalArgumentException("No file exists at: " + path);
@@ -46,10 +42,9 @@ public final class MapDataLoader {
     }
 
     /// Loads the AWT BufferedImage from an image file.
-    /// @param fileName The file name of the image to load from the disk.
+    /// @param path The path of the image to load from the disk.
     /// @return The buffered image object of the file.
-    public static BufferedImage loadBufferedImage(String fileName) {
-        String path = "/maps/" + fileName;
+    public static BufferedImage loadBufferedImage(String path) {
         try (var stream = MapView.class.getResourceAsStream(path)) {
             if (stream == null) {
                 throw new IllegalArgumentException("No file exists at: " + path);
@@ -60,9 +55,7 @@ public final class MapDataLoader {
         }
     }
 
-    public static String loadMarkdown(String fileName) {
-        String path = "/mapinfo/" + fileName;
-
+    public static String loadMarkdown(String path) {
         try (var stream = MapView.class.getResourceAsStream(path)) {
             if (stream == null) {
                 System.err.println("Failed to load Markdown: " + path);
@@ -75,7 +68,14 @@ public final class MapDataLoader {
         }
     }
 
-    public static String nameToFileName(String name) {
-        return name.replace(" ", "-").toLowerCase();
+    private static <T> T loadJson(String path, Class<T> classType) {
+        try (InputStream stream = MapView.class.getResourceAsStream(path)) {
+            if (stream == null) {
+                throw new IllegalArgumentException("Resource not found at: " + path);
+            }
+            return objectMapper.readValue(stream, classType);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load map model: " + path, e);
+        }
     }
 }
