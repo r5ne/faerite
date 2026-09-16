@@ -2,7 +2,7 @@ package faerite.atlas.overlay;
 
 import faerite.atlas.AtlasStyle;
 import faerite.atlas.AtlasViewModel;
-import faerite.model.RegionData;
+import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import javafx.geometry.Insets;
@@ -68,12 +68,9 @@ public class InfoTitleView extends VBox {
     }
 
     private void updateLabels(RegionSelectionModel newRegion) {
-        RegionData regionData;
-        if (newRegion != null) {
-            regionData = newRegion.regionData();
-        } else {
-            regionData = viewModel.getActiveLayer().mapModel.regionData();
-        }
-        titleLabel.setText(regionData.name());
+        String id = (newRegion != null)
+                ? newRegion.id()
+                : viewModel.getActiveLayer().mapModel.id();
+        titleLabel.setText(RegionDataCache.get(id).name());
     }
 }

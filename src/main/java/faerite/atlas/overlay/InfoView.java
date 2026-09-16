@@ -1,10 +1,8 @@
 package faerite.atlas.overlay;
 
 import faerite.atlas.AtlasStyle;
-import faerite.io.MapAssetCache;
-import faerite.model.RegionData;
+import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionInfoSection;
-import faerite.model.RegionModel;
 import faerite.model.RegionSelectionModel;
 import faerite.atlas.AtlasViewModel;
 import javafx.geometry.Insets;
@@ -63,22 +61,12 @@ public class InfoView extends VBox {
     }
 
     private void updateLabels(RegionSelectionModel newRegion) {
-        RegionData regionData;
-        if (newRegion != null) {
-            regionData = newRegion.regionData();
-        } else {
-            regionData = viewModel.getActiveLayer().mapModel.regionData();
-        }
-        typeLabel.setText(String.format("Type: %s", regionData.type().getDisplayName()));
+        String id = (newRegion != null)
+                ? newRegion.id()
+                : viewModel.getActiveLayer().mapModel.id();
+        typeLabel.setText(String.format("Type: %s", RegionDataCache.get(id).type().getDisplayName()));
     }
 
     private void updateMarkdown(RegionSelectionModel newRegion) {
-        RegionModel region = newRegion;
-        if (newRegion == null) {
-            region = viewModel.getActiveLayer().mapModel;
-        }
-        overview.setMarkdown(MapAssetCache.getMarkdown(region.markdownFileName("overview")));
-        geographyInfo.setMarkdown(MapAssetCache.getMarkdown(region.markdownFileName("geography")));
-        historyInfo.setMarkdown(MapAssetCache.getMarkdown(region.markdownFileName("history")));
     }
 }
