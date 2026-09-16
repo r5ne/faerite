@@ -1,11 +1,11 @@
 {
   "id" : "les-minquiers",
   "name" : "Les Minquiers",
-  "type" : null,
+  "type" : "ISLAND_GROUP",
   "area" : null,
   "elevation" : null,
   "elevationName" : null,
-  "population" : null,
+  "population" : 0,
   "climates" : [ ],
   "biomes" : [ ]
 }

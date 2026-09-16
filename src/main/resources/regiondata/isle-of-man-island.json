@@ -1,8 +1,8 @@
 {
   "id" : "isle-of-man-island",
   "name" : "Isle of Man",
-  "type" : null,
-  "area" : null,
+  "type" : "ISLAND",
+  "area" : 573.0,
   "elevation" : null,
   "elevationName" : null,
   "population" : null,

@@ -1,11 +1,11 @@
 {
   "id" : "ireland",
   "name" : "Ireland",
-  "type" : null,
-  "area" : null,
+  "type" : "ISLAND",
+  "area" : 84421.0,
   "elevation" : null,
   "elevationName" : null,
-  "population" : null,
+  "population" : 7185600,
   "climates" : [ ],
   "biomes" : [ ]
 }

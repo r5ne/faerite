@@ -1,11 +1,11 @@
 {
   "id" : "les-ecrehous",
   "name" : "Les Écrehous",
-  "type" : null,
+  "type" : "ISLAND_GROUP",
   "area" : null,
   "elevation" : null,
   "elevationName" : null,
-  "population" : null,
+  "population" : 0,
   "climates" : [ ],
   "biomes" : [ ]
 }

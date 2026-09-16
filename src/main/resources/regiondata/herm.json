@@ -1,11 +1,11 @@
 {
   "id" : "herm",
   "name" : "Herm",
-  "type" : null,
-  "area" : null,
+  "type" : "ISLAND_GROUP",
+  "area" : 2.0,
   "elevation" : null,
   "elevationName" : null,
-  "population" : null,
+  "population" : 60,
   "climates" : [ ],
   "biomes" : [ ]
 }

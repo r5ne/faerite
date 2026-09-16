@@ -3,24 +3,6 @@
   "width" : 825,
   "height" : 1129,
   "regions" : [ {
-    "id" : "chausey",
-    "maskColor" : -256,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "jersey",
-    "maskColor" : -16777216,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "guernsey",
-    "maskColor" : -1,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
     "id" : "jethou",
     "maskColor" : -13199317,
     "hasSubMap" : false,
@@ -59,6 +41,24 @@
   }, {
     "id" : "les-ecrehous",
     "maskColor" : -16711681,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "chausey",
+    "maskColor" : -256,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "jersey",
+    "maskColor" : -16777216,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "guernsey",
+    "maskColor" : -1,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null

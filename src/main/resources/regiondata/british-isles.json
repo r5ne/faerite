@@ -1,7 +1,7 @@
 {
   "id" : "british-isles",
   "name" : "British Isles",
-  "type" : null,
+  "type" : "ARCHIPELAGO",
   "area" : 121684.0,
   "elevation" : null,
   "elevationName" : null,

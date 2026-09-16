@@ -3,12 +3,6 @@
   "width" : 724,
   "height" : 1205,
   "regions" : [ {
-    "id" : "ireland",
-    "maskColor" : -1,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
     "id" : "isle-of-man",
     "maskColor" : -65536,
     "hasSubMap" : true,
@@ -47,6 +41,12 @@
   }, {
     "id" : "shetland",
     "maskColor" : -16776961,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "ireland",
+    "maskColor" : -1,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null

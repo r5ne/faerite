@@ -1,7 +1,7 @@
 {
   "id" : "great-britain",
   "name" : "Great Britain",
-  "type" : null,
+  "type" : "ISLAND",
   "area" : null,
   "elevation" : null,
   "elevationName" : null,

@@ -17,9 +17,9 @@ public class RegionDataBuilder {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private final String name;
+    private final RegionType type;
     private String id;
     private String wikidataId;
-    private RegionType type;
     private Double area;
     private Double elevation;
     private String elevationName;
@@ -27,8 +27,9 @@ public class RegionDataBuilder {
     private List<ClimateClassification> climates = new ArrayList<>();
     private List<BiomeClassification> biomes = new ArrayList<>();
 
-    public RegionDataBuilder(String name) {
+    public RegionDataBuilder(String name, RegionType type) {
         this.name = name;
+        this.type = type;
     }
 
     public RegionDataBuilder id(String id) {
@@ -38,11 +39,6 @@ public class RegionDataBuilder {
 
     public RegionDataBuilder wikidataId(String wikidataId) {
         this.wikidataId = wikidataId;
-        return this;
-    }
-
-    public RegionDataBuilder type(RegionType type) {
-        this.type = type;
         return this;
     }
 

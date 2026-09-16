@@ -1,11 +1,11 @@
 {
   "id" : "les-casquets",
   "name" : "Les Casquets",
-  "type" : null,
+  "type" : "ROCK_GROUP",
   "area" : null,
   "elevation" : null,
   "elevationName" : null,
-  "population" : null,
+  "population" : 0,
   "climates" : [ ],
   "biomes" : [ ]
 }
