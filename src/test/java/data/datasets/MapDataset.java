@@ -1,12 +1,10 @@
-package mapdata.datasets;
+package data.datasets;
 
 import faerite.model.RegionSelectionModel;
-import faerite.model.RegionType;
 
 import java.util.Set;
 
 public interface MapDataset {
-    String mapName();
-    RegionType regionType();
+    String id();
     Set<RegionSelectionModel> buildRegions();
 }
