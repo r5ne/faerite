@@ -1,6 +1,5 @@
 package faerite.atlas;
 
-import faerite.model.MapModel;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import faerite.util.Colors;
@@ -37,24 +36,24 @@ public class AtlasViewModel {
     private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xffff3d3d); // argb
 
     /// Creates the view model and adds the first map view model to the stack using the map model data.
-    /// @param rootMapModel The map model used to create the first map view model.
-    public AtlasViewModel(MapModel rootMapModel) {
+    /// @param initialMapModelId The id of the map model used to create the first map view model.
+    public AtlasViewModel(String initialMapModelId) {
         currentLayerIndex.addListener((_, _, newIndex) -> {
             if (newIndex.intValue() >= 0 && newIndex.intValue() < layerHistory.size()) {
                 activeLayer.set(layerHistory.get(newIndex.intValue()));
             }
         });
 
-        zoomIn(rootMapModel);
+        zoomIn(initialMapModelId);
     }
 
     /// Creates a new map view model using the map model and adds it to the stack.
-    /// @param mapModel The map model used to create the map view model.
-    public void zoomIn(MapModel mapModel) {
+    /// @param mapModelId The id of the map model used to create the map view model.
+    public void zoomIn(String mapModelId) {
         int nextIndex = currentLayerIndex.get() + 1;
 
         if (nextIndex < layerHistory.size()) {
-            if (layerHistory.get(nextIndex).mapModel.id().equals(mapModel.id())) {
+            if (layerHistory.get(nextIndex).mapModel.id().equals(mapModelId)) {
                 currentLayerIndex.set(nextIndex);
                 return;
             } else {
@@ -62,7 +61,7 @@ public class AtlasViewModel {
             }
         }
 
-        layerHistory.add(new MapViewModel(mapModel));
+        layerHistory.add(new MapViewModel(mapModelId));
         currentLayerIndex.set(nextIndex);
     }
 
