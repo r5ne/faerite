@@ -18,4 +18,4 @@ public record RegionSelectionModel(
     boolean hasSubMap,
     @Nullable Point parentMapPointCoordinates,
     @Nullable Integer parentMapMaskColor
-) implements RegionModel {
+) {}

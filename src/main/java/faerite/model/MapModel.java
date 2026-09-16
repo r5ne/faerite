@@ -11,4 +11,3 @@ import org.jetbrains.annotations.Nullable;
 /// @param regionData The region data of the overall region displayed by the map.
 /// @param regions A set of all the regions contained within the map.
     RegionData regionData,
-) implements RegionModel {
