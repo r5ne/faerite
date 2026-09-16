@@ -1,0 +1,11 @@
+{
+  "id" : "isles-of-scilly",
+  "name" : "Isles of Scilly",
+  "type" : "ARCHIPELAGO",
+  "area" : 16.3376,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 2281,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

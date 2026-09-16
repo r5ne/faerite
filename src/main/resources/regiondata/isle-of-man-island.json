@@ -1,0 +1,11 @@
+{
+  "id" : "isle-of-man-island",
+  "name" : "Isle of Man",
+  "type" : "ISLAND",
+  "area" : 573.0,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

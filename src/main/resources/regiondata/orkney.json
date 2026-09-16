@@ -1,0 +1,11 @@
+{
+  "id" : "orkney",
+  "name" : "Orkney",
+  "type" : "ARCHIPELAGO",
+  "area" : 990.0,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 22270,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

@@ -1,0 +1,11 @@
+{
+  "id" : "guernsey",
+  "name" : "Guernsey",
+  "type" : "ISLAND_GROUP",
+  "area" : 63.4,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 63950,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

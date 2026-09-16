@@ -1,0 +1,11 @@
+{
+  "id" : "british-isles",
+  "name" : "British Isles",
+  "type" : "ARCHIPELAGO",
+  "area" : 121684.0,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 71891524,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

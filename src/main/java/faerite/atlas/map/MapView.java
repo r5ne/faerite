@@ -2,10 +2,12 @@ package faerite.atlas.map;
 
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.MapViewModel;
+import faerite.io.AssetPaths;
 import faerite.io.MapAssetCache;
 import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.Point;
+import faerite.model.RegionDataModel;
 import faerite.model.RegionSelectionModel;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -65,9 +67,7 @@ public class MapView extends StackPane {
         });
         getChildren().addAll(swingNode, hoveredRegionTooltip);
 
-        viewModel.activeLayerProperty().addListener((_, oldLayer, newLayer) -> {
-            loadNewMap(oldLayer, newLayer);
-        });
+        viewModel.activeLayerProperty().addListener((_, oldLayer, newLayer) -> loadNewMap(oldLayer, newLayer));
 
         loadNewMap(null, viewModel.getActiveLayer());
         createEvents();
@@ -80,10 +80,10 @@ public class MapView extends StackPane {
         }
 
         MapModel mapModel = newMap.mapModel;
-        mapImage = MapAssetCache.getBufferedImage(mapModel.imageFileName());
-        hitboxMaskImage = MapAssetCache.getImage(mapModel.hitboxMaskFileName());
-        borderMaskImage = MapAssetCache.getImage(mapModel.borderMaskFileName());
-        borderCache = MapAssetCache.getMapBorders(mapModel, borderMaskImage);
+        mapImage = MapAssetCache.getBufferedImage(AssetPaths.getMapImagePath(mapModel.id()));
+        hitboxMaskImage = MapAssetCache.getImage(AssetPaths.getMapHitboxMaskPath(mapModel.id()));
+        borderMaskImage = MapAssetCache.getImage(AssetPaths.getMapBorderMaskPath(mapModel.id()));
+        borderCache = MapAssetCache.getMapBorders(mapModel.id(), mapModel.regions(), borderMaskImage);
 
         // ensure canvas size accounts for borders being added to the map
         int paddedWidth = mapModel.width() + viewModel.getStyle().mapBorderSize() * 2;
@@ -122,9 +122,7 @@ public class MapView extends StackPane {
 
         mapScale = calculateGlobalScale();
 
-        SwingUtilities.invokeLater(() -> {
-            renderer.setZoomFactor(mapScale);
-        });
+        SwingUtilities.invokeLater(() -> renderer.setZoomFactor(mapScale));
 
         swingNode.resize(getWidth(), getHeight());
     }
@@ -144,8 +142,10 @@ public class MapView extends StackPane {
                 RegionSelectionModel currentHoveredRegion = currentLayer.getHoveredRegion();
 
                 if (currentHoveredRegion != null && currentHoveredRegion.hasSubMap()) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
-                    viewModel.zoomIn(newMap);
+                    MapModel newMap = MapDataLoader.loadMapModel(
+                        AssetPaths.getMapDataPath(currentLayer.getSelectedRegion().id())
+                    );
+                    viewModel.zoomIn(newMap.id());
                 }
             }
         });
@@ -160,8 +160,10 @@ public class MapView extends StackPane {
                 RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
 
                 if (currentSelectedRegion != null && currentSelectedRegion.hasSubMap()) {
-                    MapModel newMap = MapDataLoader.loadMapModel(currentLayer.getSelectedRegion().id());
-                    viewModel.zoomIn(newMap);
+                    MapModel newMap = MapDataLoader.loadMapModel(
+                        AssetPaths.getMapDataPath(currentLayer.getSelectedRegion().id())
+                    );
+                    viewModel.zoomIn(newMap.id());
                 }
             } else if (event.getCode().equals(KeyCode.X)) {
                 viewModel.zoomOut();
@@ -188,12 +190,9 @@ public class MapView extends StackPane {
 
     private void updateHoveredRegionTooltip(RegionSelectionModel hoveredRegion, double screenX, double screenY) {
         if (hoveredRegion != null) {
+            RegionDataModel hoveredRegionData = RegionDataCache.get(hoveredRegion.id());
             hoveredRegionTooltip.setText(
-                String.format(
-                    "%s (%s)",
-                    hoveredRegion.regionData().name(),
-                    hoveredRegion.regionData().type().getDisplayName()
-                )
+                String.format("%s (%s)", hoveredRegionData.name(), hoveredRegionData.type().getDisplayName())
             );
             hoveredRegionTooltip.autosize();
             hoveredRegionTooltip.relocate(screenX + 15, screenY + 15);

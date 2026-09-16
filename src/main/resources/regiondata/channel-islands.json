@@ -1,0 +1,11 @@
+{
+  "id" : "channel-islands",
+  "name" : "Channel Islands",
+  "type" : "ARCHIPELAGO",
+  "area" : 198.0,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 163857,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

@@ -1,0 +1,11 @@
+{
+  "id" : "shetland",
+  "name" : "Shetland",
+  "type" : "ARCHIPELAGO",
+  "area" : 1468.0,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 23210,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

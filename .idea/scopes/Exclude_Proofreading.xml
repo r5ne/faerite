@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="Exclude Proofreading" pattern="test:mapdata.datasets..*" />
+  <scope name="Exclude Proofreading" pattern="test:data..*" />
 </component>

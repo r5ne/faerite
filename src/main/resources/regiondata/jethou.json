@@ -1,0 +1,11 @@
+{
+  "id" : "jethou",
+  "name" : "Jethou",
+  "type" : "ISLAND_GROUP",
+  "area" : 0.178,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 3,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

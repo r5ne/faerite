@@ -1,0 +1,11 @@
+{
+  "id" : "chausey",
+  "name" : "Chausey",
+  "type" : "ARCHIPELAGO",
+  "area" : 0.69,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

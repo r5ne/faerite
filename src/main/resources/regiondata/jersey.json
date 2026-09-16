@@ -1,0 +1,11 @@
+{
+  "id" : "jersey",
+  "name" : "Jersey",
+  "type" : "ISLAND_GROUP",
+  "area" : 118.2,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 105500,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

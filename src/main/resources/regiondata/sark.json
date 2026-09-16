@@ -1,0 +1,11 @@
+{
+  "id" : "sark",
+  "name" : "Sark",
+  "type" : "ISLAND_GROUP",
+  "area" : 5.5,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 562,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

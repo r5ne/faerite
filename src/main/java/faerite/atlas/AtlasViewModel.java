@@ -1,6 +1,5 @@
 package faerite.atlas;
 
-import faerite.model.MapModel;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import faerite.util.Colors;
@@ -12,18 +11,23 @@ import javafx.collections.ObservableList;
 /// A composite view model storing a stack of individual map view models for each displayed map.
 public class AtlasViewModel {
 
+    // map navigation fields
     private final ObservableList<MapViewModel> layerHistory = FXCollections.observableArrayList();
     private final IntegerProperty currentLayerIndex = new SimpleIntegerProperty(-1);
     private final ObjectProperty<MapViewModel> activeLayer = new SimpleObjectProperty<>();
 
+    // region fields
     private final ObservableValue<RegionSelectionModel> selectedRegion = activeLayer.flatMap(
         MapViewModel::getSelectedRegionProperty
     );
     private final ObservableValue<RegionSelectionModel> hoveredRegion = activeLayer.flatMap(
         MapViewModel::getHoveredRegionProperty
     );
+
+    // overlay fields
     private final ObjectProperty<RegionInfoSection> selectedInfoSection = new SimpleObjectProperty<>(RegionInfoSection.OVERVIEW);
 
+    // style fields
     private final ObjectProperty<AtlasStyle> style = new SimpleObjectProperty<>(AtlasStyle.DEFAULTS);
     private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
     private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty(
@@ -32,24 +36,24 @@ public class AtlasViewModel {
     private final IntegerProperty selectedBorderColor = new SimpleIntegerProperty(0xffff3d3d); // argb
 
     /// Creates the view model and adds the first map view model to the stack using the map model data.
-    /// @param rootMapModel The map model used to create the first map view model.
-    public AtlasViewModel(MapModel rootMapModel) {
+    /// @param initialMapModelId The id of the map model used to create the first map view model.
+    public AtlasViewModel(String initialMapModelId) {
         currentLayerIndex.addListener((_, _, newIndex) -> {
             if (newIndex.intValue() >= 0 && newIndex.intValue() < layerHistory.size()) {
                 activeLayer.set(layerHistory.get(newIndex.intValue()));
             }
         });
 
-        zoomIn(rootMapModel);
+        zoomIn(initialMapModelId);
     }
 
     /// Creates a new map view model using the map model and adds it to the stack.
-    /// @param mapModel The map model used to create the map view model.
-    public void zoomIn(MapModel mapModel) {
+    /// @param mapModelId The id of the map model used to create the map view model.
+    public void zoomIn(String mapModelId) {
         int nextIndex = currentLayerIndex.get() + 1;
 
         if (nextIndex < layerHistory.size()) {
-            if (layerHistory.get(nextIndex).mapModel.id().equals(mapModel.id())) {
+            if (layerHistory.get(nextIndex).mapModel.id().equals(mapModelId)) {
                 currentLayerIndex.set(nextIndex);
                 return;
             } else {
@@ -57,7 +61,7 @@ public class AtlasViewModel {
             }
         }
 
-        layerHistory.add(new MapViewModel(mapModel));
+        layerHistory.add(new MapViewModel(mapModelId));
         currentLayerIndex.set(nextIndex);
     }
 

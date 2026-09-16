@@ -1,0 +1,11 @@
+{
+  "id" : "calf-of-man",
+  "name" : "Calf of Man",
+  "type" : "ISLAND",
+  "area" : 250.0,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : 2,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

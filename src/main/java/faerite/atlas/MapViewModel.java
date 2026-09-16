@@ -1,5 +1,7 @@
 package faerite.atlas;
 
+import faerite.io.AssetPaths;
+import faerite.io.MapDataLoader;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
 import java.util.HashMap;
@@ -21,9 +23,9 @@ public class MapViewModel {
     private final Map<Integer, RegionSelectionModel> colorToRegionMap = new HashMap<>();
 
     /// Creates the view model using data from the map model.
-    /// @param mapModel The map model to use.
-    public MapViewModel(MapModel mapModel) {
-        this.mapModel = mapModel;
+    /// @param id The id of the map model to use.
+    public MapViewModel(String id) {
+        this.mapModel = MapDataLoader.loadMapModel(AssetPaths.getMapDataPath(id));
 
         for (RegionSelectionModel region : mapModel.regions()) {
             colorToRegionMap.put(region.maskColor(), region);

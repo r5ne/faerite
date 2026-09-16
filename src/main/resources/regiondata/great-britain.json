@@ -1,0 +1,11 @@
+{
+  "id" : "great-britain",
+  "name" : "Great Britain",
+  "type" : "ISLAND",
+  "area" : null,
+  "elevation" : null,
+  "elevationName" : null,
+  "population" : null,
+  "climates" : [ ],
+  "biomes" : [ ]
+}

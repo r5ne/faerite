@@ -2,11 +2,11 @@ package faerite.io;
 
 import faerite.atlas.map.BorderGenerator;
 import faerite.atlas.map.MapView;
-import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.scene.image.Image;
 
@@ -22,28 +22,28 @@ public final class MapAssetCache {
     private MapAssetCache() {}
 
     /// Gets the JavaFX Image from an image file.
-    /// @param fileName The file name of the image to query from the cache or load.
+    /// @param path The path of the image to query from the cache or load.
     /// @return The image object of the file.
-    public static Image getImage(String fileName) {
-        return imageCache.computeIfAbsent(fileName, MapDataLoader::loadImage);
+    public static Image getImage(String path) {
+        return imageCache.computeIfAbsent(path, MapDataLoader::loadImage);
     }
 
     /// Gets the AWT BufferedImage from an image file.
-    /// @param fileName The file name of the image to query from the cache of load.
+    /// @param path The path of the image to query from the cache of load.
     /// @return The buffered image object of the file.
-    public static BufferedImage getBufferedImage(String fileName) {
-        return bufferedImageCache.computeIfAbsent(fileName, MapDataLoader::loadBufferedImage);
+    public static BufferedImage getBufferedImage(String path) {
+        return bufferedImageCache.computeIfAbsent(path, MapDataLoader::loadBufferedImage);
     }
 
     /// Gets the complete map of sparse indices for all the borders of the regions in a map model.
-    /// @param mapModel The map model defining the mask colors from which to get the sparse indices.
+    /// @param mapModelId The id of the map model defining the mask colors from which to get the sparse indices.
     /// @param borderMaskImage The image containing the border mask.
     /// @return A map of sparse indices for all the borders.
-    public static Map<Integer, int[]> getMapBorders(MapModel mapModel, Image borderMaskImage) {
-        return mapBordersCache.computeIfAbsent(mapModel.id(), k ->
+    public static Map<Integer, int[]> getMapBorders(String mapModelId, Set<RegionSelectionModel> mapRegions, Image borderMaskImage) {
+        return mapBordersCache.computeIfAbsent(mapModelId, k ->
             BorderGenerator.createBorderMasks(
                 borderMaskImage,
-                mapModel.regions().stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),
+                mapRegions.stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),
                 MapView.BORDER_SIZE
             )
         );
