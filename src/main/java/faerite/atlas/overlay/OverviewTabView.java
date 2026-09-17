@@ -11,23 +11,32 @@ public class OverviewTabView extends VBox {
 
     AtlasViewModel viewModel;
 
+    InfoSection regionTypeSection;
+    Label regionTypeLabel = new Label();
+
+    InfoSection populationSection;
     Label populationNumberLabel = new Label();
 
     public OverviewTabView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
+        regionTypeLabel.getStyleClass().add("info-section-value");
         populationNumberLabel.getStyleClass().add("info-section-value");
 
-        InfoSection populationSection = new InfoSection("Population:", populationNumberLabel);
+        populationSection = new InfoSection("Population:", populationNumberLabel);
         populationSection.managedProperty().bind(populationSection.visibleProperty());
 
-        getChildren().addAll(populationSection);
+        regionTypeSection = new InfoSection("Region type:", regionTypeLabel);
+        regionTypeSection.managedProperty().bind(regionTypeSection.visibleProperty());
+
+        getChildren().addAll(regionTypeSection, populationSection);
     }
 
     public void updateLabels(RegionSelectionModel newRegion) {
         String id = newRegion != null ? newRegion.id() : viewModel.getActiveLayer().mapModel.id();
         RegionDataModel regionData = RegionDataCache.get(id);
 
+        regionTypeLabel.setText(regionData.type().getDisplayName());
         updatePopulationLabel(regionData);
     }
 
@@ -35,11 +44,11 @@ public class OverviewTabView extends VBox {
         Long population = regionData.population();
 
         if (population == null) {
-            populationNumberLabel.setVisible(false);
+            populationSection.setVisible(false);
             return;
         }
 
-        populationNumberLabel.setVisible(true);
+        populationSection.setVisible(true);
         String populationString;
 
         if (population >= 1000000000) {
