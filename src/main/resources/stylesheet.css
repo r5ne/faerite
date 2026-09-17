@@ -1,119 +1,81 @@
-/* Strip backgrounds and borders from ScrollPane and its internal viewport */
-.scroll-pane, .scroll-pane .viewport {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.info-window {
-    -fx-background-color: #1e1e1e;
-    -fx-background-radius: 12px;
-    -fx-padding: 20px;
-}
-
-.nav-title {
-    -fx-text-fill: white;
-    -fx-font-size: 64;
-    -fx-padding: 0px 0px 25px 0px;
-}
-
-.body-text {
-    -fx-font-size: 24px;
-    -fx-text-fill: #cccccc;
-    -fx-line-spacing: 4px;
-}
-
-.separator:horizontal .line {
-    -fx-border-color: #aaaaaa;
-}
-
-.markdown-view {
-    -fx-text-fill: white;
-    -fx-fill: white;
-}
-
-.markdown-view .markdown-h1 {
-    -fx-font-size: 24px;
+/* Global app style */
+.root {
+    -fx-font-family: 'Constantia';
     -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-padding: 10 0 5 0;
+    -fx-text-background-color: white;
+
+    -fx-theme-background: #1e1e1e;
+    -fx-theme-foreground: #2a2a2a;
+    -fx-theme-primary: #ffffff;
+    -fx-theme-secondary: #aaaaaa;
+    -fx-theme-accent: #a5d3e3;
 }
 
-.markdown-view .markdown-h2 {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-padding: 8 0 4 0;
-}
-
-.markdown-view .markdown-text {
+.label {
     -fx-font-size: 24px;
-    -fx-fill: white;
 }
 
-.nav-bar {
-    -fx-border-color: #ffffff;
-    -fx-border-width: 1px 0px 1px 0px;
-    -fx-padding: 0px;
-}
-
-.nav-button {
+/* Buttons */
+/* Applies to any type of button */
+.toggle-button, .button {
     -fx-background-color: transparent;
-    -fx-background-radius: 0px;
+    -fx-background-radius: 25px;
+
     -fx-text-fill: white;
     -fx-font-size: 24px;
 
-    -fx-padding: 8px 0px 8px 0px;
-}
+    -fx-padding: 10px 14px 10px 14px;
 
-.nav-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-cursor: hand;
 }
 
-.nav-button:selected {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+.button:hover, .toggle-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
 }
 
-.scroll-bar {
+.button:armed, .toggle-button:selected {
+    -fx-background-color: rgba(115, 220, 255, 0.3);
+}
+
+.tooltip {
+    -fx-font-family: "System";
+    -fx-font-weight: normal;
+    -fx-font-size: 12px;
+}
+
+/* Scroll bars and panes */
+.scroll-pane,
+.scroll-pane > .viewport,
+.scroll-pane > .corner {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
 
-.scroll-bar:vertical .track,
-.scroll-bar:horizontal .track {
+/* Custom Scrollbar */
+.scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .track {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
 
-.scroll-bar:vertical .thumb,
-.scroll-bar:horizontal .thumb {
-    -fx-background-color: #a0a0a0;
+.scroll-pane .scroll-bar:vertical .thumb {
     -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
 }
 
-.scroll-bar:vertical:hover .thumb,
-.scroll-bar:horizontal:hover .thumb {
-    -fx-background-color: #787878;
-}
-
-.scroll-bar:vertical:pressed .thumb,
-.scroll-bar:horizontal:pressed .thumb {
+.scroll-pane:hover .scroll-bar:vertical .thumb {
     -fx-background-color: #555555;
 }
 
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button {
-    -fx-background-color: transparent;
+.scroll-pane .scroll-bar .increment-button,
+.scroll-pane .scroll-bar .decrement-button {
+    -fx-pref-height: 0;
     -fx-padding: 0;
 }
 
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 0;
-}
-
-.scroll-pane > .corner {
-    -fx-background-color: transparent;
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow {
+    -fx-shape: " "; /* Erases the arrow shapes */
 }

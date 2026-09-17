@@ -16,8 +16,9 @@ public class Faerite extends Application {
     @Override
     public void start(Stage stage) {
         Scene scene = initScene("british-isles");
-        String cssPath = getClass().getResource("/stylesheet.css").toExternalForm();
-        scene.getStylesheets().add(cssPath);
+        String globalStyle = getClass().getResource("/stylesheet.css").toExternalForm();
+        String sidebarStyle = getClass().getResource("/sidebar.css").toExternalForm();
+        scene.getStylesheets().addAll(globalStyle, sidebarStyle);
         stage.setScene(scene);
         stage.setTitle("Faerite");
         Image faeriteIcon16 = new Image(Faerite.class.getResourceAsStream("/faerite-icon-16.png"));

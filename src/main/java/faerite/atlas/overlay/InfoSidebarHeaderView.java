@@ -1,40 +1,31 @@
 package faerite.atlas.overlay;
 
-import faerite.atlas.AtlasStyle;
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
-public class InfoTitleView extends VBox {
+public class InfoSidebarHeaderView extends VBox {
 
     AtlasViewModel viewModel;
 
     private final Label titleLabel = new Label();
 
-    public InfoTitleView(AtlasViewModel viewModel) {
+    public InfoSidebarHeaderView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
-        AtlasStyle style = viewModel.getStyle();
-        setAlignment(style.infoBoxTitleAlignment());
-        int paddingX = style.infoBoxHorisontalPadding();
-        int paddingY = style.infoBoxVerticalPadding();
-        setPadding(new Insets(paddingY, paddingX, 0, paddingX));
+
+        getStyleClass().add("info-sidebar-header");
 
         titleLabel.getStyleClass().add("nav-title");
         viewModel.selectedRegionProperty().addListener((_, _, newRegion) -> updateLabels(newRegion));
         updateLabels(viewModel.getSelectedRegion());
 
-        HBox navigationBar = new HBox();
-        navigationBar.setAlignment(style.infoBoxTitleAlignment());
+        UniformSpacerPane navigationBar = new UniformSpacerPane();
         navigationBar.getStyleClass().add("nav-bar");
-
 
         ToggleButton overviewButton = new ToggleButton("Overview");
         ToggleButton historyButton = new ToggleButton("History");
@@ -44,12 +35,6 @@ public class InfoTitleView extends VBox {
         historyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.HISTORY));
         geographyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.GEOGRAPHY));
 
-        overviewButton.setMaxWidth(Integer.MAX_VALUE);
-        historyButton.setMaxWidth(Integer.MAX_VALUE);
-        geographyButton.setMaxWidth(Integer.MAX_VALUE);
-        HBox.setHgrow(overviewButton, Priority.ALWAYS);
-        HBox.setHgrow(historyButton, Priority.ALWAYS);
-        HBox.setHgrow(geographyButton, Priority.ALWAYS);
         overviewButton.getStyleClass().add("nav-button");
         historyButton.getStyleClass().add("nav-button");
         geographyButton.getStyleClass().add("nav-button");
@@ -68,9 +53,7 @@ public class InfoTitleView extends VBox {
     }
 
     private void updateLabels(RegionSelectionModel newRegion) {
-        String id = (newRegion != null)
-                ? newRegion.id()
-                : viewModel.getActiveLayer().mapModel.id();
+        String id = newRegion != null ? newRegion.id() : viewModel.getActiveLayer().mapModel.id();
         titleLabel.setText(RegionDataCache.get(id).name());
     }
 }

@@ -1,7 +1,6 @@
 package faerite.io;
 
 import faerite.atlas.map.BorderGenerator;
-import faerite.atlas.map.MapView;
 import faerite.model.RegionSelectionModel;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -39,12 +38,17 @@ public final class MapAssetCache {
     /// @param mapModelId The id of the map model defining the mask colors from which to get the sparse indices.
     /// @param borderMaskImage The image containing the border mask.
     /// @return A map of sparse indices for all the borders.
-    public static Map<Integer, int[]> getMapBorders(String mapModelId, Set<RegionSelectionModel> mapRegions, Image borderMaskImage) {
+    public static Map<Integer, int[]> getMapBorders(
+        String mapModelId,
+        Set<RegionSelectionModel> mapRegions,
+        Image borderMaskImage,
+        int borderSize
+    ) {
         return mapBordersCache.computeIfAbsent(mapModelId, k ->
             BorderGenerator.createBorderMasks(
                 borderMaskImage,
                 mapRegions.stream().map(RegionSelectionModel::maskColor).collect(Collectors.toSet()),
-                MapView.BORDER_SIZE
+                borderSize
             )
         );
     }
