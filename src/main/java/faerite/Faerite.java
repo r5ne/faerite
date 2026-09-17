@@ -19,6 +19,7 @@ public class Faerite extends Application {
         String globalStyle = getClass().getResource("/stylesheet.css").toExternalForm();
         String sidebarStyle = getClass().getResource("/sidebar.css").toExternalForm();
         scene.getStylesheets().addAll(globalStyle, sidebarStyle);
+
         stage.setScene(scene);
         stage.setTitle("Faerite");
         Image faeriteIcon16 = new Image(Faerite.class.getResourceAsStream("/faerite-icon-16.png"));

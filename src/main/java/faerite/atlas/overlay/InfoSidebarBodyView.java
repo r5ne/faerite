@@ -27,11 +27,14 @@ public class InfoSidebarBodyView extends StackPane {
 
         // Stack to allow switching between tab contents.
         StackPane tabStack = new StackPane();
-        tabStack.getStyleClass().add("info-sidebar-body");
 
         overviewTab = new OverviewTabView(viewModel);
         historyTab = new HistoryTabView(viewModel);
         geographyTab = new GeographyTabView(viewModel);
+
+        overviewTab.getStyleClass().add("info-sidebar-body");
+        historyTab.getStyleClass().add("info-sidebar-body");
+        geographyTab.getStyleClass().add("info-sidebar-body");
 
         overviewTab.managedProperty().bind(overviewTab.visibleProperty());
         historyTab.managedProperty().bind(historyTab.visibleProperty());
@@ -64,5 +67,7 @@ public class InfoSidebarBodyView extends StackPane {
 
     private void updateTabs(RegionSelectionModel newRegion) {
         overviewTab.updateLabels(newRegion);
+        historyTab.updateLabels(newRegion);
+        geographyTab.updateLabels(newRegion);
     }
 }

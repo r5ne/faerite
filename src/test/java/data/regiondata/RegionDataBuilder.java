@@ -20,6 +20,7 @@ public class RegionDataBuilder {
     private final RegionType type;
     private String id;
     private String wikidataId;
+    private String nativeName;
     private Double area;
     private Double elevation;
     private String elevationName;
@@ -39,6 +40,11 @@ public class RegionDataBuilder {
 
     public RegionDataBuilder wikidataId(String wikidataId) {
         this.wikidataId = wikidataId;
+        return this;
+    }
+
+    public RegionDataBuilder nativeName(String nativeName) {
+        this.nativeName = nativeName;
         return this;
     }
 
@@ -114,6 +120,6 @@ public class RegionDataBuilder {
                 }
             }
         }
-        return new RegionDataModel(id, name, type, area, elevation, elevationName, population, climates, biomes);
+        return new RegionDataModel(id, name, type, nativeName, area, elevation, elevationName, population, climates, biomes);
     }
 }

@@ -10,6 +10,7 @@ public record RegionDataModel(
     String id,
     String name,
     RegionType type,
+    @Nullable String nativeName,
     @Nullable Double area,
     @Nullable Double elevation,
     @Nullable String elevationName,
