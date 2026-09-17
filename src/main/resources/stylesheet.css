@@ -1,7 +1,8 @@
-/* Strip backgrounds and borders from ScrollPane and its internal viewport */
-.scroll-pane, .scroll-pane .viewport {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
+/* Global app style */
+.root {
+    -fx-font-family: 'Constantia';
+    -fx-font-weight: bold;
+    -fx-text-background-color: white;
 }
 
 .info-window {
@@ -11,37 +12,29 @@
 }
 
 .nav-title {
-    -fx-text-fill: white;
-    -fx-font-size: 64;
-    -fx-padding: 0px 0px 25px 0px;
+    -fx-font-size: 72;
+    -fx-padding: 10px 0px 30px 0px;
 }
 
-.body-text {
+.nav-button {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-background-radius: 20px;
     -fx-font-size: 24px;
-    -fx-text-fill: #cccccc;
-    -fx-line-spacing: 4px;
+    -fx-padding: 10px 10px 10px 10px;
 }
 
-.separator:horizontal .line {
-    -fx-border-color: #aaaaaa;
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-cursor: hand;
 }
 
-.markdown-view {
-    -fx-text-fill: white;
-    -fx-fill: white;
-}
-
-.markdown-view .markdown-h1 {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-padding: 10 0 5 0;
+.nav-button:selected {
+    -fx-background-color: rgba(115, 220, 255, 0.3);
 }
 
 .markdown-view .markdown-h2 {
     -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
     -fx-padding: 8 0 4 0;
 }
 
@@ -50,30 +43,14 @@
     -fx-fill: white;
 }
 
-.nav-bar {
-    -fx-border-color: #ffffff;
-    -fx-border-width: 1px 0px 1px 0px;
-    -fx-padding: 0px;
-}
 
-.nav-button {
+/* Strip backgrounds and borders from ScrollPane and its internal viewport */
+.scroll-pane, .scroll-pane .viewport {
     -fx-background-color: transparent;
-    -fx-background-radius: 0px;
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
-
-    -fx-padding: 8px 0px 8px 0px;
+    -fx-padding: 0;
 }
 
-.nav-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
-    -fx-cursor: hand;
-}
-
-.nav-button:selected {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
-}
-
+/* scroll bar styling */
 .scroll-bar {
     -fx-background-color: transparent;
     -fx-padding: 0;
