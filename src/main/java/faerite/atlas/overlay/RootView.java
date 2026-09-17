@@ -2,6 +2,8 @@ package faerite.atlas.overlay;
 
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.MapView;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 
 /// The root pane on which all content is drawn on.
@@ -13,5 +15,18 @@ public class RootView extends StackPane {
         MapView map = new MapView(viewModel);
         AtlasOverlay info = new AtlasOverlay(viewModel);
         this.getChildren().addAll(map, info);
+
+        this.setFocusTraversable(true);
+
+        this.setOnKeyPressed(event -> {
+
+            if (this.getScene() != null && this.getScene().getFocusOwner() instanceof TextInputControl) {
+                return;
+            }
+
+            map.getOnKeyPressed().handle(event);
+        });
+
+        this.requestFocus();
     }
 }

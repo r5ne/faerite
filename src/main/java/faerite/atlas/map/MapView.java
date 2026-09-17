@@ -154,9 +154,8 @@ public class MapView extends StackPane {
             MapViewModel currentLayer = viewModel.getActiveLayer();
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 viewModel.zoomOut();
-            }
-
-            if (event.getCode().equals(KeyCode.E)) {
+                event.consume();
+            } else if (event.getCode().equals(KeyCode.E)) {
                 RegionSelectionModel currentSelectedRegion = currentLayer.getSelectedRegion();
 
                 if (currentSelectedRegion != null && currentSelectedRegion.hasSubMap()) {
@@ -164,9 +163,11 @@ public class MapView extends StackPane {
                         AssetPaths.getMapDataPath(currentLayer.getSelectedRegion().id())
                     );
                     viewModel.zoomIn(newMap.id());
+                    event.consume();
                 }
             } else if (event.getCode().equals(KeyCode.X)) {
                 viewModel.zoomOut();
+                event.consume();
             }
         });
     }
