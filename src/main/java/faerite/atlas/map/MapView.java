@@ -26,8 +26,8 @@ import javax.swing.*;
 /// Contains the map and any borders or tooltips displayed over its regions.
 public class MapView extends StackPane {
 
-    public static final int PADDING = 40;
-    public static final int BORDER_SIZE = 2;
+    private static final int BORDER_SIZE = 2;
+    private static final int PADDING = 40;
 
     private final AtlasViewModel viewModel;
     private final SwingNode swingNode = new SwingNode();
@@ -53,7 +53,7 @@ public class MapView extends StackPane {
     /// @param viewModel The global view model instance.
     public MapView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
-        renderer = new MapRenderer(viewModel.getStyle().mapBorderSize());
+        renderer = new MapRenderer(BORDER_SIZE);
 
         hoveredRegionTooltip.getStyleClass().add("tooltip");
         hoveredRegionTooltip.setMouseTransparent(true);
@@ -83,11 +83,11 @@ public class MapView extends StackPane {
         mapImage = MapAssetCache.getBufferedImage(AssetPaths.getMapImagePath(mapModel.id()));
         hitboxMaskImage = MapAssetCache.getImage(AssetPaths.getMapHitboxMaskPath(mapModel.id()));
         borderMaskImage = MapAssetCache.getImage(AssetPaths.getMapBorderMaskPath(mapModel.id()));
-        borderCache = MapAssetCache.getMapBorders(mapModel.id(), mapModel.regions(), borderMaskImage);
+        borderCache = MapAssetCache.getMapBorders(mapModel.id(), mapModel.regions(), borderMaskImage, BORDER_SIZE);
 
         // ensure canvas size accounts for borders being added to the map
-        int paddedWidth = mapModel.width() + viewModel.getStyle().mapBorderSize() * 2;
-        int paddedHeight = mapModel.height() + viewModel.getStyle().mapBorderSize() * 2;
+        int paddedWidth = mapModel.width() + BORDER_SIZE * 2;
+        int paddedHeight = mapModel.height() + BORDER_SIZE * 2;
         hoveredMapImage = new BufferedImage(paddedWidth, paddedHeight, BufferedImage.TYPE_INT_ARGB);
         selectedMapImage = new BufferedImage(paddedWidth, paddedHeight, BufferedImage.TYPE_INT_ARGB);
 
@@ -208,8 +208,8 @@ public class MapView extends StackPane {
             return 1.0;
         }
 
-        double paddedWidth = getWidth() - viewModel.getStyle().mapPadding();
-        double paddedHeight = getHeight() - viewModel.getStyle().mapPadding();
+        double paddedWidth = getWidth() - PADDING;
+        double paddedHeight = getHeight() - PADDING;
 
         return Math.min(paddedWidth / rootModel.width(), paddedHeight / rootModel.height());
     }

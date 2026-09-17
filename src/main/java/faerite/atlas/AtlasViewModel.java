@@ -25,10 +25,11 @@ public class AtlasViewModel {
     );
 
     // overlay fields
-    private final ObjectProperty<RegionInfoSection> selectedInfoSection = new SimpleObjectProperty<>(RegionInfoSection.OVERVIEW);
+    private final ObjectProperty<RegionInfoSection> selectedInfoSection = new SimpleObjectProperty<>(
+        RegionInfoSection.OVERVIEW
+    );
 
     // style fields
-    private final ObjectProperty<AtlasStyle> style = new SimpleObjectProperty<>(AtlasStyle.DEFAULTS);
     private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
     private final IntegerProperty hoveredBorderColor = new SimpleIntegerProperty(
         Colors.deriveColorARGB(oceanColor.get(), 0.7, 3)
@@ -89,14 +90,6 @@ public class AtlasViewModel {
 
     public IntegerProperty oceanColorProperty() {
         return oceanColor;
-    }
-
-    public AtlasStyle getStyle() {
-        return style.get();
-    }
-
-    public ObjectProperty<AtlasStyle> styleProperty() {
-        return style;
     }
 
     public RegionSelectionModel getSelectedRegion() {
