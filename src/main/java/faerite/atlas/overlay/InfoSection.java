@@ -11,7 +11,7 @@ public class InfoSection extends VBox {
 
         if (title != null) {
             Label titleLabel = new Label(title);
-            titleLabel.getStyleClass().add("card-title");
+            titleLabel.getStyleClass().add("info-section-title");
             getChildren().add(titleLabel);
         }
 

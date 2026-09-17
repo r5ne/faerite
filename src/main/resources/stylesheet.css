@@ -3,94 +3,79 @@
     -fx-font-family: 'Constantia';
     -fx-font-weight: bold;
     -fx-text-background-color: white;
+
+    -fx-theme-background: #1e1e1e;
+    -fx-theme-foreground: #2a2a2a;
+    -fx-theme-primary: #ffffff;
+    -fx-theme-secondary: #aaaaaa;
+    -fx-theme-accent: #315d6c;
 }
 
-.info-window {
-    -fx-background-color: #1e1e1e;
-    -fx-background-radius: 12px;
-    -fx-padding: 20px;
-}
-
-.nav-title {
-    -fx-font-size: 72;
-    -fx-padding: 10px 0px 30px 0px;
-}
-
-.nav-button {
-    -fx-text-fill: white;
-    -fx-background-color: transparent;
-    -fx-background-radius: 20px;
+.label {
     -fx-font-size: 24px;
-    -fx-padding: 10px 10px 10px 10px;
 }
 
-.nav-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+/* Buttons */
+/* Applies to any type of button */
+.toggle-button, .button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 25px;
+
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+
+    -fx-padding: 10px 14px 10px 14px;
+
     -fx-cursor: hand;
 }
 
-.nav-button:selected {
+.button:hover, .toggle-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+.button:armed, .toggle-button:selected {
     -fx-background-color: rgba(115, 220, 255, 0.3);
 }
 
-.markdown-view .markdown-h2 {
-    -fx-font-size: 20px;
-    -fx-padding: 8 0 4 0;
+.tooltip {
+    -fx-font-family: "System";
+    -fx-font-weight: normal;
+    -fx-font-size: 12px;
 }
 
-.markdown-view .markdown-text {
-    -fx-font-size: 24px;
-    -fx-fill: white;
-}
-
-
-/* Strip backgrounds and borders from ScrollPane and its internal viewport */
-.scroll-pane, .scroll-pane .viewport {
+/* Scroll bars and panes */
+.scroll-pane,
+.scroll-pane > .viewport,
+.scroll-pane > .corner {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
 
-/* scroll bar styling */
-.scroll-bar {
+/* Custom Scrollbar */
+.scroll-pane .scroll-bar {
     -fx-background-color: transparent;
-    -fx-padding: 0;
 }
 
-.scroll-bar:vertical .track,
-.scroll-bar:horizontal .track {
+.scroll-pane .scroll-bar .track {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
 
-.scroll-bar:vertical .thumb,
-.scroll-bar:horizontal .thumb {
-    -fx-background-color: #a0a0a0;
+.scroll-pane .scroll-bar:vertical .thumb {
     -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
 }
 
-.scroll-bar:vertical:hover .thumb,
-.scroll-bar:horizontal:hover .thumb {
-    -fx-background-color: #787878;
-}
-
-.scroll-bar:vertical:pressed .thumb,
-.scroll-bar:horizontal:pressed .thumb {
+.scroll-pane:hover .scroll-bar:vertical .thumb {
     -fx-background-color: #555555;
 }
 
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button {
-    -fx-background-color: transparent;
+.scroll-pane .scroll-bar .increment-button,
+.scroll-pane .scroll-bar .decrement-button {
+    -fx-pref-height: 0;
     -fx-padding: 0;
 }
 
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 0;
-}
-
-.scroll-pane > .corner {
-    -fx-background-color: transparent;
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow {
+    -fx-shape: " "; /* Erases the arrow shapes */
 }
