@@ -17,19 +17,33 @@ public class OverviewTabView extends VBox {
     InfoSection populationSection;
     Label populationNumberLabel = new Label();
 
+    InfoSection areaSection;
+    Label areaLabel = new Label();
+
+    InfoSection populationDensitySection;
+    Label populationDensityLabel = new Label();
+
+
     public OverviewTabView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
         regionTypeLabel.getStyleClass().add("info-section-value");
-        populationNumberLabel.getStyleClass().add("info-section-value");
-
-        populationSection = new InfoSection("Population:", populationNumberLabel);
-        populationSection.managedProperty().bind(populationSection.visibleProperty());
-
         regionTypeSection = new InfoSection("Region type:", regionTypeLabel);
         regionTypeSection.managedProperty().bind(regionTypeSection.visibleProperty());
 
-        getChildren().addAll(regionTypeSection, populationSection);
+        populationNumberLabel.getStyleClass().add("info-section-value");
+        populationSection = new InfoSection("Population:", populationNumberLabel);
+        populationSection.managedProperty().bind(populationSection.visibleProperty());
+
+        areaLabel.getStyleClass().add("info-section-value");
+        areaSection = new InfoSection("Land area:", areaLabel);
+        areaSection.managedProperty().bind(areaSection.visibleProperty());
+
+        populationDensityLabel.getStyleClass().add("info-section-value");
+        populationDensitySection = new InfoSection("Population density:", populationDensityLabel);
+        populationDensitySection.managedProperty().bind(populationDensitySection.visibleProperty());
+
+        getChildren().addAll(regionTypeSection, populationSection, areaSection, populationDensitySection);
     }
 
     public void updateLabels(RegionSelectionModel newRegion) {
@@ -38,6 +52,8 @@ public class OverviewTabView extends VBox {
 
         regionTypeLabel.setText(regionData.type().getDisplayName());
         updatePopulationLabel(regionData);
+        updateAreaLabel(regionData);
+        updatePopulationDensityLabel(regionData);
     }
 
     private void updatePopulationLabel(RegionDataModel regionData) {
@@ -60,5 +76,30 @@ public class OverviewTabView extends VBox {
         }
 
         populationNumberLabel.setText(populationString);
+    }
+
+    private void updateAreaLabel(RegionDataModel regionData) {
+        Double area = regionData.area();
+
+        if (area == null) {
+            areaSection.setVisible(false);
+            return;
+        }
+        areaSection.setVisible(true);
+        areaLabel.setText(RegionDataFormatter.formatDouble(area) + " km²");
+    }
+
+    private void updatePopulationDensityLabel(RegionDataModel regionData) {
+        Long population = regionData.population();
+        Double area = regionData.area();
+
+        if (area == null || population == null || population == 0) {
+            populationDensitySection.setVisible(false);
+            return;
+        }
+        populationDensitySection.setVisible(true);
+
+        long populationDensity = Math.round(population / area);
+        populationDensityLabel.setText(RegionDataFormatter.formatLong(populationDensity) + " people per km²");
     }
 }

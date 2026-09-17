@@ -7,55 +7,49 @@ import faerite.model.RegionSelectionModel;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.text.DecimalFormat;
-
 
 public class GeographyTabView extends VBox {
     AtlasViewModel viewModel;
 
-    InfoSection areaSection;
-    Label areaLabel = new Label();
-
-    DecimalFormat formatter = new DecimalFormat("#,###.##");
+    InfoSection elevationSection;
+    Label elevationLabel = new Label();
+    Label elevationNameLabel = new Label();
 
     public GeographyTabView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
-        areaLabel.getStyleClass().add("info-section-value");
+        elevationLabel.getStyleClass().add("info-section-value");
+        elevationNameLabel.getStyleClass().add("info-section-description");
+        elevationNameLabel.managedProperty().bind(elevationNameLabel.visibleProperty());
+        elevationSection = new InfoSection("Highest elevation:", elevationLabel, elevationNameLabel);
+        elevationSection.managedProperty().bind(elevationSection.visibleProperty());
 
-        areaSection = new InfoSection("Land area:", areaLabel);
-        areaSection.managedProperty().bind(areaSection.visibleProperty());
-
-        getChildren().addAll(areaSection);
+        getChildren().addAll(elevationSection);
     }
-
 
     public void updateLabels(RegionSelectionModel newRegion) {
         String id = newRegion != null ? newRegion.id() : viewModel.getActiveLayer().mapModel.id();
         RegionDataModel regionData = RegionDataCache.get(id);
 
-        updateAreaLabel(regionData);
+        updateElevationLabel(regionData);
     }
 
-    private void updateAreaLabel(RegionDataModel regionData) {
-        Double area = regionData.area();
+    private void updateElevationLabel(RegionDataModel regionData) {
+        Double elevation = regionData.elevation();
+        String elevationName = regionData.elevationName();
 
-        if (area == null) {
-            areaSection.setVisible(false);
+        if (elevation == null) {
+            elevationSection.setVisible(false);
             return;
         }
+        elevationSection.setVisible(true);
+        elevationLabel.setText(RegionDataFormatter.formatDouble(elevation) + " m²");
 
-        areaSection.setVisible(true);
-        String areaString;
-
-        if (area >= 1000000000) {
-            areaString = area / 1000000000 + " billion";
-        } else if (area >= 1000000) {
-            areaString = area / 1000000 + " million";
-        } else {
-            areaString = formatter.format(area);
+        if (elevationName == null) {
+            elevationNameLabel.setVisible(false);
+            return;
         }
-
-        areaLabel.setText(areaString + " km²");
+        elevationNameLabel.setVisible(true);
+        elevationNameLabel.setText(elevationName);
     }
 }
