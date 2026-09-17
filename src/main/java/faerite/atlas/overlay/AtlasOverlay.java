@@ -1,13 +1,10 @@
 package faerite.atlas.overlay;
 
 import faerite.atlas.AtlasViewModel;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 /// Contains all the UI elements overlaid over the map.
-public class OverlayView extends AnchorPane {
+public class AtlasOverlay extends AnchorPane {
 
     private static final int SIDEBAR_MIN_WIDTH = 300;
     private static final int SIDEBAR_MAX_WIDTH = 1000;
@@ -17,7 +14,7 @@ public class OverlayView extends AnchorPane {
 
     /// Creates the overlay using data from the view model.
     /// @param viewModel The global view model instance.
-    public OverlayView(AtlasViewModel viewModel) {
+    public AtlasOverlay(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
         // passes events to the pane behind if not directly over this pane's components
@@ -34,27 +31,15 @@ public class OverlayView extends AnchorPane {
         setBottomAnchor(infoSidebar, SIDEBAR_PADDING);
         setRightAnchor(infoSidebar, SIDEBAR_PADDING);
 
-        // styling
-        infoWindow.getStyleClass().add("info-window");
-
-        DropShadow dropShadow = new DropShadow(15, 0, 5, Color.color(0, 0, 0, 0.3));
-        infoWindow.setEffect(dropShadow);
+        infoSidebar.getStyleClass().add("info-sidebar");
 
         // layout
-        VBox titleBar = new InfoTitleView(viewModel);
+        VBox infoSidebarHeader = new InfoSidebarHeaderView(viewModel);
+        infoSidebar.setTop(infoSidebarHeader);
 
-        infoWindow.setTop(titleBar);
+        StackPane infoSidebarBody = new InfoSidebarBodyView(viewModel);
+        infoSidebar.setCenter(infoSidebarBody);
 
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setFitToWidth(true);
-
-        VBox infoBox = new InfoView(viewModel);
-        scrollPane.setContent(infoBox);
-
-        infoWindow.setCenter(scrollPane);
-
-        getChildren().add(infoWindow);
+        getChildren().add(infoSidebar);
     }
 }
