@@ -12,7 +12,6 @@ public class InfoSidebarBodyView extends StackPane {
 
     private final AtlasViewModel viewModel;
 
-    private final StackPane viewStack = new StackPane();
     private final OverviewTabView overviewTab;
     private final HistoryTabView historyTab;
     private final GeographyTabView geographyTab;
@@ -39,6 +38,7 @@ public class InfoSidebarBodyView extends StackPane {
         geographyTab.managedProperty().bind(geographyTab.visibleProperty());
 
         viewModel.selectedRegionProperty().addListener((_, _, newRegion) -> updateTabs(newRegion));
+        updateTabs(null);
 
         historyTab.setVisible(false);
         geographyTab.setVisible(false);
@@ -60,8 +60,6 @@ public class InfoSidebarBodyView extends StackPane {
         scrollGradient.getStyleClass().add("scroll-gradient");
 
         getChildren().addAll(scrollPane, scrollGradient);
-
-        getChildren().add(viewStack);
     }
 
     private void updateTabs(RegionSelectionModel newRegion) {
