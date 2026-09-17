@@ -1,6 +1,5 @@
 package faerite.atlas.overlay;
 
-import faerite.atlas.AtlasStyle;
 import faerite.atlas.AtlasViewModel;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
@@ -10,8 +9,9 @@ import javafx.scene.paint.Color;
 /// Contains all the UI elements overlaid over the map.
 public class OverlayView extends AnchorPane {
 
-    private static final int WINDOW_MIN_WIDTH = 300;
-    private static final int WINDOW_MAX_WIDTH = 1000;
+    private static final int SIDEBAR_MIN_WIDTH = 300;
+    private static final int SIDEBAR_MAX_WIDTH = 1000;
+    private static final double SIDEBAR_PADDING = 40.0;
 
     AtlasViewModel viewModel;
 
@@ -23,17 +23,16 @@ public class OverlayView extends AnchorPane {
         // passes events to the pane behind if not directly over this pane's components
         pickOnBoundsProperty().set(false);
 
-        BorderPane infoWindow = new BorderPane();
+        BorderPane infoSidebar = new BorderPane();
 
         // positioning
-        infoWindow.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
-        infoWindow.setMinWidth(WINDOW_MIN_WIDTH);
-        infoWindow.setMaxWidth(WINDOW_MAX_WIDTH);
+        infoSidebar.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
+        infoSidebar.setMinWidth(SIDEBAR_MIN_WIDTH);
+        infoSidebar.setMaxWidth(SIDEBAR_MAX_WIDTH);
 
-        AtlasStyle style = viewModel.getStyle();
-        setTopAnchor(infoWindow, style.mapPadding());
-        setBottomAnchor(infoWindow, style.mapPadding());
-        setRightAnchor(infoWindow, style.mapPadding());
+        setTopAnchor(infoSidebar, SIDEBAR_PADDING);
+        setBottomAnchor(infoSidebar, SIDEBAR_PADDING);
+        setRightAnchor(infoSidebar, SIDEBAR_PADDING);
 
         // styling
         infoWindow.getStyleClass().add("info-window");

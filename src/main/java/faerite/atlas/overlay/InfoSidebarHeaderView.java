@@ -1,6 +1,5 @@
 package faerite.atlas.overlay;
 
-import faerite.atlas.AtlasStyle;
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionInfoSection;
@@ -20,12 +19,6 @@ public class InfoTitleView extends VBox {
 
     public InfoTitleView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
-
-        AtlasStyle style = viewModel.getStyle();
-        setAlignment(style.infoBoxTitleAlignment());
-        int paddingX = style.infoBoxHorisontalPadding();
-        int paddingY = style.infoBoxVerticalPadding();
-        setPadding(new Insets(paddingY, paddingX, 0, paddingX));
 
         titleLabel.getStyleClass().add("nav-title");
         viewModel.selectedRegionProperty().addListener((_, _, newRegion) -> updateLabels(newRegion));
