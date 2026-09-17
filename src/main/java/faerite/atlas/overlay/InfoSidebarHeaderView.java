@@ -6,8 +6,7 @@ import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class InfoSidebarHeaderView extends VBox {
 
@@ -18,11 +17,14 @@ public class InfoSidebarHeaderView extends VBox {
     public InfoSidebarHeaderView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
 
+
+        getStyleClass().add("info-sidebar-header");
+
         titleLabel.getStyleClass().add("nav-title");
         viewModel.selectedRegionProperty().addListener((_, _, newRegion) -> updateLabels(newRegion));
         updateLabels(viewModel.getSelectedRegion());
 
-        HBox navigationBar = new HBox();
+        UniformSpacerPane navigationBar = new UniformSpacerPane();
         navigationBar.getStyleClass().add("nav-bar");
 
         ToggleButton overviewButton = new ToggleButton("Overview");
