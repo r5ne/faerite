@@ -1,20 +1,21 @@
 package faerite.atlas.overlay;
 
-import faerite.model.RegionInfoSection;
 import faerite.atlas.AtlasViewModel;
+import faerite.model.RegionInfoSection;
+import faerite.model.RegionSelectionModel;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 /// Contains the information UI for the selected region.
 public class InfoSidebarBodyView extends StackPane {
+
     private final AtlasViewModel viewModel;
 
     private final StackPane viewStack = new StackPane();
-    private final VBox overviewTab;
-    private final VBox historyTab;
-    private final VBox geographyTab;
+    private final OverviewTabView overviewTab;
+    private final HistoryTabView historyTab;
+    private final GeographyTabView geographyTab;
 
     /// Creates the information UI using data from the view model.
     /// @param viewModel The global view model instance.
@@ -36,6 +37,8 @@ public class InfoSidebarBodyView extends StackPane {
         overviewTab.managedProperty().bind(overviewTab.visibleProperty());
         historyTab.managedProperty().bind(historyTab.visibleProperty());
         geographyTab.managedProperty().bind(geographyTab.visibleProperty());
+
+        viewModel.selectedRegionProperty().addListener((_, _, newRegion) -> updateTabs(newRegion));
 
         historyTab.setVisible(false);
         geographyTab.setVisible(false);
@@ -59,5 +62,9 @@ public class InfoSidebarBodyView extends StackPane {
         getChildren().addAll(scrollPane, scrollGradient);
 
         getChildren().add(viewStack);
+    }
+
+    private void updateTabs(RegionSelectionModel newRegion) {
+        overviewTab.updateLabels(newRegion);
     }
 }

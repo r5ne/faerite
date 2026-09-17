@@ -51,9 +51,7 @@ public class InfoSidebarHeaderView extends VBox {
     }
 
     private void updateLabels(RegionSelectionModel newRegion) {
-        String id = (newRegion != null)
-                ? newRegion.id()
-                : viewModel.getActiveLayer().mapModel.id();
+        String id = newRegion != null ? newRegion.id() : viewModel.getActiveLayer().mapModel.id();
         titleLabel.setText(RegionDataCache.get(id).name());
     }
 }
