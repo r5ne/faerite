@@ -11,9 +11,9 @@ public class RegionDataBuilder {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    private final String id;
     private final String name;
     private final RegionType type;
-    private String id;
     private Map<String, String> nativeNames;
     private Double area;
     private Double elevation;
@@ -22,10 +22,10 @@ public class RegionDataBuilder {
     private Set<ClimateClassification> climates;
     private Set<BiomeClassification> biomes;
 
-    public RegionDataBuilder(String name, RegionType type) {
+    public RegionDataBuilder(String id, String name, RegionType type) {
+        this.id = id;
         this.name = name;
         this.type = type;
-        this.id = name.toLowerCase().replace(" ", "-");
 
         this.nativeNames = new HashMap<>();
         this.climates = new HashSet<>();
@@ -43,11 +43,6 @@ public class RegionDataBuilder {
         this.population = existingModel.population();
         this.climates = existingModel.climates();
         this.biomes = existingModel.biomes();
-    }
-
-    public RegionDataBuilder id(String id) {
-        this.id = id;
-        return this;
     }
 
     public RegionDataBuilder nativeNames(Map<String, String> nativeNames) {
