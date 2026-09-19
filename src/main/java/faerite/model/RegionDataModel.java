@@ -1,7 +1,7 @@
 package faerite.model;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -17,6 +17,6 @@ public record RegionDataModel(
     @Nullable Double elevation,
     @Nullable String elevationName,
     @Nullable Long population,
-    List<ClimateClassification> climates,
-    List<BiomeClassification> biomes
+    Set<ClimateClassification> climates,
+    Set<BiomeClassification> biomes
 ) {}
