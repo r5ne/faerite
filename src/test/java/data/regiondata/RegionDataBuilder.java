@@ -1,19 +1,14 @@
 package data.regiondata;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import faerite.model.BiomeClassification;
 import faerite.model.ClimateClassification;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionType;
-
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class RegionDataBuilder {
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private final String name;
@@ -31,6 +26,24 @@ public class RegionDataBuilder {
     public RegionDataBuilder(String name, RegionType type) {
         this.name = name;
         this.type = type;
+        this.id = name.toLowerCase().replace(" ", "-");
+
+        this.nativeNames = new HashMap<>();
+        this.climates = new HashSet<>();
+        this.biomes = new HashSet<>();
+    }
+
+    public RegionDataBuilder(RegionDataModel existingModel) {
+        this.id = existingModel.id();
+        this.name = existingModel.name();
+        this.type = existingModel.type();
+        this.nativeNames = existingModel.nativeNames();
+        this.area = existingModel.area();
+        this.elevation = existingModel.elevation();
+        this.elevationName = existingModel.elevationName();
+        this.population = existingModel.population();
+        this.climates = existingModel.climates();
+        this.biomes = existingModel.biomes();
     }
 
     public RegionDataBuilder id(String id) {
@@ -90,36 +103,17 @@ public class RegionDataBuilder {
     }
 
     public RegionDataModel build() {
-        id = id != null ? id : name.toLowerCase().replace(" ", "-");
-        if (wikidataId != null) {
-            HttpResponse<String> response = WikidataFetcher.fetch(wikidataId);
-            System.out.println("Got response: " + response.body() + "Status code: " + response.statusCode());
-            if (response != null) {
-                if (response.statusCode() != 200) {
-                    System.err.println("API Error: " + response.body());
-                } else {
-                    try {
-                        JsonNode root = objectMapper.readTree(response.body());
-                        JsonNode bindings = root.path("results").path("bindings");
-
-                        if (bindings.isArray() && !bindings.isEmpty()) {
-                            JsonNode data = bindings.get(0);
-
-                            if (data.has("area")) {
-                                area = data.get("area").get("value").asDouble();
-                            }
-                            System.out.println("Parsed area");
-                            if (data.has("population")) {
-                                population = data.get("population").get("value").asLong();
-                            }
-                            System.out.println("Parsed population");
-                        }
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        return new RegionDataModel(id, name, type, nativeName, area, elevation, elevationName, population, climates, biomes);
+        return new RegionDataModel(
+            id,
+            name,
+            type,
+            nativeNames,
+            area,
+            elevation,
+            elevationName,
+            population,
+            climates,
+            biomes
+        );
     }
 }
