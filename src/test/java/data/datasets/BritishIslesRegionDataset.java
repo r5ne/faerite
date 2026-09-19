@@ -16,7 +16,7 @@ public class BritishIslesRegionDataset implements RegionDataset {
             new RegionDataBuilderConfig("Ireland", "Q22890"),
 
             new RegionDataBuilderConfig("Isle of Man", "Q9676", b -> b.area(570)),
-            new RegionDataBuilderConfig("Isle of Man", "isle-of-man-island", "Q27508141", b ->
+            new RegionDataBuilderConfig("isle-of-man-island", "Isle of Man", "Q27508141", b ->
                 b.population(84521).area(570)
             ),
             new RegionDataBuilderConfig("Calf of Man", "Q125389"),
@@ -29,7 +29,7 @@ public class BritishIslesRegionDataset implements RegionDataset {
             new RegionDataBuilderConfig("Sark", "Q3405693"),
             new RegionDataBuilderConfig("Herm", "Q202023"),
             new RegionDataBuilderConfig("Jethou", "Q898856"),
-            new RegionDataBuilderConfig("Les Écrehous", "les-ecrehous", "Q776075", b -> b.area(0.2)),
+            new RegionDataBuilderConfig("les-ecrehous", "Les Écrehous", "Q776075", b -> b.area(0.2)),
             new RegionDataBuilderConfig("Les Minquiers", "Q1435852", b -> b.area(0.1)),
             new RegionDataBuilderConfig("Les Casquets", "Q1048187", b -> b.area(0.072)),
 
