@@ -14,14 +14,13 @@ public class RegionDataBuilder {
     private final String name;
     private final RegionType type;
     private String id;
-    private String wikidataId;
-    private String nativeName;
+    private Map<String, String> nativeNames;
     private Double area;
     private Double elevation;
     private String elevationName;
     private Long population;
-    private List<ClimateClassification> climates = new ArrayList<>();
-    private List<BiomeClassification> biomes = new ArrayList<>();
+    private Set<ClimateClassification> climates;
+    private Set<BiomeClassification> biomes;
 
     public RegionDataBuilder(String name, RegionType type) {
         this.name = name;
@@ -51,13 +50,29 @@ public class RegionDataBuilder {
         return this;
     }
 
-    public RegionDataBuilder wikidataId(String wikidataId) {
-        this.wikidataId = wikidataId;
+    public RegionDataBuilder nativeNames(Map<String, String> nativeNames) {
+        this.nativeNames = nativeNames;
         return this;
     }
 
-    public RegionDataBuilder nativeName(String nativeName) {
-        this.nativeName = nativeName;
+    public RegionDataBuilder addNativeName(String language, String name) {
+        this.nativeNames.put(language, name);
+        return this;
+    }
+
+    public RegionDataBuilder addAllNativeNames(String... nativeNameEntries) {
+        if (nativeNameEntries.length % 2 != 0) {
+            throw new IllegalArgumentException("Keys and values must be paired up evenly.");
+        }
+
+        for (int i = 0; i < nativeNameEntries.length; i += 2) {
+            nativeNames.put(nativeNameEntries[i], nativeNameEntries[i + 1]);
+        }
+        return this;
+    }
+
+    public RegionDataBuilder keepNativeNames(String... languages) {
+        nativeNames.keySet().retainAll(Set.of(languages));
         return this;
     }
 
@@ -82,7 +97,7 @@ public class RegionDataBuilder {
     }
 
     public RegionDataBuilder climates(ClimateClassification... climateClassification) {
-        this.climates = Arrays.asList(climateClassification);
+        this.climates = new HashSet<>(Arrays.asList(climateClassification));
         return this;
     }
 
@@ -91,9 +106,8 @@ public class RegionDataBuilder {
         return this;
     }
 
-
     public RegionDataBuilder biomes(BiomeClassification... biomeClassifications) {
-        this.biomes = Arrays.asList(biomeClassifications);
+        this.biomes = new HashSet<>(Arrays.asList(biomeClassifications));
         return this;
     }
 
