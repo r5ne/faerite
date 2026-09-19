@@ -1,9 +1,9 @@
 package data.datasets;
 
-import faerite.model.RegionDataModel;
+import data.regiondata.RegionDataBuilder;
 
 import java.util.Set;
 
 public interface RegionDataset {
-    Set<RegionDataModel> getRegionData();
+    Set<RegionDataBuilder> getRegionData();
 }
