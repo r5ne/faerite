@@ -3,6 +3,7 @@ package faerite.atlas.overlay;
 import faerite.atlas.AtlasViewModel;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
+import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -59,8 +60,15 @@ public class InfoSidebarBodyView extends StackPane {
         // Gradient overlay at the bottom to indicate you can scroll down
         Rectangle scrollGradient = new Rectangle();
         scrollGradient.widthProperty().bind(this.widthProperty());
-        scrollGradient.heightProperty().bind(this.heightProperty().multiply(0.15));
+        scrollGradient.heightProperty().bind(this.heightProperty());
+        scrollGradient.setMouseTransparent(true);
         scrollGradient.getStyleClass().add("scroll-gradient");
+
+        scrollPane.vvalueProperty().addListener((obs, oldVal, newVal) ->
+            scrollGradient.setVisible(newVal.doubleValue() < scrollPane.getVmax())
+        );
+        scrollGradient.setVisible(false);
+        setAlignment(scrollGradient, Pos.BOTTOM_CENTER);
 
         getChildren().addAll(scrollPane, scrollGradient);
     }
