@@ -16,8 +16,8 @@ public class RegionDataBuilder {
     private RegionType type;
     private Map<String, String> nativeNames;
     private Double area;
-    private Double elevation;
-    private String elevationName;
+    private Double highestElevation;
+    private String highestElevationName;
     private Long population;
     private Set<ClimateClassification> climates;
     private Set<BiomeClassification> biomes;
@@ -37,8 +37,8 @@ public class RegionDataBuilder {
         this.type = existingModel.type();
         this.nativeNames = existingModel.nativeNames();
         this.area = existingModel.area();
-        this.elevation = existingModel.elevation();
-        this.elevationName = existingModel.elevationName();
+        this.highestElevation = existingModel.highestElevation();
+        this.highestElevationName = existingModel.highestElevationName();
         this.population = existingModel.population();
         this.climates = existingModel.climates();
         this.biomes = existingModel.biomes();
@@ -80,13 +80,13 @@ public class RegionDataBuilder {
         return this;
     }
 
-    public RegionDataBuilder elevation(double elevation) {
-        this.elevation = elevation;
+    public RegionDataBuilder highestElevation(double elevation) {
+        this.highestElevation = elevation;
         return this;
     }
 
-    public RegionDataBuilder elevationName(String elevationName) {
-        this.elevationName = elevationName;
+    public RegionDataBuilder highestElevationName(String elevationName) {
+        this.highestElevationName = elevationName;
         return this;
     }
 
@@ -122,8 +122,8 @@ public class RegionDataBuilder {
             type,
             nativeNames,
             area,
-            elevation,
-            elevationName,
+            highestElevation,
+            highestElevationName,
             population,
             climates,
             biomes

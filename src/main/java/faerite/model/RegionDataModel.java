@@ -14,8 +14,8 @@ public record RegionDataModel(
     RegionType type,
     Map<String, String> nativeNames,
     @Nullable Double area,
-    @Nullable Double elevation,
-    @Nullable String elevationName,
+    @Nullable Double highestElevation,
+    @Nullable String highestElevationName,
     @Nullable Long population,
     Set<ClimateClassification> climates,
     Set<BiomeClassification> biomes
