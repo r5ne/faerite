@@ -1,42 +1,42 @@
 .info-sidebar {
     -fx-background-color: -fx-theme-background;
-    -fx-background-radius: 12px;
-    -fx-padding: 30px 30px 30px 30px;
+    -fx-background-radius: 0.5em;
+    -fx-padding: 1.5em 1.5em 1.5em 1.5em;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5);
 }
 
 .info-sidebar-header {
     -fx-alignment: center;
-    -fx-padding: 40px 0 40px 0;
-    -fx-spacing: 25px;
+    -fx-padding: 2.5em 0 2.5em 0;
+    -fx-spacing: 1.5em;
 }
 
 .nav-title {
-    -fx-font-size: 72;
+    -fx-font-size: 4.5em;
 }
 
 .info-sidebar-body {
     -fx-background-color: transparent;
-    -fx-spacing: 15px;
-    -fx-padding: 0 10px 0 0;
+    -fx-spacing: 1em;
+    -fx-padding: 0.5em 0 0 0;
 }
 
 .info-section {
     -fx-background-color: -fx-theme-foreground;
-    -fx-background-radius: 25px;
-    -fx-padding: 25px 30px 25px 30px;
+    -fx-background-radius: 1.5em;
+    -fx-padding: 1.5em 2em 1.5em 2em;
     -fx-alignment: top-left;
-    -fx-spacing: 7px;
+    -fx-spacing: 0.375em;
 }
 
 .info-section-title {
     -fx-text-fill: white;
-    -fx-font-size: 36px;
+    -fx-font-size: 2em;
 }
 
 .info-section-value {
     -fx-text-fill: -fx-theme-accent;
-    -fx-font-size: 48px;
+    -fx-font-size: 2.5em;
     -fx-alignment: center;
     -fx-max-width: infinity;
 }
@@ -48,5 +48,5 @@
 }
 
 .scroll-gradient {
-    -fx-fill: linear-gradient(to top, #1e1e1e 0%, transparent 100%);
+    -fx-fill: linear-gradient(to top, -fx-theme-background 0%, transparent 100%);
 }

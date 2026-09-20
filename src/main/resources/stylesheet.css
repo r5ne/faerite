@@ -3,28 +3,31 @@
     -fx-font-family: 'Constantia';
     -fx-font-weight: bold;
     -fx-text-background-color: white;
+    /* Baseline font size for 2560x1440 monitors */
+    -fx-font-size: 16px;
 
     -fx-theme-background: #1e1e1e;
     -fx-theme-foreground: #2a2a2a;
     -fx-theme-primary: #ffffff;
     -fx-theme-secondary: #aaaaaa;
     -fx-theme-accent: #a5d3e3;
+
 }
 
 .label {
-    -fx-font-size: 24px;
+    -fx-font-size: 1.5em;
 }
 
 /* Buttons */
 /* Applies to any type of button */
 .toggle-button, .button {
     -fx-background-color: transparent;
-    -fx-background-radius: 25px;
+    -fx-background-radius: 1.5em;
 
     -fx-text-fill: white;
-    -fx-font-size: 24px;
+    -fx-font-size: 1.5em;
 
-    -fx-padding: 10px 14px 10px 14px;
+    -fx-padding: 0.5em 0.6em 0.5em 0.6em;
 
     -fx-cursor: hand;
 }
@@ -40,7 +43,7 @@
 .tooltip {
     -fx-font-family: "System";
     -fx-font-weight: normal;
-    -fx-font-size: 12px;
+    -fx-font-size: 0.75em;
 }
 
 /* Scroll bars and panes */
@@ -62,7 +65,7 @@
 }
 
 .scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-radius: 6px;
+    -fx-background-radius: 0.2em;
 }
 
 .scroll-pane:hover .scroll-bar:vertical .thumb {
