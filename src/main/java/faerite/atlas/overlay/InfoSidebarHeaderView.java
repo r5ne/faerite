@@ -4,6 +4,7 @@ import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
+import faerite.util.UniformSpacerPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;

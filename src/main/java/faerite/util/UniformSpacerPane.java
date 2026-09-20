@@ -1,4 +1,4 @@
-package faerite.atlas.overlay;
+package faerite.util;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
