@@ -3,8 +3,7 @@
     -fx-font-family: 'Constantia';
     -fx-font-weight: bold;
     -fx-text-background-color: white;
-    /* Baseline font size for 2560x1440 monitors */
-    -fx-font-size: 16px;
+    /* -fx-font-size is calculated in the app and used for all em values */
 
     -fx-theme-background: #1e1e1e;
     -fx-theme-foreground: #2a2a2a;
