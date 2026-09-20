@@ -17,4 +17,17 @@ public class InfoSection extends VBox {
 
         getChildren().addAll(contentNodes);
     }
+
+    public void setNewContent(Node... contentNodes) {
+        clearContent();
+        getChildren().addAll(contentNodes);
+    }
+
+    public void clearContent() {
+        getChildren().subList(1, getChildren().size()).clear();
+    }
+
+    public void addContent(Node... contentNodes) {
+        getChildren().addAll(contentNodes);
+    }
 }
