@@ -55,14 +55,6 @@
             <version>26.1.0</version>
             <scope>compile</scope>
         </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/com.neovisionaries/nv-i18n -->
-        <dependency>
-            <groupId>com.neovisionaries</groupId>
-            <artifactId>nv-i18n</artifactId>
-            <version>1.29</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>
