@@ -41,6 +41,7 @@ public class OverviewTabView extends VBox {
         areaSection.managedProperty().bind(areaSection.visibleProperty());
 
         populationDensityLabel.getStyleClass().add("info-section-value");
+        populationDensityLabel.setWrapText(true);
         populationDensitySection = new InfoSection("Population density:", populationDensityLabel);
         populationDensitySection.managedProperty().bind(populationDensitySection.visibleProperty());
 

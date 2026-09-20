@@ -42,10 +42,12 @@ public class HistoryTabView extends VBox {
 
         for (Map.Entry<String, String> nativeNameEntry : nativeNames.entrySet()) {
             Label nativeNameLabel = new Label(nativeNameEntry.getValue());
+            nativeNameLabel.setWrapText(true);
             nativeNameLabel.getStyleClass().addAll("info-section-value");
 
             Label languageLabel = new Label(nativeNameEntry.getKey());
             languageLabel.getStyleClass().add("info-section-description");
+            languageLabel.setWrapText(true);
 
             nativeNameSection.addContent(nativeNameLabel, languageLabel);
         }

@@ -20,6 +20,7 @@ public class GeographyTabView extends VBox {
 
         elevationLabel.getStyleClass().add("info-section-value");
         elevationNameLabel.getStyleClass().add("info-section-description");
+        elevationNameLabel.setWrapText(true);
         elevationNameLabel.managedProperty().bind(elevationNameLabel.visibleProperty());
         elevationSection = new InfoSection("Highest elevation:", elevationLabel, elevationNameLabel);
         elevationSection.managedProperty().bind(elevationSection.visibleProperty());

@@ -14,6 +14,7 @@ public class InfoSection extends VBox {
             titleLabel.getStyleClass().add("info-section-title");
             getChildren().add(titleLabel);
         }
+        titleLabel.setWrapText(true);
 
         getChildren().addAll(contentNodes);
     }
