@@ -44,9 +44,7 @@ public class HistoryTabView extends VBox {
             Label nativeNameLabel = new Label(nativeNameEntry.getValue());
             nativeNameLabel.getStyleClass().addAll("info-section-value");
 
-            String language = nativeNameEntry.getKey();
-            java.util.Locale languageLocale = java.util.Locale.forLanguageTag(language);
-            Label languageLabel = new Label(languageLocale.getDisplayLanguage(Locale.ENGLISH));
+            Label languageLabel = new Label(nativeNameEntry.getKey());
             languageLabel.getStyleClass().add("info-section-description");
 
             nativeNameSection.addContent(nativeNameLabel, languageLabel);

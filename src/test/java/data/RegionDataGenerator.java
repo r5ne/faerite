@@ -10,9 +10,9 @@ import faerite.io.AssetPaths;
 import faerite.io.MapDataLoader;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionType;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,10 +47,14 @@ public class RegionDataGenerator {
     """;
 
     private static final Map<String, RegionType> REGION_TYPE_MAP = Map.of(
-            "archipelago", RegionType.ARCHIPELAGO,
-            "island group", RegionType.ISLAND_GROUP,
-            "island", RegionType.ISLAND,
-            "rock", RegionType.ROCK_GROUP
+        "archipelago",
+        RegionType.ARCHIPELAGO,
+        "island group",
+        RegionType.ISLAND_GROUP,
+        "island",
+        RegionType.ISLAND,
+        "rock",
+        RegionType.ROCK_GROUP
     );
 
     private RegionDataGenerator() {}
@@ -82,7 +86,12 @@ public class RegionDataGenerator {
                     if (wikidata != null) {
                         addWikidata(wikidata, builder);
                     } else {
-                        throw new RuntimeException("Returned wikidata for " + config.name() + " was null.");
+                        System.err.printf(
+                            "Returned wikidata for %s (wikidata=%s) was null. Aborting object creation.%n",
+                            config.name(),
+                            config.wikidataId()
+                        );
+                        continue;
                     }
                 }
 
@@ -120,7 +129,16 @@ public class RegionDataGenerator {
                 String[] pairs = nativeNames.split("\\|");
                 for (String languageNativeNamePair : pairs) {
                     String[] languageNativeName = languageNativeNamePair.split(":", 2);
-                    builder.addNativeName(languageNativeName[0].trim(), languageNativeName[1].trim());
+
+                    String languageCode = languageNativeName[0].trim();
+                    System.out.println(languageCode);
+                    if (languageCode.equals("en")) {
+                        continue;
+                    }
+                    java.util.Locale languageLocale = java.util.Locale.forLanguageTag(languageCode);
+                    String language = languageLocale.getDisplayLanguage(Locale.ENGLISH);
+
+                    builder.addNativeName(language.isEmpty() ? languageCode : language, languageNativeName[1].trim());
                 }
             }
         }
