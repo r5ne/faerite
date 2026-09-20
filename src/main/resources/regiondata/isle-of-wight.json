@@ -2,9 +2,7 @@
   "id" : "isle-of-wight",
   "name" : "Isle of Wight",
   "type" : "ISLAND",
-  "nativeNames" : {
-    "en" : "Isle of Wight"
-  },
+  "nativeNames" : { },
   "area" : 380.1644,
   "highestElevation" : null,
   "highestElevationName" : null,

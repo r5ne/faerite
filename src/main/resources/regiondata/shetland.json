@@ -3,9 +3,8 @@
   "name" : "Shetland",
   "type" : "ARCHIPELAGO",
   "nativeNames" : {
-    "gd" : "Sealtainn",
-    "mis" : "Hjaltland",
-    "scz" : "Shetland"
+    "Scottish Gaelic" : "Sealtainn",
+    "Uncoded" : "Hjaltland"
   },
   "area" : 1468.0,
   "highestElevation" : 450.0,

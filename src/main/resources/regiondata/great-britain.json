@@ -3,11 +3,10 @@
   "name" : "Great Britain",
   "type" : "ISLAND",
   "nativeNames" : {
-    "cy" : "Prydain Fawr",
-    "en" : "Great Britain",
-    "gd" : "Breatainn Mhòr",
-    "kw" : "Breten Veur",
-    "sco" : "Great Breetain"
+    "Cornish" : "Breten Veur",
+    "Scots" : "Great Breetain",
+    "Scottish Gaelic" : "Breatainn Mhòr",
+    "Welsh" : "Prydain Fawr"
   },
   "area" : 228938.0,
   "highestElevation" : 1344.527,
