@@ -6,17 +6,23 @@ import javafx.scene.layout.VBox;
 
 public class InfoSection extends VBox {
 
-    public InfoSection(String title, Node... contentNodes) {
+    public InfoSection(Node... contentNodes) {
         getStyleClass().add("info-section");
-
-        if (title != null) {
-            Label titleLabel = new Label(title);
-            titleLabel.getStyleClass().add("info-section-title");
-            getChildren().add(titleLabel);
-        }
-        titleLabel.setWrapText(true);
+        setMinWidth(0);
 
         getChildren().addAll(contentNodes);
+    }
+
+    public InfoSection(String title, Node... contentNodes) {
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("info-section-title");
+        titleLabel.setWrapText(true);
+
+        Node[] extraContentNodes = new Node[contentNodes.length + 1];
+        System.arraycopy(contentNodes, 0, extraContentNodes, 1, contentNodes.length);
+        extraContentNodes[0] = titleLabel;
+
+        super(extraContentNodes);
     }
 
     public void setNewContent(Node... contentNodes) {
