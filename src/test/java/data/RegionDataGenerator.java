@@ -97,13 +97,10 @@ public class RegionDataGenerator {
     }
 
     private static void addWikidata(JsonNode data, RegionDataBuilder builder) {
-        String nativeNames = data.get("nativeNamesList").get("value").asText();
-        if (!nativeNames.isBlank()) {
-            String[] pairs = nativeNames.split("\\|");
-            for (String languageNativeNamePair : pairs) {
-                String[] languageNativeName = languageNativeNamePair.split(":", 2);
-                builder.addNativeName(languageNativeName[0].trim(), languageNativeName[1].trim());
-            }
+        System.out.println(data.toPrettyString());
+        if (data.has("typeLabel")) {
+            RegionType type = REGION_TYPE_MAP.get(data.get("typeLabel").get("value").asText());
+            builder.type(type);
         }
         if (data.has("area")) {
             builder.area(data.get("area").get("value").asDouble());
@@ -111,11 +108,21 @@ public class RegionDataGenerator {
         if (data.has("population")) {
             builder.population(data.get("population").get("value").asLong());
         }
-        if (data.has("elevationQualifier")) {
-            builder.highestElevation(data.get("elevationQualifier").get("value").asDouble());
+        if (data.has("elevationValue")) {
+            builder.highestElevation(data.get("elevationValue").get("value").asDouble());
         }
-        if (data.has("highestPointLabel")) {
-            builder.highestElevationName(data.get("highestPointLabel").get("value").asText());
+        if (data.has("elevationLabel")) {
+            builder.highestElevationName(data.get("elevationLabel").get("value").asText());
+        }
+        if (data.has("nativeNamesList")) {
+            String nativeNames = data.get("nativeNamesList").get("value").asText();
+            if (!nativeNames.isBlank()) {
+                String[] pairs = nativeNames.split("\\|");
+                for (String languageNativeNamePair : pairs) {
+                    String[] languageNativeName = languageNativeNamePair.split(":", 2);
+                    builder.addNativeName(languageNativeName[0].trim(), languageNativeName[1].trim());
+                }
+            }
         }
 
         System.out.println("Parsed wikidata into builder" + builder.toString());

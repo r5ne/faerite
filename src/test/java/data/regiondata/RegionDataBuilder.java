@@ -129,4 +129,35 @@ public class RegionDataBuilder {
             biomes
         );
     }
+
+    @Override
+    public String toString() {
+        return (
+            "RegionDataBuilder{" +
+            "id='" +
+            id +
+            '\'' +
+            ", name='" +
+            name +
+            '\'' +
+            ", type=" +
+            type +
+            ", nativeNames=" +
+            nativeNames +
+            ", area=" +
+            area +
+            ", highestElevation=" +
+            highestElevation +
+            ", highestElevationName='" +
+            highestElevationName +
+            '\'' +
+            ", population=" +
+            population +
+            ", climates=" +
+            climates +
+            ", biomes=" +
+            biomes +
+            '}'
+        );
+    }
 }
