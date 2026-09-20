@@ -2,7 +2,6 @@ package data.regiondata;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -11,31 +10,37 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
 public final class WikidataFetcher {
+
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final String QUERY_TEMPLATE = """
-        SELECT\s
-          ?area\s
-          ?population\s
-          ?coordinate\s
-          ?highestPoint\s
-          ?highestPointLabel\s
-          ?elevationQualifier
-          (GROUP_CONCAT(CONCAT(LANG(?nativeName), ":", STR(?nativeName)); separator=" | ") AS ?nativeNamesList)
-        WHERE {
-          OPTIONAL { wd:%1$s wdt:P2046 ?area. }
-          OPTIONAL { wd:%1$s wdt:P1082 ?population. }
-          OPTIONAL { wd:%1$s wdt:P625 ?coordinate. }
-          OPTIONAL { wd:%1$s wdt:P1705 ?nativeName. }\s
-          OPTIONAL {\s
-            wd:%1$s wdt:P610 ?highestPoint .         \s
-            ?highestPoint wdt:P2044 ?elevationQualifier .\s
-          }
-          SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-        }
-        GROUP BY ?area ?population ?coordinate ?highestPoint ?highestPointLabel ?elevationQualifier
-        """;
+    SELECT
+      ?typeLabel
+      ?area
+      ?population
+      ?coordinates
+      ?elevation
+      ?elevationLabel
+      ?elevationValue
+      (GROUP_CONCAT(CONCAT(LANG(?nativeName), ":", STR(?nativeName)); SEPARATOR = "|") AS ?nativeNamesList)
+    WHERE {
+      BIND(wd:%s AS ?region)
+      OPTIONAL { ?region wdt:P31 ?type . }
+      OPTIONAL { ?region wdt:P2046 ?area . }
+      OPTIONAL { ?region wdt:P1082 ?population . }
+      OPTIONAL { ?region wdt:P625 ?coordinates . }
+      OPTIONAL { ?region wdt:P1705 ?nativeName . }
+
+      OPTIONAL {
+        ?region wdt:P610 ?elevation.
+        ?elevation wdt:P2044 ?elevationValue.
+      }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    }
+    GROUP BY ?typeLabel ?area ?population ?coordinates ?elevation ?elevationValue ?elevationLabel
+    LIMIT 1
+    """;
     private static final String WIKIDATA_URL_TEMPLATE = "https://query.wikidata.org/sparql?query=%s&format=json";
 
     private WikidataFetcher() {}
