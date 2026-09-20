@@ -24,7 +24,7 @@ public class RegionDataGenerator {
             for (RegionDataBuilderConfig config : regionDataset.getRegionData()) {
                 RegionDataBuilder builder;
 
-                String stringJsonPath = AssetPaths.getRelativePathOf(AssetPaths.getRegionDataPath(config.id()));
+                String stringJsonPath = DataWriter.getRelativePathOf(AssetPaths.getRegionDataPath(config.id()));
                 Path jsonPath = Path.of(stringJsonPath);
                 boolean configExists = Files.exists(jsonPath);
 

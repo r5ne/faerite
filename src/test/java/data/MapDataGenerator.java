@@ -22,12 +22,12 @@ public class MapDataGenerator {
         );
 
         for (MapDataset dataset : allDatasets) {
-            String imagePath = AssetPaths.getRelativePathOf(AssetPaths.getMapImagePath(dataset.id()));
+            String imagePath = DataWriter.getRelativePathOf(AssetPaths.getMapImagePath(dataset.id()));
             int[] imageSize = ImageMetadataReader.getDimensions(Path.of(imagePath));
 
             MapModel mapModel = new MapModel(dataset.id(), imageSize[0], imageSize[1], dataset.buildRegions());
 
-            String mapModelPath = AssetPaths.getRelativePathOf(AssetPaths.getMapDataPath(dataset.id()));
+            String mapModelPath = DataWriter.getRelativePathOf(AssetPaths.getMapDataPath(dataset.id()));
             DataWriter.writeData(mapModel, Path.of(mapModelPath));
         }
     }
