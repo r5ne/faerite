@@ -15,6 +15,41 @@ import java.util.Set;
 
 public class RegionDataGenerator {
 
+    private static final String QUERY_TEMPLATE = """
+    SELECT
+      ?typeLabel
+      ?area
+      ?population
+      ?coordinates
+      ?elevation
+      ?elevationLabel
+      ?elevationValue
+      (GROUP_CONCAT(CONCAT(LANG(?nativeName), ":", STR(?nativeName)); SEPARATOR = "|") AS ?nativeNamesList)
+    WHERE {
+      BIND(wd:%s AS ?region)
+      OPTIONAL { ?region wdt:P31 ?type . }
+      OPTIONAL { ?region wdt:P2046 ?area . }
+      OPTIONAL { ?region wdt:P1082 ?population . }
+      OPTIONAL { ?region wdt:P625 ?coordinates . }
+      OPTIONAL { ?region wdt:P1705 ?nativeName . }
+
+      OPTIONAL {
+        ?region wdt:P610 ?elevation.
+        ?elevation wdt:P2044 ?elevationValue.
+      }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    }
+    GROUP BY ?typeLabel ?area ?population ?coordinates ?elevation ?elevationValue ?elevationLabel
+    LIMIT 1
+    """;
+
+    private static final Map<String, RegionType> REGION_TYPE_MAP = Map.of(
+            "archipelago", RegionType.ARCHIPELAGO,
+            "island group", RegionType.ISLAND_GROUP,
+            "island", RegionType.ISLAND,
+            "rock", RegionType.ROCK_GROUP
+    );
+
     private RegionDataGenerator() {}
 
     public static void createRegionData(RegionDataSyncMode syncMode) {
