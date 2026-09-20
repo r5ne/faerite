@@ -125,6 +125,6 @@ public class RegionDataGenerator {
             }
         }
 
-        System.out.println("Parsed wikidata into builder" + builder.toString());
+        System.out.println("Parsed wikidata into builder " + builder.toString());
     }
 }
