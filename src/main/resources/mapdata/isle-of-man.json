@@ -3,14 +3,14 @@
   "width" : 377,
   "height" : 459,
   "regions" : [ {
-    "id" : "calf-of-man",
-    "maskColor" : -1,
+    "id" : "isle-of-man-island",
+    "maskColor" : -16777216,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "isle-of-man-island",
-    "maskColor" : -16777216,
+    "id" : "calf-of-man",
+    "maskColor" : -1,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null

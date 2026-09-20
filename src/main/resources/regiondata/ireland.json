@@ -3,9 +3,8 @@
   "name" : "Ireland",
   "type" : "ISLAND",
   "nativeNames" : {
-    "en" : "Ireland",
-    "ga" : "Éire",
-    "sco" : "Airlann"
+    "Irish" : "Éire",
+    "Scots" : "Airlann"
   },
   "area" : 84421.0,
   "highestElevation" : 1038.6,

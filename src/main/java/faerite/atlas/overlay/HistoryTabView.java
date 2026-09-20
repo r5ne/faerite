@@ -1,6 +1,5 @@
 package faerite.atlas.overlay;
 
-import com.neovisionaries.i18n.LanguageAlpha3Code;
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionDataModel;
@@ -8,6 +7,7 @@ import faerite.model.RegionSelectionModel;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class HistoryTabView extends VBox {
@@ -44,12 +44,7 @@ public class HistoryTabView extends VBox {
             Label nativeNameLabel = new Label(nativeNameEntry.getValue());
             nativeNameLabel.getStyleClass().addAll("info-section-value");
 
-            String language = nativeNameEntry.getKey();
-            LanguageAlpha3Code alpha3 = LanguageAlpha3Code.getByCode(language);
-            if (alpha3 != null) {
-                language = alpha3.getName();
-            }
-            Label languageLabel = new Label(language);
+            Label languageLabel = new Label(nativeNameEntry.getKey());
             languageLabel.getStyleClass().add("info-section-description");
 
             nativeNameSection.addContent(nativeNameLabel, languageLabel);

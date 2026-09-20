@@ -3,9 +3,9 @@
   "width" : 724,
   "height" : 1205,
   "regions" : [ {
-    "id" : "isle-of-man",
-    "maskColor" : -65536,
-    "hasSubMap" : true,
+    "id" : "great-britain",
+    "maskColor" : -16777216,
+    "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
@@ -15,26 +15,14 @@
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "great-britain",
-    "maskColor" : -16777216,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "isle-of-wight",
-    "maskColor" : -13793801,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "channel-islands",
-    "maskColor" : -10496,
+    "id" : "isle-of-man",
+    "maskColor" : -65536,
     "hasSubMap" : true,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "isles-of-scilly",
-    "maskColor" : -544997,
+    "id" : "ireland",
+    "maskColor" : -1,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
@@ -45,8 +33,20 @@
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "ireland",
-    "maskColor" : -1,
+    "id" : "isles-of-scilly",
+    "maskColor" : -544997,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "channel-islands",
+    "maskColor" : -10496,
+    "hasSubMap" : true,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "isle-of-wight",
+    "maskColor" : -13793801,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null

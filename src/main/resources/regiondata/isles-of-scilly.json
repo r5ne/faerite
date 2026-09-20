@@ -2,9 +2,7 @@
   "id" : "isles-of-scilly",
   "name" : "Isles of Scilly",
   "type" : "ARCHIPELAGO",
-  "nativeNames" : {
-    "en" : "Isles of Scilly"
-  },
+  "nativeNames" : { },
   "area" : 16.3376,
   "highestElevation" : null,
   "highestElevationName" : null,

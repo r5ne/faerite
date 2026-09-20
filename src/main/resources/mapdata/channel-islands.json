@@ -3,14 +3,8 @@
   "width" : 825,
   "height" : 1129,
   "regions" : [ {
-    "id" : "jethou",
-    "maskColor" : -13199317,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "les-casquets",
-    "maskColor" : -13355980,
+    "id" : "sark",
+    "maskColor" : -11156407,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
@@ -21,32 +15,20 @@
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "sark",
-    "maskColor" : -11156407,
+    "id" : "les-casquets",
+    "maskColor" : -13355980,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "herm",
-    "maskColor" : -74,
+    "id" : "jethou",
+    "maskColor" : -13199317,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "les-minquiers",
-    "maskColor" : -16776961,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "les-ecrehous",
-    "maskColor" : -16711681,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "chausey",
-    "maskColor" : -256,
+    "id" : "guernsey",
+    "maskColor" : -1,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
@@ -57,8 +39,26 @@
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
   }, {
-    "id" : "guernsey",
-    "maskColor" : -1,
+    "id" : "chausey",
+    "maskColor" : -256,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "les-ecrehous",
+    "maskColor" : -16711681,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "les-minquiers",
+    "maskColor" : -16776961,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "herm",
+    "maskColor" : -74,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null
