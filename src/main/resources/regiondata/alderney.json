@@ -2,9 +2,13 @@
   "id" : "alderney",
   "name" : "Alderney",
   "type" : "ISLAND_GROUP",
+  "nativeNames" : {
+    "Auregnais" : "Aoeur'gny",
+    "French" : "Aurigny"
+  },
   "area" : 7.8,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 90.0,
+  "highestElevationName" : null,
   "population" : 2167,
   "climates" : [ ],
   "biomes" : [ ]

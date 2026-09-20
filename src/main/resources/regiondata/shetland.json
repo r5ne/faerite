@@ -2,9 +2,14 @@
   "id" : "shetland",
   "name" : "Shetland",
   "type" : "ARCHIPELAGO",
+  "nativeNames" : {
+    "gd" : "Sealtainn",
+    "mis" : "Hjaltland",
+    "scz" : "Shetland"
+  },
   "area" : 1468.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 450.0,
+  "highestElevationName" : "Ronas Hill",
   "population" : 23210,
   "climates" : [ ],
   "biomes" : [ ]

@@ -2,10 +2,13 @@
   "id" : "chausey",
   "name" : "Chausey",
   "type" : "ARCHIPELAGO",
-  "area" : 0.69,
-  "elevation" : null,
-  "elevationName" : null,
-  "population" : null,
+  "nativeNames" : {
+    "French" : "îles Chausey"
+  },
+  "area" : 1.825,
+  "highestElevation" : 24.0,
+  "highestElevationName" : null,
+  "population" : 30,
   "climates" : [ ],
   "biomes" : [ ]
 }

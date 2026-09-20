@@ -1,6 +1,8 @@
 package faerite.model;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.jetbrains.annotations.Nullable;
 
 /// Stores data of a specific region.
@@ -10,11 +12,11 @@ public record RegionDataModel(
     String id,
     String name,
     RegionType type,
-    @Nullable String nativeName,
+    Map<String, String> nativeNames,
     @Nullable Double area,
-    @Nullable Double elevation,
-    @Nullable String elevationName,
+    @Nullable Double highestElevation,
+    @Nullable String highestElevationName,
     @Nullable Long population,
-    List<ClimateClassification> climates,
-    List<BiomeClassification> biomes
+    Set<ClimateClassification> climates,
+    Set<BiomeClassification> biomes
 ) {}

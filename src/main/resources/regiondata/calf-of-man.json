@@ -2,9 +2,12 @@
   "id" : "calf-of-man",
   "name" : "Calf of Man",
   "type" : "ISLAND",
+  "nativeNames" : {
+    "Manx" : "Yn Cholloo"
+  },
   "area" : 250.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 128.0,
+  "highestElevationName" : null,
   "population" : 2,
   "climates" : [ ],
   "biomes" : [ ]

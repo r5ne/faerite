@@ -2,9 +2,13 @@
   "id" : "isle-of-man",
   "name" : "Isle of Man",
   "type" : "ISLAND_GROUP",
-  "area" : 572.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "nativeNames" : {
+    "en" : "Isle of Man",
+    "gv" : "Mannin"
+  },
+  "area" : 570.0,
+  "highestElevation" : 621.0,
+  "highestElevationName" : "Snaefell",
   "population" : 84523,
   "climates" : [ ],
   "biomes" : [ ]

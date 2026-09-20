@@ -7,6 +7,7 @@ module faerite {
     requires java.desktop;
     requires javafx.swing;
     requires org.commonmark;
+    requires nv.i18n;
 
     exports faerite;
     exports faerite.model;

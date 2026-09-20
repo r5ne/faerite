@@ -1,50 +1,77 @@
 package data.regiondata;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import faerite.model.BiomeClassification;
 import faerite.model.ClimateClassification;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionType;
-
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class RegionDataBuilder {
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    private final String id;
     private final String name;
-    private final RegionType type;
-    private String id;
-    private String wikidataId;
-    private String nativeName;
+    private RegionType type;
+    private Map<String, String> nativeNames;
     private Double area;
-    private Double elevation;
-    private String elevationName;
+    private Double highestElevation;
+    private String highestElevationName;
     private Long population;
-    private List<ClimateClassification> climates = new ArrayList<>();
-    private List<BiomeClassification> biomes = new ArrayList<>();
+    private Set<ClimateClassification> climates;
+    private Set<BiomeClassification> biomes;
 
-    public RegionDataBuilder(String name, RegionType type) {
-        this.name = name;
-        this.type = type;
-    }
-
-    public RegionDataBuilder id(String id) {
+    public RegionDataBuilder(String id, String name) {
         this.id = id;
+        this.name = name;
+
+        this.nativeNames = new HashMap<>();
+        this.climates = new HashSet<>();
+        this.biomes = new HashSet<>();
+    }
+
+    public RegionDataBuilder(RegionDataModel existingModel) {
+        this.id = existingModel.id();
+        this.name = existingModel.name();
+        this.type = existingModel.type();
+        this.nativeNames = existingModel.nativeNames();
+        this.area = existingModel.area();
+        this.highestElevation = existingModel.highestElevation();
+        this.highestElevationName = existingModel.highestElevationName();
+        this.population = existingModel.population();
+        this.climates = existingModel.climates();
+        this.biomes = existingModel.biomes();
+    }
+
+    public RegionDataBuilder type(RegionType type) {
+        this.type = type;
         return this;
     }
 
-    public RegionDataBuilder wikidataId(String wikidataId) {
-        this.wikidataId = wikidataId;
+    public RegionDataBuilder nativeNames(Map<String, String> nativeNames) {
+        this.nativeNames = nativeNames;
         return this;
     }
 
-    public RegionDataBuilder nativeName(String nativeName) {
-        this.nativeName = nativeName;
+    public RegionDataBuilder addNativeName(String language, String name) {
+        this.nativeNames.put(language, name);
+        return this;
+    }
+
+    public RegionDataBuilder addAllNativeNames(String... nativeNameEntries) {
+        if (nativeNameEntries.length % 2 != 0) {
+            throw new IllegalArgumentException("Keys and values must be paired up evenly.");
+        }
+
+        for (int i = 0; i < nativeNameEntries.length; i += 2) {
+            nativeNames.put(nativeNameEntries[i], nativeNameEntries[i + 1]);
+        }
+        return this;
+    }
+
+    public RegionDataBuilder keepNativeNames(String... languages) {
+        nativeNames.keySet().retainAll(Set.of(languages));
         return this;
     }
 
@@ -53,13 +80,13 @@ public class RegionDataBuilder {
         return this;
     }
 
-    public RegionDataBuilder elevation(double elevation) {
-        this.elevation = elevation;
+    public RegionDataBuilder highestElevation(double elevation) {
+        this.highestElevation = elevation;
         return this;
     }
 
-    public RegionDataBuilder elevationName(String elevationName) {
-        this.elevationName = elevationName;
+    public RegionDataBuilder highestElevationName(String elevationName) {
+        this.highestElevationName = elevationName;
         return this;
     }
 
@@ -69,7 +96,7 @@ public class RegionDataBuilder {
     }
 
     public RegionDataBuilder climates(ClimateClassification... climateClassification) {
-        this.climates = Arrays.asList(climateClassification);
+        this.climates = new HashSet<>(Arrays.asList(climateClassification));
         return this;
     }
 
@@ -78,9 +105,8 @@ public class RegionDataBuilder {
         return this;
     }
 
-
     public RegionDataBuilder biomes(BiomeClassification... biomeClassifications) {
-        this.biomes = Arrays.asList(biomeClassifications);
+        this.biomes = new HashSet<>(Arrays.asList(biomeClassifications));
         return this;
     }
 
@@ -90,36 +116,48 @@ public class RegionDataBuilder {
     }
 
     public RegionDataModel build() {
-        id = id != null ? id : name.toLowerCase().replace(" ", "-");
-        if (wikidataId != null) {
-            HttpResponse<String> response = WikidataFetcher.fetch(wikidataId);
-            System.out.println("Got response: " + response.body() + "Status code: " + response.statusCode());
-            if (response != null) {
-                if (response.statusCode() != 200) {
-                    System.err.println("API Error: " + response.body());
-                } else {
-                    try {
-                        JsonNode root = objectMapper.readTree(response.body());
-                        JsonNode bindings = root.path("results").path("bindings");
+        return new RegionDataModel(
+            id,
+            name,
+            type,
+            nativeNames,
+            area,
+            highestElevation,
+            highestElevationName,
+            population,
+            climates,
+            biomes
+        );
+    }
 
-                        if (bindings.isArray() && !bindings.isEmpty()) {
-                            JsonNode data = bindings.get(0);
-
-                            if (data.has("area")) {
-                                area = data.get("area").get("value").asDouble();
-                            }
-                            System.out.println("Parsed area");
-                            if (data.has("population")) {
-                                population = data.get("population").get("value").asLong();
-                            }
-                            System.out.println("Parsed population");
-                        }
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        return new RegionDataModel(id, name, type, nativeName, area, elevation, elevationName, population, climates, biomes);
+    @Override
+    public String toString() {
+        return (
+            "RegionDataBuilder{" +
+            "id='" +
+            id +
+            '\'' +
+            ", name='" +
+            name +
+            '\'' +
+            ", type=" +
+            type +
+            ", nativeNames=" +
+            nativeNames +
+            ", area=" +
+            area +
+            ", highestElevation=" +
+            highestElevation +
+            ", highestElevationName='" +
+            highestElevationName +
+            '\'' +
+            ", population=" +
+            population +
+            ", climates=" +
+            climates +
+            ", biomes=" +
+            biomes +
+            '}'
+        );
     }
 }

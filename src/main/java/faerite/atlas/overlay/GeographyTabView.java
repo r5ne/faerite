@@ -35,15 +35,15 @@ public class GeographyTabView extends VBox {
     }
 
     private void updateElevationLabel(RegionDataModel regionData) {
-        Double elevation = regionData.elevation();
-        String elevationName = regionData.elevationName();
+        Double elevation = regionData.highestElevation();
+        String elevationName = regionData.highestElevationName();
 
         if (elevation == null) {
             elevationSection.setVisible(false);
             return;
         }
         elevationSection.setVisible(true);
-        elevationLabel.setText(RegionDataFormatter.formatDouble(elevation) + " m²");
+        elevationLabel.setText(RegionDataFormatter.formatDouble(elevation) + " m");
 
         if (elevationName == null) {
             elevationNameLabel.setVisible(false);

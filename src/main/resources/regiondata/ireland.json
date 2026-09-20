@@ -2,9 +2,14 @@
   "id" : "ireland",
   "name" : "Ireland",
   "type" : "ISLAND",
+  "nativeNames" : {
+    "en" : "Ireland",
+    "ga" : "Éire",
+    "sco" : "Airlann"
+  },
   "area" : 84421.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 1038.6,
+  "highestElevationName" : "Carrauntoohil",
   "population" : 7185600,
   "climates" : [ ],
   "biomes" : [ ]

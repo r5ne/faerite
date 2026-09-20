@@ -1,42 +1,56 @@
 package data.datasets;
 
-import data.regiondata.RegionDataBuilder;
-import faerite.model.RegionDataModel;
+import data.regiondata.RegionDataBuilderConfig;
 import faerite.model.RegionType;
-
+import java.util.Map;
 import java.util.Set;
 
 public class BritishIslesRegionDataset implements RegionDataset {
 
     @Override
-    public Set<RegionDataModel> getRegionData() {
+    public Set<RegionDataBuilderConfig> getRegionData() {
         return Set.of(
-            new RegionDataBuilder("British Isles", RegionType.ARCHIPELAGO).wikidataId("Q38272").build(),
+            new RegionDataBuilderConfig("British Isles", "Q38272", b -> b.keepNativeNames("cy", "ga", "gd", "sco")),
 
-            new RegionDataBuilder("Great Britain", RegionType.ISLAND).wikidataId("Q749109").build(),
-            new RegionDataBuilder("Isle of Wight", RegionType.ISLAND).wikidataId("Q9679").build(),
+            new RegionDataBuilderConfig("Great Britain", "Q23666"),
+            new RegionDataBuilderConfig("Isle of Wight", "Q9679"),
 
-            new RegionDataBuilder("Ireland", RegionType.ISLAND).wikidataId("Q22890").build(),
+            new RegionDataBuilderConfig("Ireland", "Q22890"),
 
-            new RegionDataBuilder("Isle of Man", RegionType.ISLAND_GROUP).wikidataId("Q9676").build(),
-            new RegionDataBuilder("Isle of Man", RegionType.ISLAND).id("isle-of-man-island").wikidataId("Q27508141").build(),
-            new RegionDataBuilder("Calf of Man", RegionType.ISLAND).wikidataId("Q125389").build(),
+            new RegionDataBuilderConfig("Isle of Man", "Q9676", b -> b.type(RegionType.ISLAND_GROUP).area(570)),
+            new RegionDataBuilderConfig("isle-of-man-island", "Isle of Man", "Q27508141", b ->
+                b.population(84521).area(570)
+            ),
+            new RegionDataBuilderConfig("Calf of Man", "Q125389", b ->
+                b.highestElevation(128).nativeNames(Map.of("Manx", "Yn Cholloo"))
+            ),
 
-            new RegionDataBuilder("Channel Islands", RegionType.ARCHIPELAGO).wikidataId("Q42314").build(),
-            new RegionDataBuilder("Jersey", RegionType.ISLAND_GROUP).wikidataId("Q15706498").build(),
-            new RegionDataBuilder("Guernsey", RegionType.ISLAND_GROUP).wikidataId("Q3311985").build(),
-            new RegionDataBuilder("Alderney", RegionType.ISLAND_GROUP).wikidataId("Q179313").build(),
-            new RegionDataBuilder("Chausey", RegionType.ARCHIPELAGO).wikidataId("Q292600").build(),
-            new RegionDataBuilder("Sark", RegionType.ISLAND_GROUP).wikidataId("Q3405693").build(),
-            new RegionDataBuilder("Herm", RegionType.ISLAND_GROUP).wikidataId("Q202023").build(),
-            new RegionDataBuilder("Jethou", RegionType.ISLAND_GROUP).wikidataId("Q898856").build(),
-            new RegionDataBuilder("Les Écrehous", RegionType.ISLAND_GROUP).id("les-ecrehous").wikidataId("Q776075").build(),
-            new RegionDataBuilder("Les Minquiers", RegionType.ISLAND_GROUP).wikidataId("Q1435852").build(),
-            new RegionDataBuilder("Les Casquets", RegionType.ROCK_GROUP).wikidataId("Q1048187").build(),
+            new RegionDataBuilderConfig("Channel Islands", "Q42314", b ->
+                b.nativeNames(Map.of("French", "îles Anglo-Normandes"))
+            ),
+            new RegionDataBuilderConfig("Jersey", "Q15706498", b -> b.type(RegionType.ISLAND_GROUP)),
+            new RegionDataBuilderConfig("Guernsey", "Q3311985", b -> b.type(RegionType.ISLAND_GROUP)),
+            new RegionDataBuilderConfig("Alderney", "Q179313", b ->
+                b
+                    .type(RegionType.ISLAND_GROUP)
+                    .highestElevation(90)
+                    .nativeNames(Map.of("Auregnais", "Aoeur'gny", "French", "Aurigny"))
+            ),
+            new RegionDataBuilderConfig("Chausey", "Q292600", b ->
+                b.population(30).area(1.825).nativeNames(Map.of("French", "îles Chausey")).highestElevation(24)
+            ),
+            new RegionDataBuilderConfig("Sark", "Q3405693", b -> b.type(RegionType.ISLAND_GROUP)),
+            new RegionDataBuilderConfig("Herm", "Q202023", b -> b.type(RegionType.ISLAND_GROUP)),
+            new RegionDataBuilderConfig("Jethou", "Q898856", b -> b.type(RegionType.ISLAND_GROUP)),
+            new RegionDataBuilderConfig("les-ecrehous", "Les Écrehous", "Q776075", b ->
+                b.type(RegionType.ISLAND_GROUP).area(0.2)
+            ),
+            new RegionDataBuilderConfig("Les Minquiers", "Q1435852", b -> b.type(RegionType.ISLAND_GROUP).area(0.1)),
+            new RegionDataBuilderConfig("Les Casquets", "Q1048187", b -> b.area(0.072)),
 
-            new RegionDataBuilder("Isles of Scilly", RegionType.ARCHIPELAGO).wikidataId("Q180209").build(),
-            new RegionDataBuilder("Shetland", RegionType.ARCHIPELAGO).wikidataId("Q47134").build(),
-            new RegionDataBuilder("Orkney", RegionType.ARCHIPELAGO).wikidataId("Q100166").build()
+            new RegionDataBuilderConfig("Isles of Scilly", "Q180209"),
+            new RegionDataBuilderConfig("Shetland", "Q47134"),
+            new RegionDataBuilderConfig("Orkney", "Q100166")
         );
     }
 }

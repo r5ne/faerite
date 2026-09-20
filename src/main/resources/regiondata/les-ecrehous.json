@@ -2,9 +2,10 @@
   "id" : "les-ecrehous",
   "name" : "Les Écrehous",
   "type" : "ISLAND_GROUP",
-  "area" : null,
-  "elevation" : null,
-  "elevationName" : null,
+  "nativeNames" : { },
+  "area" : 0.2,
+  "highestElevation" : null,
+  "highestElevationName" : null,
   "population" : 0,
   "climates" : [ ],
   "biomes" : [ ]

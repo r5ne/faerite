@@ -2,9 +2,12 @@
   "id" : "orkney",
   "name" : "Orkney",
   "type" : "ARCHIPELAGO",
+  "nativeNames" : {
+    "gd" : "Arcaibh"
+  },
   "area" : 990.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 481.0,
+  "highestElevationName" : "Ward Hill",
   "population" : 22270,
   "climates" : [ ],
   "biomes" : [ ]

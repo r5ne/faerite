@@ -4,6 +4,7 @@ import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionSelectionModel;
+import faerite.model.RegionType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -64,7 +65,6 @@ public class OverviewTabView extends VBox {
             return;
         }
 
-        populationSection.setVisible(true);
         String populationString;
 
         if (population >= 1000000000) {
@@ -76,6 +76,7 @@ public class OverviewTabView extends VBox {
         }
 
         populationNumberLabel.setText(populationString);
+        populationSection.setVisible(true);
     }
 
     private void updateAreaLabel(RegionDataModel regionData) {
@@ -85,8 +86,8 @@ public class OverviewTabView extends VBox {
             areaSection.setVisible(false);
             return;
         }
-        areaSection.setVisible(true);
         areaLabel.setText(RegionDataFormatter.formatDouble(area) + " km²");
+        areaSection.setVisible(true);
     }
 
     private void updatePopulationDensityLabel(RegionDataModel regionData) {
@@ -97,9 +98,9 @@ public class OverviewTabView extends VBox {
             populationDensitySection.setVisible(false);
             return;
         }
-        populationDensitySection.setVisible(true);
 
         long populationDensity = Math.round(population / area);
         populationDensityLabel.setText(RegionDataFormatter.formatLong(populationDensity) + " people per km²");
+        populationDensitySection.setVisible(true);
     }
 }

@@ -2,9 +2,10 @@
   "id" : "herm",
   "name" : "Herm",
   "type" : "ISLAND_GROUP",
+  "nativeNames" : { },
   "area" : 2.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : null,
+  "highestElevationName" : null,
   "population" : 60,
   "climates" : [ ],
   "biomes" : [ ]
