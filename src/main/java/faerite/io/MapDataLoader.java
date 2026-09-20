@@ -75,7 +75,7 @@ public final class MapDataLoader {
             }
             return objectMapper.readValue(stream, classType);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load map model: " + path, e);
+            throw new RuntimeException("Failed to load JSON: " + path, e);
         }
     }
 }

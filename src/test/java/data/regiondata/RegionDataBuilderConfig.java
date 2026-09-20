@@ -10,7 +10,7 @@ public record RegionDataBuilderConfig(
     Consumer<RegionDataBuilder> overrides
 ) {
     public RegionDataBuilderConfig(String name, String wikidataId, Consumer<RegionDataBuilder> overrides) {
-        this(name, nameToId(name), wikidataId, overrides);
+        this(nameToId(name), name, wikidataId, overrides);
     }
 
     public RegionDataBuilderConfig(String id, String name, String wikidataId) {
