@@ -22,6 +22,10 @@ public class UniformSpacerPane extends Region {
         }
 
         double totalButtonWidth = maxButtonWidth * children.size();
+        if (totalButtonWidth > width) {
+            maxButtonWidth = width / children.size();
+            totalButtonWidth = maxButtonWidth * children.size();
+        }
         double availableSpace = width - totalButtonWidth;
         double spacing = availableSpace / (children.size() + 1);
 
