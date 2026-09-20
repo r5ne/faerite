@@ -1,10 +1,11 @@
 {
   "id" : "jethou",
   "name" : "Jethou",
-  "type" : "ISLAND_GROUP",
+  "type" : "ISLAND",
+  "nativeNames" : { },
   "area" : 0.178,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : null,
+  "highestElevationName" : null,
   "population" : 3,
   "climates" : [ ],
   "biomes" : [ ]

@@ -2,9 +2,19 @@
   "id" : "british-isles",
   "name" : "British Isles",
   "type" : "ARCHIPELAGO",
+  "nativeNames" : {
+    "cy" : "Ynysoedd Prydain",
+    "en" : "British Isles",
+    "fr" : "Îles Britanniques",
+    "ga" : "Éire agus an Bhreatain Mhór",
+    "gd" : "Eileanan Bhreatainn",
+    "gv" : "Ny h-Ellanyn Goaldagh",
+    "kw" : "Enesow Bretennek",
+    "sco" : "Breetish Isles"
+  },
   "area" : 121684.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 1344.527,
+  "highestElevationName" : "Ben Nevis",
   "population" : 71891524,
   "climates" : [ ],
   "biomes" : [ ]

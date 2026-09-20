@@ -2,10 +2,11 @@
   "id" : "isle-of-man-island",
   "name" : "Isle of Man",
   "type" : "ISLAND",
-  "area" : 573.0,
-  "elevation" : null,
-  "elevationName" : null,
-  "population" : null,
+  "nativeNames" : { },
+  "area" : 570.0,
+  "highestElevation" : null,
+  "highestElevationName" : null,
+  "population" : 84521,
   "climates" : [ ],
   "biomes" : [ ]
 }

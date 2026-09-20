@@ -2,9 +2,10 @@
   "id" : "calf-of-man",
   "name" : "Calf of Man",
   "type" : "ISLAND",
+  "nativeNames" : { },
   "area" : 250.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : null,
+  "highestElevationName" : null,
   "population" : 2,
   "climates" : [ ],
   "biomes" : [ ]

@@ -1,10 +1,13 @@
 {
   "id" : "jersey",
   "name" : "Jersey",
-  "type" : "ISLAND_GROUP",
+  "type" : "ISLAND",
+  "nativeNames" : {
+    "nrf-je" : "Jèrri"
+  },
   "area" : 118.2,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : null,
+  "highestElevationName" : null,
   "population" : 105500,
   "climates" : [ ],
   "biomes" : [ ]

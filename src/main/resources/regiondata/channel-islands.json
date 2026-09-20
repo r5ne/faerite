@@ -2,9 +2,10 @@
   "id" : "channel-islands",
   "name" : "Channel Islands",
   "type" : "ARCHIPELAGO",
+  "nativeNames" : { },
   "area" : 198.0,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 136.0,
+  "highestElevationName" : "Les Platons",
   "population" : 163857,
   "climates" : [ ],
   "biomes" : [ ]

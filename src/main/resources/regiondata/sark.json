@@ -1,10 +1,11 @@
 {
   "id" : "sark",
   "name" : "Sark",
-  "type" : "ISLAND_GROUP",
+  "type" : "ISLAND",
+  "nativeNames" : { },
   "area" : 5.5,
-  "elevation" : null,
-  "elevationName" : null,
+  "highestElevation" : 114.0,
+  "highestElevationName" : "Le Moulin",
   "population" : 562,
   "climates" : [ ],
   "biomes" : [ ]

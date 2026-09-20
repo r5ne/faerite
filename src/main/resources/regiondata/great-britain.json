@@ -2,10 +2,17 @@
   "id" : "great-britain",
   "name" : "Great Britain",
   "type" : "ISLAND",
-  "area" : null,
-  "elevation" : null,
-  "elevationName" : null,
-  "population" : null,
+  "nativeNames" : {
+    "cy" : "Prydain Fawr",
+    "en" : "Great Britain",
+    "gd" : "Breatainn Mhòr",
+    "kw" : "Breten Veur",
+    "sco" : "Great Breetain"
+  },
+  "area" : 228938.0,
+  "highestElevation" : 1344.527,
+  "highestElevationName" : "Ben Nevis",
+  "population" : 65121000,
   "climates" : [ ],
   "biomes" : [ ]
 }

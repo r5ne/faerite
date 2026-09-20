@@ -2,9 +2,10 @@
   "id" : "les-casquets",
   "name" : "Les Casquets",
   "type" : "ROCK_GROUP",
-  "area" : null,
-  "elevation" : null,
-  "elevationName" : null,
+  "nativeNames" : { },
+  "area" : 0.072,
+  "highestElevation" : null,
+  "highestElevationName" : null,
   "population" : 0,
   "climates" : [ ],
   "biomes" : [ ]

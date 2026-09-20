@@ -2,10 +2,11 @@
   "id" : "chausey",
   "name" : "Chausey",
   "type" : "ARCHIPELAGO",
-  "area" : 0.69,
-  "elevation" : null,
-  "elevationName" : null,
-  "population" : null,
+  "nativeNames" : { },
+  "area" : 1.825,
+  "highestElevation" : null,
+  "highestElevationName" : null,
+  "population" : 30,
   "climates" : [ ],
   "biomes" : [ ]
 }
