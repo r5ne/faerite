@@ -9,8 +9,11 @@ import data.regiondata.WikidataFetcher;
 import faerite.io.AssetPaths;
 import faerite.io.MapDataLoader;
 import faerite.model.RegionDataModel;
+import faerite.model.RegionType;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Set;
 
 public class RegionDataGenerator {
@@ -59,13 +62,13 @@ public class RegionDataGenerator {
             for (RegionDataBuilderConfig config : regionDataset.getRegionData()) {
                 RegionDataBuilder builder;
 
-                String stringJsonPath = DataWriter.getRelativePathOf(AssetPaths.getRegionDataPath(config.id()));
-                Path jsonPath = Path.of(stringJsonPath);
-                boolean configExists = Files.exists(jsonPath);
+                String resourcePath = AssetPaths.getRegionDataPath(config.id());
+                Path relativePath = Path.of(DataWriter.getRelativePathOf(resourcePath));
+                boolean configExists = Files.exists(relativePath);
 
                 // Loading in the existing RegionDataModel if it exists.
                 if (configExists) {
-                    RegionDataModel existingModel = MapDataLoader.loadRegionDataModel(config.id());
+                    RegionDataModel existingModel = MapDataLoader.loadRegionDataModel(resourcePath);
                     builder = new RegionDataBuilder(existingModel);
                 } else {
                     builder = new RegionDataBuilder(config.id(), config.name());
@@ -75,7 +78,7 @@ public class RegionDataGenerator {
                 if (
                     syncMode == RegionDataSyncMode.ALL || (syncMode == RegionDataSyncMode.IF_MISSING && !configExists)
                 ) {
-                    JsonNode wikidata = WikidataFetcher.fetch(config.id());
+                    JsonNode wikidata = WikidataFetcher.fetch(String.format(QUERY_TEMPLATE, config.wikidataId()));
                     if (wikidata != null) {
                         addWikidata(wikidata, builder);
                     } else {
@@ -88,7 +91,7 @@ public class RegionDataGenerator {
                     config.overrides().accept(builder);
                 }
 
-                DataWriter.writeData(builder.build(), jsonPath);
+                DataWriter.writeData(builder.build(), relativePath);
             }
         }
     }
