@@ -1,7 +1,7 @@
 {
   "id" : "sark",
   "name" : "Sark",
-  "type" : "ISLAND",
+  "type" : "ISLAND_GROUP",
   "nativeNames" : { },
   "area" : 5.5,
   "highestElevation" : 114.0,

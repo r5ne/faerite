@@ -43,7 +43,7 @@ public class GeographyTabView extends VBox {
             return;
         }
         elevationSection.setVisible(true);
-        elevationLabel.setText(RegionDataFormatter.formatDouble(elevation) + " m²");
+        elevationLabel.setText(RegionDataFormatter.formatDouble(elevation) + " m");
 
         if (elevationName == null) {
             elevationNameLabel.setVisible(false);

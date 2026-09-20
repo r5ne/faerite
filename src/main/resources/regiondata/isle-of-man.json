@@ -1,7 +1,7 @@
 {
   "id" : "isle-of-man",
   "name" : "Isle of Man",
-  "type" : null,
+  "type" : "ISLAND_GROUP",
   "nativeNames" : {
     "en" : "Isle of Man",
     "gv" : "Mannin"

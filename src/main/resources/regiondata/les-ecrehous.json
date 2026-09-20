@@ -1,7 +1,7 @@
 {
   "id" : "les-ecrehous",
   "name" : "Les Écrehous",
-  "type" : "ARCHIPELAGO",
+  "type" : "ISLAND_GROUP",
   "nativeNames" : { },
   "area" : 0.2,
   "highestElevation" : null,

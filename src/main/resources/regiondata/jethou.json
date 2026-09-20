@@ -1,7 +1,7 @@
 {
   "id" : "jethou",
   "name" : "Jethou",
-  "type" : "ISLAND",
+  "type" : "ISLAND_GROUP",
   "nativeNames" : { },
   "area" : 0.178,
   "highestElevation" : null,

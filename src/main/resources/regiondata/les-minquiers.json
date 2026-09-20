@@ -1,7 +1,7 @@
 {
   "id" : "les-minquiers",
   "name" : "Les Minquiers",
-  "type" : null,
+  "type" : "ISLAND_GROUP",
   "nativeNames" : { },
   "area" : 0.1,
   "highestElevation" : null,
