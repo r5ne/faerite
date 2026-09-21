@@ -4,9 +4,11 @@ import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionSelectionModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -41,27 +43,27 @@ public class HistoryTabView extends VBox {
 
         nativeNameSection.clearContent();
 
-        Map<String, List<String>> languagesByNativeName = nativeNames
-            .entrySet()
-            .stream()
-            .collect(
-                Collectors.groupingBy(Map.Entry::getValue, Collectors.mapping(Map.Entry::getKey, Collectors.toList()))
-            );
-        for (Map.Entry<String, List<String>> entry : languagesByNativeName.entrySet()) {
-            String sharedNativeName = entry.getKey();
-            List<String> languageKeys = entry.getValue();
+        Map<String, List<String>> languagesByNativeName = new HashMap<>();
 
-            Label nativeNameLabel = new Label(sharedNativeName);
+        for (Map.Entry<String, String> entry : nativeNames.entrySet()) {
+            languagesByNativeName
+                    .computeIfAbsent(entry.getValue(), k -> new ArrayList<>())
+                    .add(entry.getKey());
+        }
+
+        for (Map.Entry<String, List<String>> entry : languagesByNativeName.entrySet()) {
+            Label nativeNameLabel = new Label(entry.getKey());
             nativeNameLabel.setWrapText(true);
             nativeNameLabel.getStyleClass().addAll("info-section-value");
 
-            String combinedLanguages = String.join(", ", languageKeys);
+            String combinedLanguages = String.join(", ", entry.getValue());
             Label languageLabel = new Label(combinedLanguages);
             languageLabel.getStyleClass().add("info-section-description");
             languageLabel.setWrapText(true);
 
             nativeNameSection.addContent(nativeNameLabel, languageLabel);
         }
+
         nativeNameSection.setVisible(true);
     }
 }
