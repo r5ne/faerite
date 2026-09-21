@@ -2,9 +2,11 @@
   "id" : "herm",
   "name" : "Herm",
   "type" : "ISLAND_GROUP",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "Guernésiais" : "Haerme"
+  },
   "area" : 2.0,
-  "highestElevation" : null,
+  "highestElevation" : 61.0,
   "highestElevationName" : null,
   "population" : 60,
   "climates" : [ ],

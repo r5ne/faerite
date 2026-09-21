@@ -2,12 +2,7 @@
   "id" : "british-isles",
   "name" : "British Isles",
   "type" : "ARCHIPELAGO",
-  "nativeNames" : {
-    "Welsh" : "Ynysoedd Prydain",
-    "Irish" : "Éire agus an Bhreatain Mhór",
-    "Scottish Gaelic" : "Eileanan Bhreatainn",
-    "Scots" : "Breetish Isles"
-  },
+  "nativeNames" : { },
   "area" : 121684.0,
   "highestElevation" : 1344.527,
   "highestElevationName" : "Ben Nevis",

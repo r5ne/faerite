@@ -2,7 +2,10 @@
   "id" : "sark",
   "name" : "Sark",
   "type" : "ISLAND_GROUP",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "French" : "Sercq",
+    "Sercquiais" : "Sèr"
+  },
   "area" : 5.5,
   "highestElevation" : 114.0,
   "highestElevationName" : "Le Moulin",

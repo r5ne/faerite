@@ -3,7 +3,8 @@
   "name" : "Isle of Man",
   "type" : "ISLAND_GROUP",
   "nativeNames" : {
-    "Manx" : "Mannin"
+    "Manx" : "Mannin",
+    "Welsh" : "Manaw"
   },
   "area" : 570.0,
   "highestElevation" : 621.0,

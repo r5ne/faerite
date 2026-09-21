@@ -2,10 +2,12 @@
   "id" : "isle-of-wight",
   "name" : "Isle of Wight",
   "type" : "ISLAND",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "Welsh" : "Ynys Wyth"
+  },
   "area" : 380.1644,
-  "highestElevation" : null,
-  "highestElevationName" : null,
+  "highestElevation" : 242.0,
+  "highestElevationName" : "St Bonafice Down",
   "population" : 140459,
   "climates" : [ ],
   "biomes" : [ ]

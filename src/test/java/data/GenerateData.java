@@ -5,5 +5,5 @@ import data.RegionDataSyncMode;
 
 void main() {
     MapDataGenerator.createMapModels();
-    RegionDataGenerator.createRegionData(RegionDataSyncMode.ALL);
+    RegionDataGenerator.createRegionData(RegionDataSyncMode.IF_MISSING);
 }

@@ -3,12 +3,11 @@
   "name" : "Jersey",
   "type" : "ISLAND_GROUP",
   "nativeNames" : {
-    "nrf" : "Jèrri",
-    "nrf-je" : "Jèrri"
+    "Jèrriais" : "Jèrri"
   },
   "area" : 118.2,
-  "highestElevation" : null,
-  "highestElevationName" : null,
+  "highestElevation" : 143.0,
+  "highestElevationName" : "Les Platons",
   "population" : 105500,
   "climates" : [ ],
   "biomes" : [ ]

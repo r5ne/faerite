@@ -2,10 +2,13 @@
   "id" : "isles-of-scilly",
   "name" : "Isles of Scilly",
   "type" : "ARCHIPELAGO",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "Cornish" : "Syllan",
+    "Old Norse" : "Syllingar"
+  },
   "area" : 16.3376,
-  "highestElevation" : null,
-  "highestElevationName" : null,
+  "highestElevation" : 51.0,
+  "highestElevationName" : "Telegraph",
   "population" : 2281,
   "climates" : [ ],
   "biomes" : [ ]
