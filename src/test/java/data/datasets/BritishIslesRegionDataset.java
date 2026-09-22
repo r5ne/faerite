@@ -44,7 +44,7 @@ public class BritishIslesRegionDataset implements RegionDataset {
                 b
                     .type(RegionType.ISLAND_GROUP)
                     .nativeNames(Map.of("Jèrriais", "Jèrri"))
-                    .highestElevation(143)
+                    .highestElevation(136)
                     .highestElevationName("Les Platons")
             ),
             new RegionDataBuilderConfig("Guernsey", "Q3311985", b ->
