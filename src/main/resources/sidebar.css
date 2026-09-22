@@ -69,5 +69,5 @@
 }
 
 .scroll-gradient {
-    -fx-fill: linear-gradient(to top, -fx-theme-background 0%, transparent 100%);
+    -fx-background-color: linear-gradient(to top, -fx-theme-background 0%, transparent 100%);
 }
