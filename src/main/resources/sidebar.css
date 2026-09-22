@@ -1,12 +1,19 @@
 .info-sidebar {
     -fx-background-color: -fx-theme-background;
+
     -fx-background-radius: 0.5em;
     -fx-padding: 1.5em 1.5em 1.5em 1.5em;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5);
+
+    -fx-min-width: 0;
+    -fx-min-height: 0;
 }
 
 .info-sidebar-header {
+    -fx-wrap-text: true;
     -fx-alignment: center;
+    -fx-text-alignment: center;
+
     -fx-padding: 2.5em 0 2.5em 0;
     -fx-spacing: 1.5em;
 }
@@ -15,14 +22,20 @@
     -fx-font-size: 4.5em;
 }
 
+.nav-button:selected {
+    -fx-cursor: default;
+}
+
 .info-sidebar-body {
     -fx-background-color: transparent;
+
     -fx-spacing: 1em;
     -fx-padding: 0.5em 0 0 0;
 }
 
 .info-section {
     -fx-background-color: -fx-theme-foreground;
+
     -fx-background-radius: 1.5em;
     -fx-padding: 1.5em 2em 1.5em 2em;
     -fx-alignment: top-left;
@@ -30,20 +43,28 @@
 }
 
 .info-section-title {
-    -fx-text-fill: white;
     -fx-font-size: 2em;
+    -fx-text-fill: white;
 }
 
 .info-section-value {
-    -fx-text-fill: -fx-theme-accent;
     -fx-font-size: 2.5em;
+    -fx-text-fill: -fx-theme-accent;
+
+    -fx-wrap-text: true;
     -fx-alignment: center;
+    -fx-text-alignment: center;
+
     -fx-max-width: infinity;
 }
 
 .info-section-description {
     -fx-text-fill: -fx-theme-secondary;
+
+    -fx-wrap-text: true;
     -fx-alignment: center;
+    -fx-text-alignment: center;
+
     -fx-max-width: infinity;
 }
 
