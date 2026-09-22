@@ -7,8 +7,13 @@ import javafx.scene.layout.*;
 public class AtlasOverlay extends AnchorPane {
 
     private static final int SIDEBAR_MIN_WIDTH = 300;
+    private static final double SIDEBAR_PREF_WIDTH_RATIO = 0.25;
+    private static final double MIN_WINDOW_WIDTH_FOR_SIDEBAR = SIDEBAR_MIN_WIDTH * (1 / SIDEBAR_PREF_WIDTH_RATIO);
+
     private static final int SIDEBAR_MAX_WIDTH = 1000;
+
     private static final int SIDEBAR_MIN_HEIGHT = 480;
+
     private static final double SIDEBAR_PADDING = 40.0;
 
     private static final int MIN_FONT_SIZE = 8;
@@ -37,21 +42,11 @@ public class AtlasOverlay extends AnchorPane {
             int fontSize = Math.max(viewModel.uiContext.getUiElementFontSize(currentWidth), MIN_FONT_SIZE);
             this.setStyle("-fx-font-size: " + fontSize + "px;");
 
-            double minSidebarWidthThreshold = SIDEBAR_MIN_WIDTH * uiScale * 4;
-
-            if (currentWidth < minSidebarWidthThreshold) {
-                infoSidebar.setVisible(false);
-            } else {
-                infoSidebar.setVisible(true);
-                infoSidebar.setPrefWidth(currentWidth * 0.25);
-            }
+            updateInfoSidebarLayout();
         });
-        this.heightProperty().addListener((_, _, newHeight) -> {
-            double currentHeight = newHeight.doubleValue();
 
-            double minSidebarHeightThreshold = SIDEBAR_MIN_HEIGHT * uiScale;
-
-            infoSidebar.setVisible(!(currentHeight < minSidebarHeightThreshold));
+        this.heightProperty().addListener((_, _, _) -> {
+            updateInfoSidebarLayout();
         });
 
         setTopAnchor(infoSidebar, SIDEBAR_PADDING * uiScale);
@@ -68,5 +63,21 @@ public class AtlasOverlay extends AnchorPane {
         infoSidebar.setCenter(infoSidebarBody);
 
         getChildren().add(infoSidebar);
+    }
+
+    private void updateInfoSidebarLayout() {
+        double uiScale = viewModel.uiContext.getUiScale();
+
+        double currentWidth = getWidth();
+        double currentHeight = getHeight();
+
+        double minSidebarWidthThreshold = MIN_WINDOW_WIDTH_FOR_SIDEBAR * uiScale;
+        double minSidebarHeightThreshold = SIDEBAR_MIN_HEIGHT * uiScale;
+        if (currentWidth > minSidebarWidthThreshold && currentHeight > minSidebarHeightThreshold) {
+            infoSidebar.setVisible(true);
+            infoSidebar.setPrefWidth(currentWidth * SIDEBAR_PREF_WIDTH_RATIO);
+        } else {
+            infoSidebar.setVisible(false);
+        }
     }
 }
