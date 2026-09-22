@@ -26,7 +26,11 @@ public class UIContext {
         fontSize = (int) Math.round(uiScale * LOGICAL_FONT_SIZE);
     }
 
-    public static int getFontSize() {
+    public int getUiElementFontSize(double uiElementWidth) {
+        double uiElementSize = Math.min(1.0, uiElementWidth / screenWidth);
+        return (int) Math.round(fontSize * uiElementSize);
+    }
+
     public int getFontSize() {
         return fontSize;
     }
