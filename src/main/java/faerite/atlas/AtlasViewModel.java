@@ -3,6 +3,7 @@ package faerite.atlas;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import faerite.util.Colors;
+import faerite.util.UIContext;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,6 +29,7 @@ public class AtlasViewModel {
     private final ObjectProperty<RegionInfoSection> selectedInfoSection = new SimpleObjectProperty<>(
         RegionInfoSection.OVERVIEW
     );
+    public final UIContext uiContext;
 
     // style fields
     private final IntegerProperty oceanColor = new SimpleIntegerProperty(0x213840); // rgb
@@ -38,7 +40,9 @@ public class AtlasViewModel {
 
     /// Creates the view model and adds the first map view model to the stack using the map model data.
     /// @param initialMapModelId The id of the map model used to create the first map view model.
-    public AtlasViewModel(String initialMapModelId) {
+    public AtlasViewModel(String initialMapModelId, UIContext uiContext) {
+        this.uiContext = uiContext;
+
         currentLayerIndex.addListener((_, _, newIndex) -> {
             if (newIndex.intValue() >= 0 && newIndex.intValue() < layerHistory.size()) {
                 activeLayer.set(layerHistory.get(newIndex.intValue()));
