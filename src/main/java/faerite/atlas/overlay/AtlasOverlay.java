@@ -8,6 +8,7 @@ public class AtlasOverlay extends AnchorPane {
 
     private static final int SIDEBAR_MIN_WIDTH = 300;
     private static final int SIDEBAR_MAX_WIDTH = 1000;
+    private static final int SIDEBAR_MIN_HEIGHT = 480;
     private static final double SIDEBAR_PADDING = 40.0;
 
     private static final int MIN_FONT_SIZE = 8;
@@ -27,10 +28,10 @@ public class AtlasOverlay extends AnchorPane {
         double uiScale = viewModel.uiContext.getUiScale();
 
         // positioning
-        infoSidebar.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
-        infoSidebar.setMinWidth(SIDEBAR_MIN_WIDTH);
-        infoSidebar.setMaxWidth(SIDEBAR_MAX_WIDTH);
         infoSidebar.setMaxWidth(SIDEBAR_MAX_WIDTH * uiScale);
+        infoSidebar.managedProperty().bind(infoSidebar.visibleProperty());
+
+        this.widthProperty().addListener((_, _, newWidth) -> {
             double currentWidth = newWidth.doubleValue();
 
             int fontSize = Math.max(viewModel.uiContext.getUiElementFontSize(currentWidth), MIN_FONT_SIZE);
@@ -45,10 +46,14 @@ public class AtlasOverlay extends AnchorPane {
                 infoSidebar.setPrefWidth(currentWidth * 0.25);
             }
         });
+        this.heightProperty().addListener((_, _, newHeight) -> {
+            double currentHeight = newHeight.doubleValue();
 
-        setTopAnchor(infoSidebar, SIDEBAR_PADDING);
-        setBottomAnchor(infoSidebar, SIDEBAR_PADDING);
-        setRightAnchor(infoSidebar, SIDEBAR_PADDING);
+            double minSidebarHeightThreshold = SIDEBAR_MIN_HEIGHT * uiScale;
+
+            infoSidebar.setVisible(!(currentHeight < minSidebarHeightThreshold));
+        });
+
         setTopAnchor(infoSidebar, SIDEBAR_PADDING * uiScale);
         setBottomAnchor(infoSidebar, SIDEBAR_PADDING * uiScale);
         setRightAnchor(infoSidebar, SIDEBAR_PADDING * uiScale);
