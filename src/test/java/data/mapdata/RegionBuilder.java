@@ -4,6 +4,7 @@ import faerite.model.Point;
 import faerite.model.RegionSelectionModel;
 
 public class RegionBuilder {
+
     private final String id;
     private final int maskColor;
     private boolean hasSubMap = false;

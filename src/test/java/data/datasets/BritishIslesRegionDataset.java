@@ -1,6 +1,7 @@
 package data.datasets;
 
 import data.regiondata.RegionDataBuilderConfig;
+import faerite.model.Habitat;
 import faerite.model.RegionType;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +13,9 @@ public class BritishIslesRegionDataset implements RegionDataset {
         return Set.of(
             new RegionDataBuilderConfig("British Isles", "Q38272"),
 
-            new RegionDataBuilderConfig("Great Britain", "Q23666"),
+            new RegionDataBuilderConfig("Great Britain", "Q23666", b ->
+                b.habitats(Habitat.MOORLAND, Habitat.HEATHER_MOORLAND)
+            ),
             new RegionDataBuilderConfig("Isle of Wight", "Q9679", b ->
                 b
                     .nativeNames(Map.of("Welsh", "Ynys Wyth"))
@@ -46,6 +49,7 @@ public class BritishIslesRegionDataset implements RegionDataset {
                     .nativeNames(Map.of("Jèrriais", "Jèrri"))
                     .highestElevation(136)
                     .highestElevationName("Les Platons")
+                    .habitats(Habitat.COASTAL_HEATHLAND)
             ),
             new RegionDataBuilderConfig("Guernsey", "Q3311985", b ->
                 b

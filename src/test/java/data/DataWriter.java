@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class DataWriter {
+
     private static final String RELATIVE_RESOURCES_PATH = "src/main/resources";
 
     private static final ObjectMapper objectMapper = JsonMapper.builder()

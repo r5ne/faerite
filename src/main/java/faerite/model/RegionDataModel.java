@@ -18,5 +18,5 @@ public record RegionDataModel(
     @Nullable String highestElevationName,
     @Nullable Long population,
     Set<KoeppenClimateClassification> climates,
-    Set<BiomeClassification> biomes
+    Set<Habitat> habitats
 ) {}

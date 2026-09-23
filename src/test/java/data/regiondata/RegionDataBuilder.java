@@ -2,7 +2,6 @@ package data.regiondata;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import faerite.model.*;
-
 import java.util.*;
 
 public class RegionDataBuilder {
@@ -18,7 +17,7 @@ public class RegionDataBuilder {
     private String highestElevationName;
     private Long population;
     private Set<KoeppenClimateClassification> climates;
-    private Set<BiomeClassification> biomes;
+    private Set<Habitat> habitats;
 
     public RegionDataBuilder(String id, String name) {
         this.id = id;
@@ -26,7 +25,7 @@ public class RegionDataBuilder {
 
         this.nativeNames = new HashMap<>();
         this.climates = new HashSet<>();
-        this.biomes = new HashSet<>();
+        this.habitats = new HashSet<>();
     }
 
     public RegionDataBuilder(RegionDataModel existingModel) {
@@ -39,7 +38,7 @@ public class RegionDataBuilder {
         this.highestElevationName = existingModel.highestElevationName();
         this.population = existingModel.population();
         this.climates = existingModel.climates();
-        this.biomes = existingModel.biomes();
+        this.habitats = existingModel.habitats();
     }
 
     public RegionDataBuilder type(RegionType type) {
@@ -103,18 +102,17 @@ public class RegionDataBuilder {
         return this;
     }
 
-
     public RegionDataBuilder addClimates(KoeppenClimateClassification... climateClassification) {
         return this.addClimates(Arrays.asList(climateClassification));
     }
 
-    public RegionDataBuilder biomes(BiomeClassification... biomeClassifications) {
-        this.biomes = new HashSet<>(Arrays.asList(biomeClassifications));
+    public RegionDataBuilder habitats(Habitat... habitat) {
+        this.habitats = new HashSet<>(Arrays.asList(habitat));
         return this;
     }
 
-    public RegionDataBuilder addBiomes(BiomeClassification... biomeClassifications) {
-        this.biomes.addAll(Arrays.asList(biomeClassifications));
+    public RegionDataBuilder addHabitats(Habitat... habitat) {
+        this.habitats.addAll(Arrays.asList(habitat));
         return this;
     }
 
@@ -129,7 +127,7 @@ public class RegionDataBuilder {
             highestElevationName,
             population,
             climates,
-            biomes
+            habitats
         );
     }
 
@@ -158,8 +156,8 @@ public class RegionDataBuilder {
             population +
             ", climates=" +
             climates +
-            ", biomes=" +
-            biomes +
+            ", habitats=" +
+            habitats +
             '}'
         );
     }
