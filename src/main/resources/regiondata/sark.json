@@ -10,6 +10,6 @@
   "highestElevation" : 114.0,
   "highestElevationName" : "Le Moulin",
   "population" : 562,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

@@ -9,6 +9,6 @@
   "highestElevation" : 22.0,
   "highestElevationName" : "Grande-Île (Island)",
   "population" : 30,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

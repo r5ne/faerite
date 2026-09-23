@@ -10,6 +10,6 @@
   "highestElevation" : 51.0,
   "highestElevationName" : "Telegraph",
   "population" : 2281,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

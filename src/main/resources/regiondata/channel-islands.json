@@ -9,6 +9,6 @@
   "highestElevation" : 136.0,
   "highestElevationName" : "Les Platons",
   "population" : 163857,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CSB", "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND" ]
 }

@@ -9,6 +9,6 @@
   "highestElevation" : 242.0,
   "highestElevationName" : "St Bonafice Down",
   "population" : 140459,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

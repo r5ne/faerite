@@ -1,6 +1,6 @@
 {
   "id" : "les-ecrehous",
-  "name" : "Les Écrehous",
+  "name" : "Les Écréhous",
   "type" : "ISLAND_GROUP",
   "nativeNames" : {
     "Jèrriais" : "Êcrého"
@@ -9,6 +9,6 @@
   "highestElevation" : 5.0,
   "highestElevationName" : null,
   "population" : 0,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

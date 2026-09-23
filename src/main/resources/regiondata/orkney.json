@@ -11,6 +11,6 @@
   "highestElevation" : 481.0,
   "highestElevationName" : "Ward Hill",
   "population" : 22270,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

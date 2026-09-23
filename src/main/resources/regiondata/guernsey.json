@@ -9,6 +9,6 @@
   "highestElevation" : 110.0,
   "highestElevationName" : "Hautnez",
   "population" : 63950,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

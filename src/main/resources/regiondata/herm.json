@@ -9,6 +9,6 @@
   "highestElevation" : 61.0,
   "highestElevationName" : null,
   "population" : 60,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

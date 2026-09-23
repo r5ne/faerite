@@ -10,6 +10,6 @@
   "highestElevation" : 1038.6,
   "highestElevationName" : "Carrauntoohil",
   "population" : 7185600,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }
