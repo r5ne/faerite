@@ -3,13 +3,11 @@ package data.regiondata;
 import java.util.*;
 
 public class RegionHierarchyTree {
+
     private final Map<String, List<String>> regionChildrenMap = new HashMap<>();
-    private final Set<String> regions = new HashSet<>();
 
     public void addRegionRelationship(String parentRegionId, String childRegionId) {
         regionChildrenMap.computeIfAbsent(parentRegionId, _ -> new ArrayList<>()).add(childRegionId);
-        regions.add(parentRegionId);
-        regions.add(childRegionId);
     }
 
     public List<String> bottomUpTraversal() {
