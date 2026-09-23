@@ -9,11 +9,14 @@ import data.regiondata.RegionDataBuilderConfig;
 import data.regiondata.RegionHierarchyTree;
 import faerite.io.AssetPaths;
 import faerite.io.MapDataLoader;
+import faerite.model.KoeppenClimateClassification;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionType;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegionDataGenerator {
 
@@ -44,6 +47,9 @@ public class RegionDataGenerator {
     GROUP BY ?typeLabel ?area ?population ?coordinates ?elevation ?elevationValue ?elevationLabel
     LIMIT 1
     """;
+    private static final Pattern WKT_POINT_PATTERN = Pattern.compile(
+        "Point\\(\\s*([+-]?\\d*\\.?\\d+)\\s+([+-]?\\d*\\.?\\d+)\\s*\\)"
+    );
 
     private static final Map<String, RegionType> REGION_TYPE_MAP = Map.of(
         "archipelago",
@@ -88,23 +94,29 @@ public class RegionDataGenerator {
             }
 
             // Filling in data returned by APIs.
-            if (
-                    syncMode == DataSyncMode.ALL || (syncMode == DataSyncMode.IF_MISSING && !configExists)
-                ) {
-                    JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
-                    if (wikidata != null) {
-                        addWikidata(wikidata, builder);
-                    } else {
-                        System.err.printf(
-            ) {
+            if (syncMode == DataSyncMode.ALL || (syncMode == DataSyncMode.IF_MISSING && !configExists)) {
                 JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
                 if (wikidata != null) {
                     addWikidata(wikidata, builder);
+
+                    if (wikidata.has("coordinates")) {
+                        String wktString = wikidata.path("coordinates").path("value").asText();
+                        Matcher matcher = WKT_POINT_PATTERN.matcher(wktString);
+
+                        if (matcher.find()) {
+                            // Group 1 is Longitude, Group 2 is Latitude
+                            double lon = Double.parseDouble(matcher.group(1));
+                            double lat = Double.parseDouble(matcher.group(2));
+
+                            JsonNode climateData = ApiFetcher.fetchClimateData(lat, lon);
+                            addMapressoClimate(climateData, builder);
+                        }
+                    }
                 } else {
                     System.err.printf(
-                            "Returned wikidata for %s (wikidata=%s) was null. Aborting object creation.%n",
-                            config.name(),
-                            config.wikidataId()
+                        "Returned wikidata for %s (wikidata=%s) was null. Aborting object creation.%n",
+                        config.name(),
+                        config.wikidataId()
                     );
                     continue;
                 }
@@ -155,7 +167,6 @@ public class RegionDataGenerator {
                     String[] languageNativeName = languageNativeNamePair.split(":", 2);
 
                     String languageCode = languageNativeName[0].trim();
-                    System.out.println(languageCode);
                     if (languageCode.equals("en")) {
                         continue;
                     }
@@ -168,6 +179,27 @@ public class RegionDataGenerator {
         }
 
         System.out.println("Parsed wikidata into builder " + builder.toString());
+    }
+
+    private static void addMapressoClimate(JsonNode data, RegionDataBuilder builder) {
+        if (data == null || !data.isArray()) return;
+
+        for (JsonNode entry : data) {
+            String type = entry.path("type").asText();
+
+            if ("Köppen-Geiger".equals(type)) {
+                String codeStr = entry.path("code").asText();
+                System.out.println("Koppen code: " + codeStr);
+
+                try {
+                    KoeppenClimateClassification code = KoeppenClimateClassification.valueOf(codeStr.toUpperCase());
+                    builder.addClimates(code);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Unrecognized climate code returned by Mapresso: " + codeStr);
+                }
+                break;
+            }
+        }
     }
 
     private static void aggregateFromChild(RegionDataBuilder builder, RegionDataModel childData) {

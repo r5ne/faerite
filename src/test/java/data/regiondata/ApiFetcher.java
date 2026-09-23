@@ -16,7 +16,7 @@ public final class ApiFetcher {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final String WIKIDATA_URL_TEMPLATE = "https://query.wikidata.org/sparql?query=%s&format=json";
-    private static final String MAPRESSO_URL_TEMPLATE = "https://climate.mapresso.com/api/koeppen/?lat=%d&lon=%d";
+    private static final String MAPRESSO_URL_TEMPLATE = "https://climate.mapresso.com/api/koeppen/?lat=%f&lon=%f";
 
     private ApiFetcher() {}
 
@@ -40,7 +40,7 @@ public final class ApiFetcher {
         return null;
     }
 
-    public static JsonNode fetchClimateData(int latitude, int longitude) {
+    public static JsonNode fetchClimateData(double latitude, double longitude) {
         try {
             String url = String.format(MAPRESSO_URL_TEMPLATE, latitude, longitude);
             HttpResponse<String> response = getHttpResponse(url);
@@ -48,12 +48,12 @@ public final class ApiFetcher {
             if (response.statusCode() == 200) {
                 JsonNode bindings = mapper.readTree(response.body()).path("data");
                 if (bindings.isArray() && !bindings.isEmpty()) {
-                    return bindings.get(0);
+                    return bindings;
                 }
             }
         } catch (Exception e) {
             System.err.println(
-                "Failed to fetch data for " + String.format("Latitude: %d, Longitude: %d", latitude, longitude)
+                "Failed to fetch data for " + String.format("Latitude: %f, Longitude: %f", latitude, longitude)
             );
             return null;
         }
