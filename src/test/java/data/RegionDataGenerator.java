@@ -13,9 +13,7 @@ import faerite.model.RegionDataModel;
 import faerite.model.RegionType;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RegionDataGenerator {
 
@@ -62,25 +60,35 @@ public class RegionDataGenerator {
 
     public static void createRegionData(DataSyncMode syncMode, RegionHierarchyTree regionHierarchyTree) {
         Set<RegionDataset> allDatasets = Set.of(new BritishIslesRegionDataset());
+        Map<String, RegionDataBuilderConfig> regionIdBuilderConfigMap = new HashMap<>();
+        for (RegionDataset dataset : allDatasets) {
+            for (RegionDataBuilderConfig config : dataset.getRegionData()) {
+                regionIdBuilderConfigMap.put(config.id(), config);
+            }
+        }
 
-        for (RegionDataset regionDataset : allDatasets) {
-            for (RegionDataBuilderConfig config : regionDataset.getRegionData()) {
-                RegionDataBuilder builder;
+        List<String> processingOrder = regionHierarchyTree.bottomUpTraversal();
+        Map<String, RegionDataModel> memoryCache = new HashMap<>();
 
-                String resourcePath = AssetPaths.getRegionDataPath(config.id());
-                Path relativePath = Path.of(DataWriter.getRelativePathOf(resourcePath));
-                boolean configExists = Files.exists(relativePath);
+        for (String regionId : processingOrder) {
+            RegionDataBuilderConfig config = regionIdBuilderConfigMap.get(regionId);
 
-                // Loading in the existing RegionDataModel if it exists.
-                if (configExists) {
-                    RegionDataModel existingModel = MapDataLoader.loadRegionDataModel(resourcePath);
-                    builder = new RegionDataBuilder(existingModel);
-                } else {
-                    builder = new RegionDataBuilder(config.id(), config.name());
-                }
+            RegionDataBuilder builder;
 
-                // Filling in data returned by APIs.
-                if (
+            String resourcePath = AssetPaths.getRegionDataPath(config.id());
+            Path relativePath = Path.of(DataWriter.getRelativePathOf(resourcePath));
+            boolean configExists = Files.exists(relativePath);
+
+            // Loading in the existing RegionDataModel if it exists.
+            if (configExists) {
+                RegionDataModel existingModel = MapDataLoader.loadRegionDataModel(resourcePath);
+                builder = new RegionDataBuilder(existingModel);
+            } else {
+                builder = new RegionDataBuilder(config.id(), config.name());
+            }
+
+            // Filling in data returned by APIs.
+            if (
                     syncMode == DataSyncMode.ALL || (syncMode == DataSyncMode.IF_MISSING && !configExists)
                 ) {
                     JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
@@ -88,21 +96,36 @@ public class RegionDataGenerator {
                         addWikidata(wikidata, builder);
                     } else {
                         System.err.printf(
+            ) {
+                JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
+                if (wikidata != null) {
+                    addWikidata(wikidata, builder);
+                } else {
+                    System.err.printf(
                             "Returned wikidata for %s (wikidata=%s) was null. Aborting object creation.%n",
                             config.name(),
                             config.wikidataId()
-                        );
-                        continue;
+                    );
+                    continue;
+                }
+            }
+
+            // Not a leaf, so aggregate data from children
+            if (!regionHierarchyTree.isLeaf(regionId)) {
+                for (String childRegionId : regionHierarchyTree.getChildren(regionId)) {
+                    RegionDataModel childRegionData = memoryCache.get(childRegionId);
+                    if (childRegionData != null) {
+                        aggregateFromChild(builder, childRegionData);
                     }
                 }
-
-                // Applying the overrides.
-                if (config.overrides() != null) {
-                    config.overrides().accept(builder);
-                }
-
-                DataWriter.writeData(builder.build(), relativePath);
             }
+
+            // Applying the overrides.
+            if (config.overrides() != null) {
+                config.overrides().accept(builder);
+            }
+
+            DataWriter.writeData(builder.build(), relativePath);
         }
     }
 
@@ -145,5 +168,9 @@ public class RegionDataGenerator {
         }
 
         System.out.println("Parsed wikidata into builder " + builder.toString());
+    }
+
+    private static void aggregateFromChild(RegionDataBuilder builder, RegionDataModel childData) {
+        builder.addClimates(childData.climates());
     }
 }
