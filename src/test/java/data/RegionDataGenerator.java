@@ -6,6 +6,7 @@ import data.datasets.RegionDataset;
 import data.regiondata.ApiFetcher;
 import data.regiondata.RegionDataBuilder;
 import data.regiondata.RegionDataBuilderConfig;
+import data.regiondata.RegionHierarchyTree;
 import faerite.io.AssetPaths;
 import faerite.io.MapDataLoader;
 import faerite.model.RegionDataModel;
@@ -59,7 +60,7 @@ public class RegionDataGenerator {
 
     private RegionDataGenerator() {}
 
-    public static void createRegionData(DataSyncMode syncMode) {
+    public static void createRegionData(DataSyncMode syncMode, RegionHierarchyTree regionHierarchyTree) {
         Set<RegionDataset> allDatasets = Set.of(new BritishIslesRegionDataset());
 
         for (RegionDataset regionDataset : allDatasets) {

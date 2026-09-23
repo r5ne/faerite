@@ -4,6 +4,6 @@ import data.RegionDataGenerator;
 
 
 void main() {
-    MapDataGenerator.createMapModels();
-    RegionDataGenerator.createRegionData(DataSyncMode.IF_MISSING);
+    MapDataGenerator mapData = new MapDataGenerator();
+    RegionDataGenerator.createRegionData(DataSyncMode.IF_MISSING, mapData.getRegionHierarchyTree());
 }
