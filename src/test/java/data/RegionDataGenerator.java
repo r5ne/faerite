@@ -3,9 +3,9 @@ package data;
 import com.fasterxml.jackson.databind.JsonNode;
 import data.datasets.BritishIslesRegionDataset;
 import data.datasets.RegionDataset;
+import data.regiondata.ApiFetcher;
 import data.regiondata.RegionDataBuilder;
 import data.regiondata.RegionDataBuilderConfig;
-import data.regiondata.WikidataFetcher;
 import faerite.io.AssetPaths;
 import faerite.io.MapDataLoader;
 import faerite.model.RegionDataModel;
@@ -82,7 +82,7 @@ public class RegionDataGenerator {
                 if (
                     syncMode == RegionDataSyncMode.ALL || (syncMode == RegionDataSyncMode.IF_MISSING && !configExists)
                 ) {
-                    JsonNode wikidata = WikidataFetcher.fetch(String.format(QUERY_TEMPLATE, config.wikidataId()));
+                    JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
                     if (wikidata != null) {
                         addWikidata(wikidata, builder);
                     } else {
