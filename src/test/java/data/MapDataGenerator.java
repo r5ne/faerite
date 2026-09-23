@@ -9,16 +9,20 @@ import data.regiondata.RegionHierarchyTree;
 import faerite.io.AssetPaths;
 import faerite.model.MapModel;
 import faerite.model.RegionSelectionModel;
-
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
 public class MapDataGenerator {
+
     private final RegionHierarchyTree regionHierarchyTree = new RegionHierarchyTree();
 
     public MapDataGenerator() {
-        List<MapDataset> allDatasets = List.of(new BritishIslesDataset(), new ChannelIslandsDataset(), new IsleOfManDataset());
+        List<MapDataset> allDatasets = List.of(
+            new BritishIslesDataset(),
+            new ChannelIslandsDataset(),
+            new IsleOfManDataset()
+        );
 
         for (MapDataset dataset : allDatasets) {
             String imagePath = DataWriter.getRelativePathOf(AssetPaths.getMapImagePath(dataset.id()));

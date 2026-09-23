@@ -74,6 +74,7 @@ public class RegionDataGenerator {
         }
 
         List<String> processingOrder = regionHierarchyTree.bottomUpTraversal();
+        System.out.println(processingOrder);
         Map<String, RegionDataModel> memoryCache = new HashMap<>();
 
         for (String regionId : processingOrder) {
@@ -125,6 +126,7 @@ public class RegionDataGenerator {
             // Not a leaf, so aggregate data from children
             if (!regionHierarchyTree.isLeaf(regionId)) {
                 for (String childRegionId : regionHierarchyTree.getChildren(regionId)) {
+                    System.out.println(String.format("Aggregating data for %s from child: %s", regionId, childRegionId));
                     RegionDataModel childRegionData = memoryCache.get(childRegionId);
                     if (childRegionData != null) {
                         aggregateFromChild(builder, childRegionData);
@@ -137,7 +139,9 @@ public class RegionDataGenerator {
                 config.overrides().accept(builder);
             }
 
-            DataWriter.writeData(builder.build(), relativePath);
+            RegionDataModel builtModel = builder.build();
+            memoryCache.put(regionId, builtModel);
+            DataWriter.writeData(builtModel, relativePath);
         }
     }
 
@@ -204,5 +208,6 @@ public class RegionDataGenerator {
 
     private static void aggregateFromChild(RegionDataBuilder builder, RegionDataModel childData) {
         builder.addClimates(childData.climates());
+        builder.addHabitats(childData.habitats());
     }
 }

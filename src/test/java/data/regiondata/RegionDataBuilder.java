@@ -111,9 +111,13 @@ public class RegionDataBuilder {
         return this;
     }
 
-    public RegionDataBuilder addHabitats(Habitat... habitat) {
-        this.habitats.addAll(Arrays.asList(habitat));
+    public RegionDataBuilder addHabitats(Collection<Habitat> habitats) {
+        this.habitats.addAll(habitats);
         return this;
+    }
+
+    public RegionDataBuilder addHabitats(Habitat... habitat) {
+        return addHabitats(Arrays.asList(habitat));
     }
 
     public RegionDataModel build() {
