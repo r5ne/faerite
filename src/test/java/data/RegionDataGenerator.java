@@ -59,7 +59,7 @@ public class RegionDataGenerator {
 
     private RegionDataGenerator() {}
 
-    public static void createRegionData(RegionDataSyncMode syncMode) {
+    public static void createRegionData(DataSyncMode syncMode) {
         Set<RegionDataset> allDatasets = Set.of(new BritishIslesRegionDataset());
 
         for (RegionDataset regionDataset : allDatasets) {
@@ -80,7 +80,7 @@ public class RegionDataGenerator {
 
                 // Filling in data returned by APIs.
                 if (
-                    syncMode == RegionDataSyncMode.ALL || (syncMode == RegionDataSyncMode.IF_MISSING && !configExists)
+                    syncMode == DataSyncMode.ALL || (syncMode == DataSyncMode.IF_MISSING && !configExists)
                 ) {
                     JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
                     if (wikidata != null) {
