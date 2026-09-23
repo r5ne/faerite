@@ -10,7 +10,7 @@ public class BritishIslesRegionDataset implements RegionDataset {
     @Override
     public Set<RegionDataBuilderConfig> getRegionData() {
         return Set.of(
-            new RegionDataBuilderConfig("British Isles", "Q38272", b -> b.keepNativeNames("cy", "ga", "gd", "sco")),
+            new RegionDataBuilderConfig("British Isles", "Q38272"),
 
             new RegionDataBuilderConfig("Great Britain", "Q23666"),
             new RegionDataBuilderConfig("Isle of Wight", "Q9679", b ->
