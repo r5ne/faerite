@@ -1,6 +1,7 @@
 # Faerite
+
 <p>
-<img src="assets/faerite-banner.png">
+<img src="assets/faerite-banner.png" alt="Faerite banner">
   <a href="https://github.com/r5ne/faerite/releases/latest">
   <img src="https://img.shields.io/github/v/release/r5ne/faerite?style=flat-square"
     alt="GitHub Actions workflow status"/></a>
@@ -8,6 +9,7 @@
     <img src="https://img.shields.io/github/actions/workflow/status/r5ne/faerite/release.yml?event=push&label=workflow&style=flat-square"
       alt="GitHub Actions workflow status"/></a>
 </p>
+
 An interactive, hand-drawn pixel art atlas.
 
 ## Installation
@@ -17,7 +19,7 @@ You will find the executable inside (or in the /bin folder on linux).
 
 Faerite can also be downloaded and ran directly from the terminal which some may find more convenient.
 > [!IMPORTANT]
-> Replace the LATEST `x.x.x` variable used in all of the commands with the latest version number e.g. `0.0.5`.
+> Replace the LATEST `x.x.x` variable used in all the commands with the latest version number e.g. `0.0.5`.
 
 
 ##### On Linux
@@ -82,5 +84,8 @@ git clone --depth 1 --branch "v$VERSION" https://github.com/r5ne/faerite && cd f
 ```
 ## Licence
 Faerite is licenced under the [MIT Licence](https://github.com/r5ne/faerite/blob/master/LICENCE).
+## Credits
+- [Wikidata API](https://www.wikidata.org/wiki/Wikidata:Main_Page) for providing data for most of the program's statistics.  
+- [MAPresso](https://climate.mapresso.com/) for Köppen-Geiger climate classifications and their descriptions.
 ## Special Thanks
-[Дима Дегтярёв](https://github.com/DimasikGit) for testing on Windows.
+- [Дима Дегтярёв](https://github.com/DimasikGit) for testing on Windows.
