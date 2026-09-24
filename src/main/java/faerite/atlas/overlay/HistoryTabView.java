@@ -53,13 +53,11 @@ public class HistoryTabView extends VBox {
 
         for (Map.Entry<String, List<String>> entry : languagesByNativeName.entrySet()) {
             Label nativeNameLabel = new Label(entry.getKey());
-            nativeNameLabel.setWrapText(true);
-            nativeNameLabel.getStyleClass().addAll("info-section-value");
+            nativeNameLabel.getStyleClass().add("info-section-value");
 
             String combinedLanguages = String.join(", ", entry.getValue());
             Label languageLabel = new Label(combinedLanguages);
             languageLabel.getStyleClass().add("info-section-description");
-            languageLabel.setWrapText(true);
 
             nativeNameSection.addContent(nativeNameLabel, languageLabel);
         }
