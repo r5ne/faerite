@@ -13,5 +13,5 @@
   "highestElevationName" : "Ben Nevis",
   "population" : 65121000,
   "climates" : [ "CFB" ],
-  "habitats" : [ "MOORLAND", "HEATHER_MOORLAND" ]
+  "habitats" : [ "MOORLAND", "BOCAGE", "MEADOW", "DUNE_GRASSLAND", "CALCAREOUS_GRASSLAND", "BOG", "HEATHER_MOORLAND" ]
 }

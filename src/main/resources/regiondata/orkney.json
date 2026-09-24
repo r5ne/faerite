@@ -12,5 +12,5 @@
   "highestElevationName" : "Ward Hill",
   "population" : 22270,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "BOG", "FEN", "HEATHER_MOORLAND" ]
 }

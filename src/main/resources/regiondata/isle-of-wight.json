@@ -10,5 +10,5 @@
   "highestElevationName" : "St Bonafice Down",
   "population" : 140459,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "CONIFEROUS_FOREST", "BROADLEAF_WOODLAND", "FEN", "CALCAREOUS_GRASSLAND" ]
 }

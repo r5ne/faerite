@@ -10,5 +10,5 @@
   "highestElevationName" : "Hautnez",
   "population" : 63950,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "MARSH", "DUNE_GRASSLAND", "BROADLEAF_WOODLAND", "COASTAL_GRASSLAND" ]
 }

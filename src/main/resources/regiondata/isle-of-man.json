@@ -11,5 +11,5 @@
   "highestElevationName" : "Snaefell",
   "population" : 84523,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "MOORLAND", "WOODLAND", "MEADOW", "CONIFEROUS_FOREST", "BOG", "BROADLEAF_WOODLAND", "MIXED_WOODLAND", "COASTAL_GRASSLAND", "HEATHER_MOORLAND" ]
 }

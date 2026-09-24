@@ -10,5 +10,5 @@
   "highestElevationName" : null,
   "population" : 3,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "BROADLEAF_WOODLAND" ]
 }

@@ -10,5 +10,5 @@
   "highestElevationName" : "Grande-Île (Island)",
   "population" : 30,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "BOCAGE", "COASTAL_GRASSLAND" ]
 }

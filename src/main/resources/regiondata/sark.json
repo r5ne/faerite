@@ -11,5 +11,5 @@
   "highestElevationName" : "Le Moulin",
   "population" : 562,
   "climates" : [ "CFB" ],
-  "habitats" : [ ]
+  "habitats" : [ "COASTAL_HEATHLAND", "COASTAL_MEADOW", "MEADOW" ]
 }

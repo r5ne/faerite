@@ -102,7 +102,7 @@ public enum KoeppenClimateClassification {
         "Mild summers (warmest month below 22°C but with at least four months above 10°C) " +
             "and cool, not severely cold, winters. " +
             "Precipitation is fairly even throughout the year without a pronounced dry season. " +
-            "Low seasonal temperature amplitude reflects strong maritime influence." +
+            "Low seasonal temperature amplitude reflects strong maritime influence. " +
             "Typical of west coasts in the higher middle latitudes of continents."
     ),
     CFC(
