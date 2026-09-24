@@ -1,10 +1,7 @@
 package data.regiondata;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import faerite.model.BiomeClassification;
-import faerite.model.ClimateClassification;
-import faerite.model.RegionDataModel;
-import faerite.model.RegionType;
+import faerite.model.*;
 import java.util.*;
 
 public class RegionDataBuilder {
@@ -19,8 +16,8 @@ public class RegionDataBuilder {
     private Double highestElevation;
     private String highestElevationName;
     private Long population;
-    private Set<ClimateClassification> climates;
-    private Set<BiomeClassification> biomes;
+    private Set<KoeppenClimateClassification> climates;
+    private Set<Habitat> habitats;
 
     public RegionDataBuilder(String id, String name) {
         this.id = id;
@@ -28,7 +25,7 @@ public class RegionDataBuilder {
 
         this.nativeNames = new HashMap<>();
         this.climates = new HashSet<>();
-        this.biomes = new HashSet<>();
+        this.habitats = new HashSet<>();
     }
 
     public RegionDataBuilder(RegionDataModel existingModel) {
@@ -41,7 +38,7 @@ public class RegionDataBuilder {
         this.highestElevationName = existingModel.highestElevationName();
         this.population = existingModel.population();
         this.climates = existingModel.climates();
-        this.biomes = existingModel.biomes();
+        this.habitats = existingModel.habitats();
     }
 
     public RegionDataBuilder type(RegionType type) {
@@ -95,24 +92,32 @@ public class RegionDataBuilder {
         return this;
     }
 
-    public RegionDataBuilder climates(ClimateClassification... climateClassification) {
+    public RegionDataBuilder climates(KoeppenClimateClassification... climateClassification) {
         this.climates = new HashSet<>(Arrays.asList(climateClassification));
         return this;
     }
 
-    public RegionDataBuilder addClimates(ClimateClassification... climateClassification) {
-        this.climates.addAll(Arrays.asList(climateClassification));
+    public RegionDataBuilder addClimates(Collection<KoeppenClimateClassification> climateClassifications) {
+        this.climates.addAll(climateClassifications);
         return this;
     }
 
-    public RegionDataBuilder biomes(BiomeClassification... biomeClassifications) {
-        this.biomes = new HashSet<>(Arrays.asList(biomeClassifications));
+    public RegionDataBuilder addClimates(KoeppenClimateClassification... climateClassification) {
+        return this.addClimates(Arrays.asList(climateClassification));
+    }
+
+    public RegionDataBuilder habitats(Habitat... habitat) {
+        this.habitats = new HashSet<>(Arrays.asList(habitat));
         return this;
     }
 
-    public RegionDataBuilder addBiomes(BiomeClassification... biomeClassifications) {
-        this.biomes.addAll(Arrays.asList(biomeClassifications));
+    public RegionDataBuilder addHabitats(Collection<Habitat> habitats) {
+        this.habitats.addAll(habitats);
         return this;
+    }
+
+    public RegionDataBuilder addHabitats(Habitat... habitat) {
+        return addHabitats(Arrays.asList(habitat));
     }
 
     public RegionDataModel build() {
@@ -126,7 +131,7 @@ public class RegionDataBuilder {
             highestElevationName,
             population,
             climates,
-            biomes
+            habitats
         );
     }
 
@@ -155,8 +160,8 @@ public class RegionDataBuilder {
             population +
             ", climates=" +
             climates +
-            ", biomes=" +
-            biomes +
+            ", habitats=" +
+            habitats +
             '}'
         );
     }

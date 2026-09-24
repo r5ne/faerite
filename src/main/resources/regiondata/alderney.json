@@ -10,6 +10,6 @@
   "highestElevation" : 90.0,
   "highestElevationName" : null,
   "population" : 2167,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND", "COASTAL_MEADOW", "DUNE_GRASSLAND", "CALCAREOUS_GRASSLAND", "BROADLEAF_WOODLAND" ]
 }

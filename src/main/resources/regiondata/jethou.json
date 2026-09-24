@@ -2,11 +2,13 @@
   "id" : "jethou",
   "name" : "Jethou",
   "type" : "ISLAND_GROUP",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "French" : "Jéthou"
+  },
   "area" : 0.178,
-  "highestElevation" : null,
+  "highestElevation" : 63.0,
   "highestElevationName" : null,
   "population" : 3,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND", "BROADLEAF_WOODLAND" ]
 }

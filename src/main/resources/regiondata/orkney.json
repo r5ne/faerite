@@ -3,12 +3,14 @@
   "name" : "Orkney",
   "type" : "ARCHIPELAGO",
   "nativeNames" : {
+    "Norn" : "Orknøjar",
+    "Old Norse" : "Orkneyjar",
     "Scottish Gaelic" : "Arcaibh"
   },
   "area" : 990.0,
   "highestElevation" : 481.0,
   "highestElevationName" : "Ward Hill",
   "population" : 22270,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND", "BOG", "FEN", "HEATHER_MOORLAND" ]
 }

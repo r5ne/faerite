@@ -4,9 +4,9 @@
   "type" : "ROCK_GROUP",
   "nativeNames" : { },
   "area" : 0.072,
-  "highestElevation" : null,
+  "highestElevation" : 4.0,
   "highestElevationName" : null,
   "population" : 0,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ ]
 }

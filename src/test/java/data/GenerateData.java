@@ -1,9 +1,8 @@
+import data.DataSyncMode;
 import data.MapDataGenerator;
 import data.RegionDataGenerator;
-import data.RegionDataSyncMode;
-
 
 void main() {
-    MapDataGenerator.createMapModels();
-    RegionDataGenerator.createRegionData(RegionDataSyncMode.ALL);
+    MapDataGenerator mapData = new MapDataGenerator();
+    RegionDataGenerator.createRegionData(DataSyncMode.IF_MISSING, mapData.getRegionHierarchyTree());
 }

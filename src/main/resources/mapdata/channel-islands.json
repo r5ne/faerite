@@ -3,30 +3,6 @@
   "width" : 825,
   "height" : 1129,
   "regions" : [ {
-    "id" : "sark",
-    "maskColor" : -11156407,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "alderney",
-    "maskColor" : -65536,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "les-casquets",
-    "maskColor" : -13355980,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
-    "id" : "jethou",
-    "maskColor" : -13199317,
-    "hasSubMap" : false,
-    "parentMapPointCoordinates" : null,
-    "parentMapMaskColor" : null
-  }, {
     "id" : "guernsey",
     "maskColor" : -1,
     "hasSubMap" : false,
@@ -59,6 +35,30 @@
   }, {
     "id" : "herm",
     "maskColor" : -74,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "sark",
+    "maskColor" : -11156407,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "alderney",
+    "maskColor" : -65536,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "les-casquets",
+    "maskColor" : -13355980,
+    "hasSubMap" : false,
+    "parentMapPointCoordinates" : null,
+    "parentMapMaskColor" : null
+  }, {
+    "id" : "jethou",
+    "maskColor" : -13199317,
     "hasSubMap" : false,
     "parentMapPointCoordinates" : null,
     "parentMapMaskColor" : null

@@ -4,6 +4,8 @@ import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
+import faerite.util.PersistentToggleGroup;
+import faerite.util.UniformSpacerPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
@@ -31,13 +33,18 @@ public class InfoSidebarHeaderView extends VBox {
         ToggleButton historyButton = new ToggleButton("History");
         ToggleButton geographyButton = new ToggleButton("Geography");
 
-        overviewButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.OVERVIEW));
-        historyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.HISTORY));
-        geographyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.GEOGRAPHY));
+        PersistentToggleGroup navButtonGroup = new PersistentToggleGroup();
+        overviewButton.setToggleGroup(navButtonGroup);
+        historyButton.setToggleGroup(navButtonGroup);
+        geographyButton.setToggleGroup(navButtonGroup);
 
         overviewButton.getStyleClass().add("nav-button");
         historyButton.getStyleClass().add("nav-button");
         geographyButton.getStyleClass().add("nav-button");
+
+        overviewButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.OVERVIEW));
+        historyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.HISTORY));
+        geographyButton.setOnAction(_ -> viewModel.selectedInfoSectionProperty().set(RegionInfoSection.GEOGRAPHY));
 
         viewModel.selectedInfoSectionProperty().addListener((_, _, selectedSection) -> {
             overviewButton.setSelected(selectedSection == RegionInfoSection.OVERVIEW);

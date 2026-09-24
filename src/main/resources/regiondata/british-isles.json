@@ -3,15 +3,18 @@
   "name" : "British Isles",
   "type" : "ARCHIPELAGO",
   "nativeNames" : {
-    "Welsh" : "Ynysoedd Prydain",
+    "Cornish" : "Enesow Bretennek",
+    "French" : "Îles Britanniques",
     "Irish" : "Éire agus an Bhreatain Mhór",
+    "Manx" : "Ny h-Ellanyn Goaldagh",
+    "Scots" : "Breetish Isles",
     "Scottish Gaelic" : "Eileanan Bhreatainn",
-    "Scots" : "Breetish Isles"
+    "Welsh" : "Ynysoedd Prydain"
   },
   "area" : 121684.0,
   "highestElevation" : 1344.527,
   "highestElevationName" : "Ben Nevis",
   "population" : 71891524,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFC", "CFB" ],
+  "habitats" : [ "MOORLAND", "COASTAL_MEADOW", "BOCAGE", "MEADOW", "CONIFEROUS_FOREST", "DUNE_GRASSLAND", "BOG", "BROADLEAF_WOODLAND", "MIXED_WOODLAND", "COASTAL_GRASSLAND", "HEATHER_MOORLAND", "COASTAL_HEATHLAND", "WOODLAND", "MARSH", "FEN", "CALCAREOUS_GRASSLAND", "HEATHLAND" ]
 }

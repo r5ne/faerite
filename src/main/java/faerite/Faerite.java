@@ -2,6 +2,7 @@ package faerite;
 
 import faerite.atlas.AtlasViewModel;
 import faerite.atlas.overlay.RootView;
+import faerite.util.UIContext;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -31,11 +32,12 @@ public class Faerite extends Application {
     }
 
     private static @NotNull Scene initScene(String mapId) {
-        AtlasViewModel viewModel = new AtlasViewModel(mapId);
-        RootView root = new RootView(viewModel);
 
         Rectangle2D screenRect = Screen.getPrimary().getVisualBounds();
+        UIContext uiContext = new UIContext(screenRect.getWidth(), screenRect.getHeight());
 
+        AtlasViewModel viewModel = new AtlasViewModel(mapId, uiContext);
+        RootView root = new RootView(viewModel);
         // Screen dimensions are ignored on non-strict compositors where the setMaximised call ensures the window is
         // as big as the monitor.
         // On strict compositors ensures the window gets treated as non-maximized, and is forced to the screen size.

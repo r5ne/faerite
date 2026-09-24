@@ -3,13 +3,13 @@
   "name" : "Shetland",
   "type" : "ARCHIPELAGO",
   "nativeNames" : {
-    "Scottish Gaelic" : "Sealtainn",
-    "Uncoded" : "Hjaltland"
+    "Norn" : "Hjaltland",
+    "Old Norse" : "Hjaltland"
   },
   "area" : 1468.0,
   "highestElevation" : 450.0,
   "highestElevationName" : "Ronas Hill",
   "population" : 23210,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFC" ],
+  "habitats" : [ ]
 }

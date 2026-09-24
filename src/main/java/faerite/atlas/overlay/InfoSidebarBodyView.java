@@ -5,8 +5,8 @@ import faerite.model.RegionInfoSection;
 import faerite.model.RegionSelectionModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 
 /// Contains the information UI for the selected region.
 public class InfoSidebarBodyView extends StackPane {
@@ -21,10 +21,6 @@ public class InfoSidebarBodyView extends StackPane {
     /// @param viewModel The global view model instance.
     public InfoSidebarBodyView(AtlasViewModel viewModel) {
         this.viewModel = viewModel;
-
-        // Everything in the body of the info sidebar is scrollable.
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setFitToWidth(true);
 
         // Stack to allow switching between tab contents.
         StackPane tabStack = new StackPane();
@@ -55,22 +51,33 @@ public class InfoSidebarBodyView extends StackPane {
 
         tabStack.getChildren().addAll(overviewTab, historyTab, geographyTab);
 
+        ScrollPane scrollPane = createScrollElements();
         scrollPane.setContent(tabStack);
+    }
+
+    private ScrollPane createScrollElements() {
+        // Everything in the body of the info sidebar is scrollable.
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToWidth(true);
 
         // Gradient overlay at the bottom to indicate you can scroll down
-        Rectangle scrollGradient = new Rectangle();
-        scrollGradient.widthProperty().bind(this.widthProperty());
-        scrollGradient.heightProperty().bind(this.heightProperty());
+        Region scrollGradient = new Region();
         scrollGradient.setMouseTransparent(true);
         scrollGradient.getStyleClass().add("scroll-gradient");
+        scrollGradient.maxHeightProperty().bind(this.heightProperty().multiply(0.15));
 
-        scrollPane.vvalueProperty().addListener((obs, oldVal, newVal) ->
-            scrollGradient.setVisible(newVal.doubleValue() < scrollPane.getVmax())
+        // Hide the gradient when there is no more content to scroll.
+        scrollPane.vvalueProperty().addListener((_, _, newVal) ->
+                scrollGradient.setVisible(newVal.doubleValue() < scrollPane.getVmax())
         );
         scrollGradient.setVisible(false);
+
+        setAlignment(scrollPane, Pos.TOP_CENTER);
         setAlignment(scrollGradient, Pos.BOTTOM_CENTER);
 
         getChildren().addAll(scrollPane, scrollGradient);
+
+        return scrollPane;
     }
 
     private void updateTabs(RegionSelectionModel newRegion) {

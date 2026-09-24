@@ -4,13 +4,16 @@ import faerite.atlas.AtlasViewModel;
 import faerite.atlas.map.RegionDataCache;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionSelectionModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.util.Locale;
-import java.util.Map;
-
 public class HistoryTabView extends VBox {
+
     AtlasViewModel viewModel;
 
     InfoSection nativeNameSection;
@@ -40,15 +43,25 @@ public class HistoryTabView extends VBox {
 
         nativeNameSection.clearContent();
 
-        for (Map.Entry<String, String> nativeNameEntry : nativeNames.entrySet()) {
-            Label nativeNameLabel = new Label(nativeNameEntry.getValue());
-            nativeNameLabel.getStyleClass().addAll("info-section-value");
+        Map<String, List<String>> languagesByNativeName = new HashMap<>();
 
-            Label languageLabel = new Label(nativeNameEntry.getKey());
+        for (Map.Entry<String, String> entry : nativeNames.entrySet()) {
+            languagesByNativeName
+                    .computeIfAbsent(entry.getValue(), k -> new ArrayList<>())
+                    .add(entry.getKey());
+        }
+
+        for (Map.Entry<String, List<String>> entry : languagesByNativeName.entrySet()) {
+            Label nativeNameLabel = new Label(entry.getKey());
+            nativeNameLabel.getStyleClass().add("info-section-value");
+
+            String combinedLanguages = String.join(", ", entry.getValue());
+            Label languageLabel = new Label(combinedLanguages);
             languageLabel.getStyleClass().add("info-section-description");
 
             nativeNameSection.addContent(nativeNameLabel, languageLabel);
         }
+
         nativeNameSection.setVisible(true);
     }
 }

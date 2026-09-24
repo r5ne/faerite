@@ -2,11 +2,13 @@
   "id" : "guernsey",
   "name" : "Guernsey",
   "type" : "ISLAND_GROUP",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "Guernésiais" : "Guernési"
+  },
   "area" : 63.4,
-  "highestElevation" : null,
-  "highestElevationName" : null,
+  "highestElevation" : 110.0,
+  "highestElevationName" : "Hautnez",
   "population" : 63950,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND", "MARSH", "DUNE_GRASSLAND", "BROADLEAF_WOODLAND", "COASTAL_GRASSLAND" ]
 }

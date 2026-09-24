@@ -2,11 +2,14 @@
   "id" : "isle-of-man-island",
   "name" : "Isle of Man",
   "type" : "ISLAND",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "Manx" : "Mannin",
+    "Welsh" : "Manaw"
+  },
   "area" : 570.0,
-  "highestElevation" : null,
-  "highestElevationName" : null,
+  "highestElevation" : 621.0,
+  "highestElevationName" : "Snaefell",
   "population" : 84521,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND", "MOORLAND", "MEADOW", "CONIFEROUS_FOREST", "BROADLEAF_WOODLAND", "BOG", "MIXED_WOODLAND", "HEATHER_MOORLAND", "COASTAL_GRASSLAND" ]
 }

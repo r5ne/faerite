@@ -1,6 +1,5 @@
 package data.regiondata;
 
-
 import java.util.function.Consumer;
 
 public record RegionDataBuilderConfig(

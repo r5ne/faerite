@@ -3,18 +3,20 @@ package data;
 import com.fasterxml.jackson.databind.JsonNode;
 import data.datasets.BritishIslesRegionDataset;
 import data.datasets.RegionDataset;
+import data.regiondata.ApiFetcher;
 import data.regiondata.RegionDataBuilder;
 import data.regiondata.RegionDataBuilderConfig;
-import data.regiondata.WikidataFetcher;
+import data.regiondata.RegionHierarchyTree;
 import faerite.io.AssetPaths;
 import faerite.io.MapDataLoader;
+import faerite.model.KoeppenClimateClassification;
 import faerite.model.RegionDataModel;
 import faerite.model.RegionType;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegionDataGenerator {
 
@@ -45,6 +47,9 @@ public class RegionDataGenerator {
     GROUP BY ?typeLabel ?area ?population ?coordinates ?elevation ?elevationValue ?elevationLabel
     LIMIT 1
     """;
+    private static final Pattern WKT_POINT_PATTERN = Pattern.compile(
+        "Point\\(\\s*([+-]?\\d*\\.?\\d+)\\s+([+-]?\\d*\\.?\\d+)\\s*\\)"
+    );
 
     private static final Map<String, RegionType> REGION_TYPE_MAP = Map.of(
         "archipelago",
@@ -59,49 +64,84 @@ public class RegionDataGenerator {
 
     private RegionDataGenerator() {}
 
-    public static void createRegionData(RegionDataSyncMode syncMode) {
+    public static void createRegionData(DataSyncMode syncMode, RegionHierarchyTree regionHierarchyTree) {
         Set<RegionDataset> allDatasets = Set.of(new BritishIslesRegionDataset());
+        Map<String, RegionDataBuilderConfig> regionIdBuilderConfigMap = new HashMap<>();
+        for (RegionDataset dataset : allDatasets) {
+            for (RegionDataBuilderConfig config : dataset.getRegionData()) {
+                regionIdBuilderConfigMap.put(config.id(), config);
+            }
+        }
 
-        for (RegionDataset regionDataset : allDatasets) {
-            for (RegionDataBuilderConfig config : regionDataset.getRegionData()) {
-                RegionDataBuilder builder;
+        List<String> processingOrder = regionHierarchyTree.bottomUpTraversal();
+        System.out.println(processingOrder);
+        Map<String, RegionDataModel> memoryCache = new HashMap<>();
 
-                String resourcePath = AssetPaths.getRegionDataPath(config.id());
-                Path relativePath = Path.of(DataWriter.getRelativePathOf(resourcePath));
-                boolean configExists = Files.exists(relativePath);
+        for (String regionId : processingOrder) {
+            RegionDataBuilderConfig config = regionIdBuilderConfigMap.get(regionId);
 
-                // Loading in the existing RegionDataModel if it exists.
-                if (configExists) {
-                    RegionDataModel existingModel = MapDataLoader.loadRegionDataModel(resourcePath);
-                    builder = new RegionDataBuilder(existingModel);
+            RegionDataBuilder builder;
+
+            String resourcePath = AssetPaths.getRegionDataPath(config.id());
+            Path relativePath = Path.of(DataWriter.getRelativePathOf(resourcePath));
+            boolean configExists = Files.exists(relativePath);
+
+            // Loading in the existing RegionDataModel if it exists.
+            if (configExists) {
+                RegionDataModel existingModel = MapDataLoader.loadRegionDataModel(resourcePath);
+                builder = new RegionDataBuilder(existingModel);
+            } else {
+                builder = new RegionDataBuilder(config.id(), config.name());
+            }
+
+            // Filling in data returned by APIs.
+            if (syncMode == DataSyncMode.ALL || (syncMode == DataSyncMode.IF_MISSING && !configExists)) {
+                JsonNode wikidata = ApiFetcher.fetchWikidata(String.format(QUERY_TEMPLATE, config.wikidataId()));
+                if (wikidata != null) {
+                    addWikidata(wikidata, builder);
+
+                    if (wikidata.has("coordinates")) {
+                        String wktString = wikidata.path("coordinates").path("value").asText();
+                        Matcher matcher = WKT_POINT_PATTERN.matcher(wktString);
+
+                        if (matcher.find()) {
+                            // Group 1 is Longitude, Group 2 is Latitude
+                            double lon = Double.parseDouble(matcher.group(1));
+                            double lat = Double.parseDouble(matcher.group(2));
+
+                            JsonNode climateData = ApiFetcher.fetchClimateData(lat, lon);
+                            addMapressoClimate(climateData, builder);
+                        }
+                    }
                 } else {
-                    builder = new RegionDataBuilder(config.id(), config.name());
+                    System.err.printf(
+                        "Returned wikidata for %s (wikidata=%s) was null. Aborting object creation.%n",
+                        config.name(),
+                        config.wikidataId()
+                    );
+                    continue;
                 }
+            }
 
-                // Filling in data returned by APIs.
-                if (
-                    syncMode == RegionDataSyncMode.ALL || (syncMode == RegionDataSyncMode.IF_MISSING && !configExists)
-                ) {
-                    JsonNode wikidata = WikidataFetcher.fetch(String.format(QUERY_TEMPLATE, config.wikidataId()));
-                    if (wikidata != null) {
-                        addWikidata(wikidata, builder);
-                    } else {
-                        System.err.printf(
-                            "Returned wikidata for %s (wikidata=%s) was null. Aborting object creation.%n",
-                            config.name(),
-                            config.wikidataId()
-                        );
-                        continue;
+            // Not a leaf, so aggregate data from children
+            if (!regionHierarchyTree.isLeaf(regionId)) {
+                for (String childRegionId : regionHierarchyTree.getChildren(regionId)) {
+                    System.out.println(String.format("Aggregating data for %s from child: %s", regionId, childRegionId));
+                    RegionDataModel childRegionData = memoryCache.get(childRegionId);
+                    if (childRegionData != null) {
+                        aggregateFromChild(builder, childRegionData);
                     }
                 }
-
-                // Applying the overrides.
-                if (config.overrides() != null) {
-                    config.overrides().accept(builder);
-                }
-
-                DataWriter.writeData(builder.build(), relativePath);
             }
+
+            // Applying the overrides.
+            if (config.overrides() != null) {
+                config.overrides().accept(builder);
+            }
+
+            RegionDataModel builtModel = builder.build();
+            memoryCache.put(regionId, builtModel);
+            DataWriter.writeData(builtModel, relativePath);
         }
     }
 
@@ -131,7 +171,6 @@ public class RegionDataGenerator {
                     String[] languageNativeName = languageNativeNamePair.split(":", 2);
 
                     String languageCode = languageNativeName[0].trim();
-                    System.out.println(languageCode);
                     if (languageCode.equals("en")) {
                         continue;
                     }
@@ -144,5 +183,31 @@ public class RegionDataGenerator {
         }
 
         System.out.println("Parsed wikidata into builder " + builder.toString());
+    }
+
+    private static void addMapressoClimate(JsonNode data, RegionDataBuilder builder) {
+        if (data == null || !data.isArray()) return;
+
+        for (JsonNode entry : data) {
+            String type = entry.path("type").asText();
+
+            if ("Köppen-Geiger".equals(type)) {
+                String codeStr = entry.path("code").asText();
+                System.out.println("Koppen code: " + codeStr);
+
+                try {
+                    KoeppenClimateClassification code = KoeppenClimateClassification.valueOf(codeStr.toUpperCase());
+                    builder.addClimates(code);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Unrecognized climate code returned by Mapresso: " + codeStr);
+                }
+                break;
+            }
+        }
+    }
+
+    private static void aggregateFromChild(RegionDataBuilder builder, RegionDataModel childData) {
+        builder.addClimates(childData.climates());
+        builder.addHabitats(childData.habitats());
     }
 }

@@ -2,11 +2,14 @@
   "id" : "sark",
   "name" : "Sark",
   "type" : "ISLAND_GROUP",
-  "nativeNames" : { },
+  "nativeNames" : {
+    "French" : "Sercq",
+    "Sercquiais" : "Sèr"
+  },
   "area" : 5.5,
   "highestElevation" : 114.0,
   "highestElevationName" : "Le Moulin",
   "population" : 562,
-  "climates" : [ ],
-  "biomes" : [ ]
+  "climates" : [ "CFB" ],
+  "habitats" : [ "COASTAL_HEATHLAND", "COASTAL_MEADOW", "MEADOW" ]
 }
