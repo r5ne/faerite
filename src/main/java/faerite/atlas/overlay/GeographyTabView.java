@@ -103,6 +103,13 @@ public class GeographyTabView extends VBox {
             habitatNameLabel.getStyleClass().add("info-section-value");
 
             habitatSection.addContent(habitatNameLabel);
+
+            if (!habitat.getDescription().isEmpty()) {
+                Label habitatDescriptionLabel = new Label(habitat.getDescription());
+                habitatDescriptionLabel.getStyleClass().add("info-section-description");
+
+                habitatSection.addContent(habitatDescriptionLabel);
+            }
         }
 
         habitatSection.setVisible(true);
